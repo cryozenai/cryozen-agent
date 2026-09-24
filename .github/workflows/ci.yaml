@@ -251,16 +251,22 @@ jobs:
     steps:
       - name: Evaluate job results
         id: evaluate
-        env:
-          NEEDS: ${{ toJSON(needs) }}
+        # toJSON(needs) carries every job's outputs and outgrows the ~128 KB
+        # per-value execve limit, so it goes through a file, not an env var.
+        # The quoted heredoc stops shell expansion, and JSON escapes newlines,
+        # so no line of it can equal the delimiter.
         run: |
-          echo "$NEEDS" | python3 -c "
-          import json, sys
-          needs = json.load(sys.stdin)
+          cat > "$RUNNER_TEMP/needs.json" <<'NEEDS_JSON_EOF'
+          ${{ toJSON(needs) }}
+          NEEDS_JSON_EOF
+          python3 -c "
+          import json, os, sys
+          with open(os.path.join(os.environ['RUNNER_TEMP'], 'needs.json')) as f:
+              needs = json.load(f)
           # Emit compact {job_name: result} for the comment assembler.
           compact = {name: info['result'] for name, info in needs.items()}
           print(f'needs-json={json.dumps(compact)}')
-          with open('$GITHUB_OUTPUT', 'a') as f:
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
               f.write(f'needs-json={json.dumps(compact)}\n')
           failed = [name for name, info in needs.items() if info['result'] == 'failure']
           for name, info in sorted(needs.items()):
