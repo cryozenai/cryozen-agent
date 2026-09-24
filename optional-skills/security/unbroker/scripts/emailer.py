@@ -5,7 +5,7 @@ request straight to the broker's known opt-out address, and `find_verification_l
 polls the inbox for the broker's confirmation email and extracts the link (scored
 by email_modes.extract_verification_link, so arbitrary/phishing links are ignored).
 The agent still OPENS the link with its own browser - several brokers bind the
-verification session to the browser that opens it (see the intelius record).
+verification session to the browser that opens it (PeopleConnect/Intelius does).
 
 Configuration comes from the same env vars the Cryozen email gateway uses:
   EMAIL_ADDRESS / EMAIL_PASSWORD              (required for Mode B)

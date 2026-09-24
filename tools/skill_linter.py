@@ -111,10 +111,9 @@ def _check_frontmatter(frontmatter: Dict[str, Any], skill_dir: Optional[Path]) -
     elif "tags" not in cryozen_meta:
         yield _warn("missing-metadata", "metadata.cryozen.tags is missing.")
     author = str(frontmatter.get("author", ""))
-    if author and author.strip().lower() in ("cryozen", "agent", "cryozen agent") and (
-        author != "Cryozen Agent"):
-        yield _warn("author-caps", f"author '{author}' should be 'Cryozen Agent' (proper caps) "
-                    f"or a real contributor name.")
+    if author and author != "Cryozen":
+        yield _warn("author-value", f"author '{author}' should be exactly 'Cryozen', with no personal "
+                    f"names, handles or host identity.")
     platforms = frontmatter.get("platforms")
     if platforms:
         valid = {"linux", "macos", "windows", "darwin"}

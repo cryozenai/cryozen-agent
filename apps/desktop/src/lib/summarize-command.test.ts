@@ -6,7 +6,7 @@ describe('summarizeShellCommand', () => {
   it('strips a leading cd and trailing tail + status echo', () => {
     expect(
       summarizeShellCommand(
-        'cd /Users/me/www/bb-rainbows && pnpm run lint 2>&1 | tail -10; echo "lint_exit=${PIPESTATUS[0]}"'
+        'cd /Users/me/www/sample-site && pnpm run lint 2>&1 | tail -10; echo "lint_exit=${PIPESTATUS[0]}"'
       )
     ).toBe('pnpm run lint')
   })
@@ -95,7 +95,7 @@ describe('summarizeShellCommand', () => {
   it('summarizes the successful lint command from session 20260624_231846_bdbd1e', () => {
     expect(
       summarizeShellCommand(
-        'cd /Users/testuser/www/bb-rainbows && pnpm run lint 2>&1 | tail -20; echo "lint_exit=${PIPESTATUS[0]}"'
+        'cd /Users/testuser/www/sample-site && pnpm run lint 2>&1 | tail -20; echo "lint_exit=${PIPESTATUS[0]}"'
       )
     ).toBe('pnpm run lint')
   })
@@ -103,7 +103,7 @@ describe('summarizeShellCommand', () => {
   it('summarizes a background build command from session 20260624_231846_bdbd1e', () => {
     expect(
       summarizeShellCommand(
-        'cd /Users/testuser/www/bb-rainbows && pnpm run build 2>&1 | tail -20; echo "build_exit=${PIPESTATUS[0]}"'
+        'cd /Users/testuser/www/sample-site && pnpm run build 2>&1 | tail -20; echo "build_exit=${PIPESTATUS[0]}"'
       )
     ).toBe('pnpm run build')
   })

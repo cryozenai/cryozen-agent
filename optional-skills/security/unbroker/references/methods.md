@@ -146,8 +146,7 @@ Two more false-positive traps that a naive scan records as `found` when it shoul
     FREE public records found for {Name}"). That echo is **templating, not a result** - the actual
     result cards are often unrelated namesakes in other states. A `match_signal` on title/intro text
     yields false positives. Require a real result **card** corroborated by the subject's address or
-    DOB, and ignore the templated title/intro/H1 entirely. See `truepeoplesearch.json` /
-    `fastpeoplesearch.json` `search.match_signal_notes`.
+    DOB, and ignore the templated title/intro/H1 entirely.
 
 Both are why the **parent re-verifies every `found` before acting** rule is load-bearing (`pdd.py show
 <subject> <broker>` reads back a subagent's recorded evidence so the parent can re-verify without

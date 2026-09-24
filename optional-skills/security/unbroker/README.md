@@ -69,7 +69,7 @@ The underlying CLI (run via `terminal`, as `python3 scripts/pdd.py <cmd>`):
 | `pdd.py setup --auto` / `doctor` | Self-configure (most-autonomous valid config) and readiness check |
 | `pdd.py intake` | Create a consenting subject (captures aliases, multiple emails/phones, prior addresses) |
 | `pdd.py next` | The loop driver: ordered agent actions right now, the human digest, and the next wake time |
-| `pdd.py brokers` / `refresh-brokers` | List people-search brokers, or pull the latest BADBOOL list plus the CA registry |
+| `pdd.py brokers` / `refresh-brokers` | List people-search brokers, or pull the latest BADBOOL list plus the CA registry at run time |
 | `pdd.py registry` | State data-broker registry coverage (CA ~545 ingested; VT/OR/TX portals); `--search` to find one |
 | `pdd.py drop` | The CA DROP one-shot: delete from all registered brokers in a single request |
 | `pdd.py plan` | Per-broker tier, method, search vectors, and the exact fields to disclose |
@@ -106,8 +106,8 @@ The underlying CLI (run via `terminal`, as `python3 scripts/pdd.py <cmd>`):
   CCPA/CPRA in California, GDPR in the EU/UK, a general right-to-delete request otherwise. It never
   cites a right the subject cannot invoke.
 - **Coverage that matches or exceeds commercial services.** Two lanes: (1) people-search sites with
-  per-site opt-out mechanics (19 curated records, including FamilyTreeNow, Radaris, and Nuwber, plus
-  a live pull from [BADBOOL](https://github.com/yaelwrites/Big-Ass-Data-Broker-Opt-Out-List)), and
+  per-site opt-out mechanics (11 curated records, including FamilyTreeNow and Nuwber, plus a live
+  pull of the public BADBOOL opt-out list that is fetched at run time and never shipped), and
   (2) the **state data-broker registries** as a distinct legal-coverage lane: the **California Data
   Broker Registry** (~545 registered brokers, the authoritative universe the commercial services draw
   from) is ingested, with Vermont, Oregon, and Texas surfaced as search portals.
@@ -152,10 +152,10 @@ against broker sites is the active field-testing frontier.
 
 ## Credits and license
 
-- Broker dataset adapted from the **Big-Ass Data Broker Opt-Out List (BADBOOL)** by **Yael Grauer**,
-  licensed [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) (attribution
-  required, non-commercial). See [yaelwrites.com](https://yaelwrites.com/).
-- Code: MIT.
+- Code and the curated broker records: MIT.
+- `refresh-brokers` downloads third-party lists (the BADBOOL opt-out list and the California Data
+  Broker Registry) to the local cache at run time; that data is not part of this skill and stays
+  under its publishers' terms.
 
 ## Disclaimer
 

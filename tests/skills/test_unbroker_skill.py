@@ -126,7 +126,7 @@ def test_seed_broker_db_loads_and_is_well_formed():
     everyone = brokers.load_all()
     assert len(everyone) >= 10
     ids = {b["id"] for b in everyone}
-    assert {"spokeo", "whitepages", "mylife"} <= ids
+    assert {"familytreenow", "nuwber", "usphonebook"} <= ids
     for b in everyone:
         assert b.get("id") and b.get("name") and b.get("priority") in {"crucial", "high", "standard", "long_tail"}
         assert (b.get("optout") or {}).get("method")
@@ -138,8 +138,6 @@ def test_blocked_pass_records_and_cluster_coverage():
     # Records added from the blocked-tail pass load, resolve, and dedupe correctly.
     ids = {b["id"] for b in brokers.load_all()}
     assert {"addresses", "socialcatfish"} <= ids
-    # addresses.com is a PeopleConnect/Intelius front-end -> covered by the intelius cluster (deduped).
-    assert "addresses" in brokers.clusters().get("intelius", [])
     for bid in ("addresses", "socialcatfish"):
         b = brokers.get(bid)
         assert tiers.select_tier(b) in {"T0", "T1", "T2", "T3"}
@@ -156,9 +154,10 @@ def test_every_broker_resolves_to_valid_tier():
 
 
 def test_captcha_tier_shifts_with_browser():
-    tps = brokers.get("truepeoplesearch")
-    assert tiers.select_tier(tps, "programmatic", browser_clears_captcha=False) == "T2"
-    assert tiers.select_tier(tps, "programmatic", browser_clears_captcha=True) == "T1"
+    captcha_form = {"id": "captcha-form",
+                    "optout": {"requires": {"captcha": True, "email_verification": True}}}
+    assert tiers.select_tier(captcha_form, "programmatic", browser_clears_captcha=False) == "T2"
+    assert tiers.select_tier(captcha_form, "programmatic", browser_clears_captcha=True) == "T1"
 
 
 
@@ -314,11 +313,11 @@ def test_fanout_batches_large_runs():
 
 
 def test_render_optout_email_includes_listing_and_name():
-    b = brokers.get("spokeo")
+    b = brokers.get("nuwber")
     out = legal.render_optout_email(b, {"full_name": "Jane Q. Public",
                                         "contact_email": "jane@example.com",
-                                        "listing_urls": ["https://www.spokeo.com/jane"]})
-    assert "Jane Q. Public" in out and "https://www.spokeo.com/jane" in out
+                                        "listing_urls": ["https://nuwber.com/person/jane"]})
+    assert "Jane Q. Public" in out and "https://nuwber.com/person/jane" in out
 
 
 
@@ -367,10 +366,14 @@ def test_badbool_parses_people_search_section_only():
 
 def test_badbool_merge_keeps_curated_and_adds_new():
     with temp_env():
-        badbool.refresh(__import__("paths").brokers_cache_path(), markdown=BADBOOL_FIXTURE)
+        markdown = BADBOOL_FIXTURE.replace(
+            "## Special Circumstances",
+            "### Nuwber\n[Opt out](https://nuwber.com/removal/link).\n\n## Special Circumstances",
+        )
+        badbool.refresh(__import__("paths").brokers_cache_path(), markdown=markdown)
         merged = {b["id"]: b for b in brokers.load_all()}
         # curated record wins over the live one
-        assert merged["beenverified"]["source"] == "BADBOOL"
+        assert merged["nuwber"]["source"] == "curated"
         # a non-curated live record is added with auto confidence
         assert "pimeyes" in merged and merged["pimeyes"]["confidence"] == "auto"
 
@@ -557,22 +560,6 @@ def test_parked_and_reappeared_states_group_correctly():
 
 
 # --- cluster parents: verified deletion lanes + data-driven playbooks ------------------------
-
-
-
-def test_curated_intelius_suppress_first_not_delete():
-    # PeopleConnect is the EXCEPTION to deletion-beats-suppression: deleting user data wipes
-    # your suppressions and does not stop public-records re-listing, so suppress-and-maintain.
-    b = brokers.get("intelius")
-    d = b["optout"]["deletion"]
-    assert d["prefer"] is False and d["via"] == "in_flow"
-    assert d["email"] == "privacy@peopleconnect.us"     # rights-request address for the data-purge path
-    steps = " ".join(b["optout"]["playbook"]).upper()
-    assert "SUPPRESS" in steps                          # the recommended action
-    assert "DELETE MY USER DATA" in steps               # names the trap to avoid
-
-
-
 
 
 

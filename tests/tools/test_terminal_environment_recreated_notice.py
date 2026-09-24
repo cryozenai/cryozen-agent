@@ -1,5 +1,5 @@
 """The model must be told when the backend replaced its container/sandbox
-mid-command (ported from lobehub/lobehub#19329): silent recovery leaves the
+mid-command (same failure class as lobehub/lobehub#19329): silent recovery leaves the
 agent assuming background processes and unsynced files survived."""
 
 import json

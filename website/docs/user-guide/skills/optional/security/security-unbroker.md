@@ -197,8 +197,7 @@ For anything past a couple of brokers, run this as **map → reduce → act**, n
 - **PeopleConnect delete-wipes-suppression (permanent rule).** A PeopleConnect *deletion* wipes the
   suppression and the subject re-lists across the whole affiliate cluster. If a "Your deletion request
   for PeopleConnect.us is Complete" email ever appears, the suppression is gone -> **re-run suppression
-  and re-verify** the Control step reads "suppressed". Never leave this cluster on a completed deletion
-  (see `references/brokers/intelius.json`).
+  and re-verify** the Control step reads "suppressed". Never leave this cluster on a completed deletion.
 
 Subagent reports are self-reports: the parent re-verifies key claims (listing URLs, match basis) before
 recording `found` and before any deletion.
@@ -243,8 +242,8 @@ recording `found` and before any deletion.
    `$PDD record <subject> <broker> <found|not_found|indirect_exposure|blocked> --found <bool> --evidence '{"listing_urls":[...]}'`.
    The parent re-verifies key `found` claims from subagents before trusting them.
 5. **Opt-outs (when `next` says so).** Actions come pre-ordered parents-first with `steps` from each
-   broker record's own `optout.playbook` (field-verified; cluster parents like PeopleConnect,
-   Whitepages, BeenVerified, Spokeo have exact, live-checked recipes). **Deletion usually beats
+   broker record's own `optout.playbook` when the record has one (`references/site-playbooks.md`
+   covers the large cluster parents such as PeopleConnect). **Deletion usually beats
    suppression**: when an action carries `prefer_deletion`, complete the record's DELETION lane, not
    just the hide-my-listing flow. When it carries `prefer_suppression` instead (**PeopleConnect** -
    deleting removes your suppressions and does not stop re-listing), do the suppression flow and keep

@@ -58,6 +58,6 @@ def test_maintainer_commits_are_not_credited_but_external_authors_are():
     assert maintainer not in changelog
     assert "- @outsider (1 commit)" in changelog
     assert any(
-        line.startswith("- outside change") and line.endswith("— @outsider")
+        line.startswith("- Outside change") and line.endswith(" @outsider")
         for line in changelog.splitlines()
     )

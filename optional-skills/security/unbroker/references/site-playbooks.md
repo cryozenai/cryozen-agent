@@ -34,8 +34,7 @@ table). A dead/404 site or an operator-confirmed "no results" search is a valid 
   `InfoPay_Core_Components_OptOuts_*` form fields and the same **slide-to-verify** slider. If one shows
   the slider, expect it on the rest -> go straight to the email lane (where cited) or skip.
 - **PeopleConnect / Intelius front-end** = **addresses.com** (report links -> `tracking.intelius.com`).
-  Covered by the cluster suppression (`addresses` is in `intelius.owns`); no separate opt-out. See
-  `brokers/intelius.json` and `brokers/addresses.json`.
+  Covered by the cluster suppression; no separate opt-out. See `brokers/addresses.json`.
 
 ## Meta-search / link-out aggregators -- do NOT file opt-outs (no-ops)
 

@@ -39,7 +39,7 @@
     "inputs": [
       "contact_email"
     ],
-    "notes": "COVERED BY THE INTELIUS/PEOPLECONNECT CLUSTER -- do NOT file a separate opt-out. addresses.com is a front-end (report links -> tracking.intelius.com), and 'addresses' is listed in intelius.owns, so one PeopleConnect suppression (see intelius.json) removes it too. Recorded here only so the scan cross-check has the URL pattern and knows it maps to the parent. After the intelius suppression confirms, re-scan this URL to verify it dropped.",
+    "notes": "COVERED BY THE INTELIUS/PEOPLECONNECT CLUSTER -- do NOT file a separate opt-out. addresses.com is a front-end (report links -> tracking.intelius.com), so one PeopleConnect suppression through the Intelius opt-out removes it too (the Intelius record arrives with refresh-brokers). Recorded here only so the scan cross-check has the URL pattern and knows it maps to the parent. After the Intelius suppression confirms, re-scan this URL to verify it dropped.",
     "quirks": [
       "Front-end only; holds no independent removal channel. The PeopleConnect Suppression Center is the lever."
     ],

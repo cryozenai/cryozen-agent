@@ -6,7 +6,7 @@ describe('shortCwd', () => {
   const origHome = process.env.HOME
 
   beforeEach(() => {
-    process.env.HOME = '/Users/bb'
+    process.env.HOME = '/Users/me'
   })
 
   afterEach(() => {
@@ -14,7 +14,7 @@ describe('shortCwd', () => {
   })
 
   it('collapses HOME to ~', () => {
-    expect(shortCwd('/Users/bb/proj/repo')).toBe('~/proj/repo')
+    expect(shortCwd('/Users/me/proj/repo')).toBe('~/proj/repo')
   })
 
   it('leaves non-HOME paths alone', () => {
@@ -37,7 +37,7 @@ describe('fmtCwdBranch', () => {
   const origHome = process.env.HOME
 
   beforeEach(() => {
-    process.env.HOME = '/Users/bb'
+    process.env.HOME = '/Users/me'
   })
 
   afterEach(() => {
@@ -45,25 +45,25 @@ describe('fmtCwdBranch', () => {
   })
 
   it('returns bare cwd when branch is null', () => {
-    expect(fmtCwdBranch('/Users/bb/proj', null)).toBe('~/proj')
+    expect(fmtCwdBranch('/Users/me/proj', null)).toBe('~/proj')
   })
 
   it('returns bare cwd when branch is empty', () => {
-    expect(fmtCwdBranch('/Users/bb/proj', '')).toBe('~/proj')
+    expect(fmtCwdBranch('/Users/me/proj', '')).toBe('~/proj')
   })
 
   it('appends branch in parens', () => {
-    expect(fmtCwdBranch('/Users/bb/proj', 'main')).toBe('~/proj (main)')
+    expect(fmtCwdBranch('/Users/me/proj', 'main')).toBe('~/proj (main)')
   })
 
   it('truncates the path to keep the branch tag readable', () => {
-    const out = fmtCwdBranch('/Users/bb/very/deeply/nested/project/folder', 'feature-branch', 30)
+    const out = fmtCwdBranch('/Users/me/very/deeply/nested/project/folder', 'feature-branch', 30)
     expect(out).toMatch(/ \(feature-branch\)$/)
     expect(out.length).toBeLessThanOrEqual(30)
   })
 
   it('truncates very long branch names from the right', () => {
-    const out = fmtCwdBranch('/Users/bb/p', 'a-very-long-feature-branch-name')
+    const out = fmtCwdBranch('/Users/me/p', 'a-very-long-feature-branch-name')
     expect(out).toMatch(/^~\/p \(…/)
     expect(out).toContain(')')
   })
@@ -83,7 +83,7 @@ describe('fmtProjectCwdBranch', () => {
   const origHome = process.env.HOME
 
   beforeEach(() => {
-    process.env.HOME = '/Users/bb'
+    process.env.HOME = '/Users/me'
   })
 
   afterEach(() => {
@@ -91,15 +91,15 @@ describe('fmtProjectCwdBranch', () => {
   })
 
   it('prefixes the cwd/branch label with the project name', () => {
-    expect(fmtProjectCwdBranch('/Users/bb/proj', 'main', 'website', 28)).toBe('website · ~/proj (main)')
+    expect(fmtProjectCwdBranch('/Users/me/proj', 'main', 'website', 28)).toBe('website · ~/proj (main)')
   })
 
   it('falls back to the cwd/branch label when no project is known', () => {
-    expect(fmtProjectCwdBranch('/Users/bb/proj', 'main', null, 28)).toBe('~/proj (main)')
+    expect(fmtProjectCwdBranch('/Users/me/proj', 'main', null, 28)).toBe('~/proj (main)')
   })
 
   it('keeps the project visible when space is tight', () => {
-    expect(fmtProjectCwdBranch('/Users/bb/proj', 'main', 'cryozen-agent', 13)).toBe('cryozen-agent')
+    expect(fmtProjectCwdBranch('/Users/me/proj', 'main', 'cryozen-agent', 13)).toBe('cryozen-agent')
   })
 })
 

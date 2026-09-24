@@ -112,7 +112,7 @@ class TestWriteToSandbox:
     )
     def test_size_probe_decides_lossless(self, stdin_mode, probed, ok):
         """An archive that is not byte-exact (modulo the heredoc newline) is discarded — never
-        referenced to the model (port of lobehub/lobehub#18258). Multibyte content pins the
+        referenced to the model (same bug class as lobehub/lobehub#18258). Multibyte content pins the
         comparison to UTF-8 bytes (170 here, 130 chars), on both the sandbox and host paths."""
         import os
 

@@ -31,42 +31,35 @@ The following is the complete skill definition that Cryozen loads when this skil
 
 # Darwinian Evolver
 
-Run Imbue's [darwinian_evolver](https://github.com/imbue-ai/darwinian_evolver) — an
-LLM-driven evolutionary search loop — to optimize a **prompt, regex, SQL query,
-or small code snippet** against a fitness function.
+Run Imbue's [darwinian_evolver](https://github.com/imbue-ai/darwinian_evolver), an
+LLM-driven evolutionary search loop, to optimize a prompt, regex, SQL query or
+small code snippet against a fitness function.
+The skill installs the upstream tool, drives its command line and summarizes the
+JSON log it writes.
+It does not write evolution problems or evaluators for you.
 
-Status: thin wrapper around the upstream tool. The skill installs it, walks the
-agent through writing a `Problem` definition (organism + evaluator + mutator),
-and drives the loop via the upstream CLI or a small custom Python driver.
-
-**License:** the upstream tool is **AGPL-3.0**. The skill ONLY ever invokes it
-via the upstream CLI or a `subprocess`/`uv run` call (mere aggregation). Do NOT
-import upstream classes into Cryozen itself.
+**License boundary:** the upstream tool is AGPL-3.0 and is installed separately.
+The skill ships no upstream code and never imports it: `scripts/run_evolver.py`
+only runs the upstream CLI as a child process, and `scripts/summarize_results.py`
+only reads the `results.jsonl` file that the CLI writes.
 
 ## When to Use
 
-- User says "optimize this prompt", "evolve a regex for X", "auto-improve this
-  code/SQL", "search for a better instruction".
-- You have a scorer (exact match, regex pass-rate, unit test, LLM-judge, runtime
-  metric) AND a starting candidate (organism). If you don't have a scorer, stop
-  and define one first — that's the hard part.
-- Cost is OK: a typical run is 50–500 LLM calls. On gpt-4o-mini that's pennies;
-  on Claude Sonnet it can be a few dollars.
+- The user asks to "optimize this prompt", "evolve a regex for X", "auto-improve
+  this code/SQL" or "search for a better instruction".
+- There is a scorer (exact match, regex pass rate, unit test, LLM judge, runtime
+  metric) AND a starting candidate. Without a scorer, stop and define one first.
+- The cost is acceptable: a typical run makes 50-500 LLM calls.
 
 Do **not** use this when:
-- The optimization target is differentiable (use gradient descent / DSPy).
-- You only need to try 2–3 variants — just write them by hand.
+- The optimization target is differentiable (use gradient methods instead).
+- Only 2-3 variants are needed; write them by hand.
 - The fitness signal is purely subjective with no measurable criterion.
 
 ## Prerequisites
 
-- Python ≥3.11
-- `git`, `uv` (or `pip`)
-- One of: `OPENROUTER_API_KEY`, `ANTHROPIC_API_KEY`, or `OPENAI_API_KEY`
-
-The skill ships a small `parrot_openrouter.py` driver that uses `OPENROUTER_API_KEY`
-via the OpenAI SDK, so any model on OpenRouter works. The upstream CLI itself
-hardcodes Anthropic and needs `ANTHROPIC_API_KEY`.
+- Python 3.11 or newer, `git` and `uv`.
+- `ANTHROPIC_API_KEY`: the upstream CLI's built-in problems call Anthropic models.
 
 ## Install (One-Time)
 
@@ -78,140 +71,87 @@ mkdir -p ~/.cryozen-agent/cache/darwinian-evolver && cd ~/.cryozen-agent/cache/d
 cd darwinian_evolver && uv sync
 ```
 
-Verify:
+The package is not on PyPI; `pip install darwinian-evolver` installs something else.
+
+## How to Run
+
+`scripts/run_evolver.py` builds the upstream command line, runs it inside the
+checkout with `uv run`, and returns the upstream exit code.
+Preview the exact command first with `--dry-run`:
 
 ```bash
-cd ~/.cryozen-agent/cache/darwinian-evolver/darwinian_evolver \
-  && uv run darwinian_evolver --help | head -5
-```
-
-## Quick Start — The Built-In Parrot Example
-
-Tiny smoke test (requires `ANTHROPIC_API_KEY`):
-
-```bash
-cd ~/.cryozen-agent/cache/darwinian-evolver/darwinian_evolver
-uv run darwinian_evolver parrot \
-  --num_iterations 2 \
-  --num_parents_per_iteration 2 \
-  --mutator_concurrency 2 --evaluator_concurrency 2 \
-  --output_dir ~/.cryozen-agent/cache/scratch/parrot_demo
-```
-
-Outputs:
-- `~/.cryozen-agent/cache/scratch/parrot_demo/snapshots/iteration_N.pkl` — pickled population per iteration
-- `~/.cryozen-agent/cache/scratch/parrot_demo/<jsonl>` — per-iteration JSON log (path printed at end)
-
-Open `~/.cryozen-agent/cache/darwinian-evolver/darwinian_evolver/darwinian_evolver/lineage_visualizer.html`
-in a browser and load the JSON log to see the evolutionary tree.
-
-## Quick Start — OpenRouter Driver (No Anthropic Key)
-
-The skill ships `scripts/parrot_openrouter.py` — same parrot problem, but the
-LLM call goes through OpenRouter so any provider works.
-
-```bash
-# From wherever the skill is installed:
 SKILL_DIR=~/.cryozen-agent/skills/research/darwinian-evolver
-DE_DIR=~/.cryozen-agent/cache/darwinian-evolver/darwinian_evolver
-
-cd "$DE_DIR" && \
-  EVOLVER_MODEL='openai/gpt-4o-mini' \
-  uv run --with openai python "$SKILL_DIR/scripts/parrot_openrouter.py" \
-    --num_iterations 3 --num_parents_per_iteration 2 \
-    --output_dir ~/.cryozen-agent/cache/scratch/parrot_or
+python3 "$SKILL_DIR/scripts/run_evolver.py" parrot \
+  --output-dir ~/.cryozen-agent/cache/scratch/parrot_demo --iterations 2 --dry-run
+python3 "$SKILL_DIR/scripts/run_evolver.py" parrot \
+  --output-dir ~/.cryozen-agent/cache/scratch/parrot_demo --iterations 2
 ```
 
-Inspect the result with `scripts/show_snapshot.py`:
+`parrot` is the upstream smoke-test problem; the upstream `--help` lists the others.
+The run writes `results.jsonl` (one JSON record per iteration) and `snapshots/`
+into the output directory.
+Use `--evolver-dir` if the checkout lives somewhere other than the skill cache.
+
+Summarize the run from its JSON log:
 
 ```bash
-uv run --with openai python "$SKILL_DIR/scripts/show_snapshot.py" \
-  ~/.cryozen-agent/cache/scratch/parrot_or/snapshots/iteration_3.pkl
+python3 "$SKILL_DIR/scripts/summarize_results.py" ~/.cryozen-agent/cache/scratch/parrot_demo --top 5
+python3 "$SKILL_DIR/scripts/summarize_results.py" ~/.cryozen-agent/cache/scratch/parrot_demo --json
 ```
 
-Expected output: 7 evolved prompt templates ranked by score, with the best
-landing around 0.6–0.8 (the seed `Say {{ phrase }}` scored 0.000).
+It ranks the last iteration's organisms by score and prints each one's main text
+field (override with `--field`, pick an iteration with `--iteration`).
+The upstream checkout also includes `lineage_visualizer.html`, which can load the
+same `results.jsonl` in a browser.
 
-## Defining a Custom Problem
+## Custom Problems
 
-The skill ships `templates/custom_problem_template.py` — copy, edit, run.
-Three things you must define:
+A custom problem is Python code that subclasses the upstream `Organism`,
+`Evaluator` and `Mutator` classes, so it is AGPL-covered work that belongs in the
+user's own checkout, not in this skill or in Cryozen.
+Point the user to the "Creating Your Own Problem" section of the upstream README,
+help them decide the three inputs (initial organism, a scorer returning a 0-1 score
+plus failure cases, and a mutation prompt), and let them register the problem in
+their checkout.
+Once the upstream CLI lists it, run it by name with `run_evolver.py` exactly like
+`parrot`.
 
-1. **`Organism`** — a Pydantic `BaseModel` subclass holding the artifact being
-   evolved (`prompt_template: str`, `regex_pattern: str`, `sql_query: str`,
-   `code_block: str`, etc.). Add a `run(*args)` method that exercises it.
+## Quick Reference
 
-2. **`Evaluator`** — `.evaluate(organism) -> EvaluationResult(score=..., trainable_failure_cases=[...], holdout_failure_cases=[...], is_viable=True)`.
-   - **`score`** is in `[0, 1]`. Higher is better.
-   - **`trainable_failure_cases`** — what the mutator sees. Include enough
-     context (input, expected, actual) for the LLM to diagnose.
-   - **`holdout_failure_cases`** — kept out of the mutator's view. Use these
-     to detect overfitting.
-   - **`is_viable=True`** unless the organism is completely broken (raises,
-     returns None, etc.). A 0-score viable organism is fine — it just gets
-     down-weighted in parent selection.
-
-3. **`Mutator`** — `.mutate(organism, failure_cases, learning_log_entries) -> list[Organism]`.
-   Typically: build an LLM prompt that includes the current organism + a
-   failure case + an ask to propose a fix; parse the LLM's response; return
-   a new `Organism`. Return `[]` on parse failure — the loop handles it.
-
-Then write a driver script that wires `Problem(initial_organism, evaluator, [mutators])`
-into `EvolveProblemLoop` and iterates over `loop.run(num_iterations=N)` — the
-shipped `scripts/parrot_openrouter.py` is the reference.
-
-## Hyperparameters That Actually Matter
-
-| flag | default | when to change |
+| run_evolver flag | upstream flag | guidance |
 |---|---|---|
-| `--num_iterations` | 5 | bump to 10–20 once you trust the evaluator |
-| `--num_parents_per_iteration` | 4 | drop to 2 for cheap exploration |
-| `--mutator_concurrency` | 10 | drop to 2–4 to avoid rate limits |
-| `--evaluator_concurrency` | 10 | same; evaluator hits the LLM too |
-| `--batch_size` | 1 | raise to 3–5 once your mutator handles multiple failures |
-| `--verify_mutations` | off | turn on once mutator is wasteful (>10× cost saving on later runs per Imbue) |
-| `--midpoint_score` | `p75` | leave alone unless scores cluster |
-| `--sharpness` | 10 | leave alone |
+| `--iterations` (3) | `--num_iterations` | raise to 10-20 once the evaluator is trusted |
+| `--parents` (2) | `--num_parents_per_iteration` | 2 for cheap exploration |
+| `--concurrency` (2) | `--mutator_concurrency`, `--evaluator_concurrency` | higher values hit rate limits |
+| `--batch-size` (1) | `--batch_size` | 2-5 only if the problem's mutator supports batches |
+| `--verify-mutations` | `--verify_mutations` | cuts cost when mutations are often useless |
 
 ## Pitfalls
 
-1. **`Initial organism must be viable`** — set `is_viable=True` in your
-   `EvaluationResult` even on a 0-score seed. The loop refuses non-viable
-   organisms because they imply the loop has nothing to evolve from.
-2. **Provider content filters kill runs.** Azure-backed OpenRouter models
-   reject phrases like "ignore previous instructions" with HTTP 400. Wrap
-   the LLM call in `try/except` and return `f"<LLM_ERROR: {e}>"` — the
-   evolver will just score that organism 0 and move on.
-3. **`loop.run()` is a generator** — calling it doesn't run anything until
-   you iterate. Use `for snap in loop.run(num_iterations=N):`.
-4. **Snapshots are nested pickles.** `iteration_N.pkl` contains a dict with
-   `population_snapshot` (more pickled bytes). To unpickle you must have the
-   `Organism` class importable under the same dotted path it was pickled at.
-5. **Concurrency defaults are aggressive.** 10/10 will hit rate limits on
-   most providers. Start with 2/2.
-6. **CLI is hardcoded to Anthropic.** `uv run darwinian_evolver <problem>`
-   reaches for `ANTHROPIC_API_KEY` and uses Claude Sonnet. To use any other
-   provider, write a driver like `parrot_openrouter.py`.
-7. **AGPL.** Never `from darwinian_evolver import ...` inside Cryozen core.
-   Custom driver scripts under `~/.cryozen-agent/skills/...` are user-side and fine.
-8. **No PyPI package.** `pip install darwinian-evolver` will pull the wrong
-   thing. Always install from the GitHub repo.
+1. **Initial organism must be viable.** The upstream loop refuses to start from a
+   non-viable seed, even one with a score of 0.
+2. **Provider content filters kill mutations.** Phrases such as "ignore previous
+   instructions" can be rejected by some providers; expect some failed mutations.
+3. **Concurrency defaults upstream are aggressive (10/10).** The wrapper defaults
+   to 2/2 for that reason.
+4. **Snapshots are pickles.** Only the upstream tool should load them (for example
+   with `--resume_from_snapshot`); inspect results through `results.jsonl` instead.
+5. **Do not import the upstream package into Cryozen code or this skill.**
 
 ## Verification
 
-After install + a parrot run, exit code 0 from this is sufficient:
+After install, this exits 0 and prints the upstream help:
 
 ```bash
-DE_DIR=~/.cryozen-agent/cache/darwinian-evolver/darwinian_evolver
-ls "$DE_DIR/darwinian_evolver/lineage_visualizer.html" >/dev/null && \
-cd "$DE_DIR" && uv run darwinian_evolver --help >/dev/null && \
-echo "darwinian-evolver: OK"
+cd ~/.cryozen-agent/cache/darwinian-evolver/darwinian_evolver && uv run darwinian_evolver --help >/dev/null \
+  && echo "darwinian-evolver: OK"
 ```
+
+After a run, `summarize_results.py OUTPUT_DIR` prints at least one organism with a score.
 
 ## References
 
 - [Imbue research post](https://imbue.com/research/2026-02-27-darwinian-evolver/)
-- [ARC-AGI-2 results](https://imbue.com/research/2026-02-27-arc-agi-2-evolution/)
-- [imbue-ai/darwinian_evolver](https://github.com/imbue-ai/darwinian_evolver) (AGPL-3.0)
-- [Darwin Gödel Machines](https://arxiv.org/abs/2505.22954)
+- [imbue-ai/darwinian_evolver](https://github.com/imbue-ai/darwinian_evolver) (AGPL-3.0, installed separately)
+- [Darwin Goedel Machines](https://arxiv.org/abs/2505.22954)
 - [PromptBreeder](https://arxiv.org/abs/2309.16797)

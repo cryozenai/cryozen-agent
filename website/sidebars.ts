@@ -495,7 +495,6 @@ const sidebars: SidebarsConfig = {
                   collapsed: true,
                   items: [
                     'user-guide/skills/optional/security/security-1password',
-                    'user-guide/skills/optional/security/security-godmode',
                     'user-guide/skills/optional/security/security-sherlock',
                     'user-guide/skills/optional/security/security-unbroker',
                     'user-guide/skills/optional/security/security-web-pentest',
