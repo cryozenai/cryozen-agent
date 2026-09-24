@@ -1,6 +1,6 @@
 """The update→restart obligation is HOST-scoped, and one update restarts the host gateway once.
 
-Multiplex-only (Teknium ruling): exactly one ``cryozen gateway run`` per host serves every
+Multiplex-only: exactly one ``cryozen gateway run`` per host serves every
 profile. The obligation used to live in ONE profile's ``CRYOZEN_HOME``, so ``cryozen -p coder
 update`` armed and cleared coder's copy while restarting the SHARED process; no other profile
 could see that obligation, and every profile that ran the catch-up killed the same gateway

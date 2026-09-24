@@ -992,7 +992,7 @@ class TestPluginHooks:
 class TestDeliveryParity:
     """Hook/middleware delivery parity across surfaces (#64178).
 
-    Salvaged from PR #64188 (@Bartok9): module-level invoke_hook /
+    Salvaged from PR #64188: module-level invoke_hook /
     invoke_middleware / has_hook / has_middleware lazily run discovery so
     surfaces that never imported model_tools (dashboards, TUI slash workers,
     query mode, cron) still deliver plugin callbacks.

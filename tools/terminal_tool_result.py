@@ -79,7 +79,7 @@ _EXIT_CODE_SEMANTICS: dict[str, dict[int, str]] = {
 # Model-facing warning attached when the backend replaced its container/sandbox
 # mid-command (out-of-band removal, terminal sandbox state). Persistent-filesystem
 # state was restored, but background processes and anything outside the synced
-# paths are gone (ported from lobehub/lobehub#19329).
+# paths are gone (same failure class as lobehub/lobehub#19329).
 _ENV_RECREATED_NOTE = (
     "The execution environment was recreated while running this command "
     "(the previous container/sandbox was gone). Persistent files were restored "

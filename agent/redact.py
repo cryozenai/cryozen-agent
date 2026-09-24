@@ -77,7 +77,7 @@ def redact_registered_vault_values(text: str) -> str:
 
 # Sensitive query-string param names (case-insensitive): opaque tokens / OAuth
 # codes / pre-signed signatures with no vendor prefix.
-# Ported from nearai/ironclaw#2529 — catches tokens whose values don't match any known vendor prefix regex
+# Ported from nearai/ironclaw#2529 (MIT; see NOTICE) — catches tokens whose values don't match any known vendor prefix regex
 # (e.g. opaque tokens, short OAuth codes).
 _SENSITIVE_QUERY_PARAMS = frozenset({
     "access_token", "refresh_token", "id_token", "token", "api_key", "apikey",
@@ -185,7 +185,7 @@ _PREFIX_PATTERNS = [
     r"fw_[A-Za-z0-9]{30,}",             # Fireworks AI API key
     r"fpk_[A-Za-z0-9]{30,}",            # Fireworks AI project key
     # GitLab token families (each keeps a full literal prefix for the pre-screen).
-    # Ported from openclaw/openclaw#112954; follow-up invited in #4541.
+    # Ported from openclaw/openclaw#112954 (MIT; see NOTICE); follow-up invited in #4541.
     r"glpat-[A-Za-z0-9_\-]{10,}",       # GitLab personal access token
     r"gloas-[A-Za-z0-9_\-]{10,}",       # GitLab OAuth application secret
     r"gldt-[A-Za-z0-9_\-]{10,}",        # GitLab deploy token
@@ -293,7 +293,7 @@ _YAML_ASSIGN_RE = re.compile(
 # The side effect: ordinary prose/document words that merely CONTAIN a keyword also matched — ``Secretary:
 # J.Smith`` (secret), ``tokenizer: cl100k_base`` (token), ``author=Smith`` (auth) — mangling legitimate
 # content on the surfaces that run these passes (browser snapshots, log lines, kanban summaries, CLI-echoed
-# command output). Ported from nearai/ironclaw#6129, where the same substring false positive ("Secretary of
+# command output). Ported from nearai/ironclaw#6129 (MIT; see NOTICE), where the same substring false positive ("Secretary of
 # the Treasury" matching the ``secret`` marker) scrubbed legitimate tool results from the replayed
 # transcript and sent the model into a re-fetch loop. Common concatenated compounds keep matching via
 # explicit alternatives (``authtoken`` ngrok, ``authkey`` tailscale, ``secretkey`` minio, ``apikey``).

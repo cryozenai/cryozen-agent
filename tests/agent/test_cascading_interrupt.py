@@ -1,6 +1,6 @@
 """Regression guard for the cascading-interrupt hang (PR #6600).
 
-Original diagnosis and fix by Kristian Vastveit (@kristianvast) in PR #6600,
+Original diagnosis and fix in PR #6600,
 against the then-inline ``_interruptible_api_call`` /
 ``_interruptible_streaming_api_call`` methods in run_agent.py. Those methods
 have since been extracted into ``agent/chat_completion_helpers.py``, so the

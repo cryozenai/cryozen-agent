@@ -2,7 +2,7 @@
 
 Drives the merged app-server event bridge through the real TUI gateway
 callbacks and asserts stable tool ids flow into tool.start/tool.complete
-TUI events. Grafted from PR #65412 (@HaiderSultanArc).
+TUI events. Grafted from PR #65412.
 """
 
 from types import SimpleNamespace

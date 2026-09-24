@@ -1907,7 +1907,7 @@ class TestTransientTransportRetry:
     """call_llm retries ONCE on the same provider for a transient transport
     blip before escalating to the fallback chain.
 
-    Salvaged from PR #16587 (@ARegalado1). The original fixed only the
+    Salvaged from PR #16587. The original fixed only the
     context-compression caller; this lives in call_llm so every auxiliary
     task (compression, memory flush, title-gen, session-search, vision)
     gets the same same-target retry, and the gate reuses the canonical

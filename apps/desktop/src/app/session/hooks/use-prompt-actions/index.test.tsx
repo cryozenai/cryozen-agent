@@ -476,7 +476,7 @@ describe('usePromptActions slash session targeting', () => {
   })
 
   it('runs /goal status against the ROUTED stored session instead of minting a new one', async () => {
-    // Teknium's report: start a goal in the desktop app, then `/goal status`
+    // Reported bug: start a goal in the desktop app, then `/goal status`
     // says there is no goal. `/goal` state lives per-session in SessionDB
     // (`goal:<session_id>`), and slash.ts used to resolve its target with a
     // bare `hint || activeRef || createSession()`. With the runtime binding
@@ -3352,7 +3352,7 @@ describe('usePromptActions file attachment sync', () => {
     // has no bytes to send, so syncAttachments leaves it untouched and the ref
     // reaches the gateway as-is — correct for workspace-relative refs.
     //
-    // The MahmoudR drag-drop bug (a Finder PDF that became a local-path text
+    // The drag-drop bug (a Finder PDF that became a local-path text
     // ref in remote mode) is fixed upstream at the DROP layer: OS drops now
     // carry a path and route through the upload pipeline instead of becoming a
     // path-less inline ref. See partitionDroppedFiles in use-composer-actions.
@@ -3368,7 +3368,7 @@ describe('usePromptActions file attachment sync', () => {
       kind: 'file',
       label: 'DEVIS_signed.pdf',
       // NOTE: no `path` field — only the pre-baked local @file: ref.
-      refText: '@file:`/Users/mahmoud/Downloads/DEVIS_signed.pdf`'
+      refText: '@file:`/Users/devuser/Downloads/DEVIS_signed.pdf`'
     }
 
     const calls: { method: string; params?: Record<string, unknown> }[] = []
@@ -3390,7 +3390,7 @@ describe('usePromptActions file attachment sync', () => {
     // No path → no file.attach, no byte read: the ref passes through unchanged.
     expect(calls.map(c => c.method)).toEqual(['prompt.submit'])
     expect(readFileDataUrl).not.toHaveBeenCalled()
-    expect(calls[0]?.params?.text).toContain('@file:`/Users/mahmoud/Downloads/DEVIS_signed.pdf`')
+    expect(calls[0]?.params?.text).toContain('@file:`/Users/devuser/Downloads/DEVIS_signed.pdf`')
   })
 
   it('passes a Windows path directly for a native Windows local backend', async () => {
@@ -5421,7 +5421,7 @@ describe('usePromptActions eager attachment upload (drop-time)', () => {
     })
 
     $composerAttachments.set([
-      { id: 'file:devis', kind: 'file', label: 'DEVIS_signed.pdf', path: '/Users/mahmoud/Downloads/DEVIS_signed.pdf' }
+      { id: 'file:devis', kind: 'file', label: 'DEVIS_signed.pdf', path: '/Users/devuser/Downloads/DEVIS_signed.pdf' }
     ])
 
     await actRender(
@@ -5434,7 +5434,7 @@ describe('usePromptActions eager attachment upload (drop-time)', () => {
     const chip = $composerAttachments.get()[0]!
     expect(chip.refText).toBe('@file:.cryozen-agent/desktop-attachments/DEVIS_signed.pdf')
     expect(chip.uploadState).toBeUndefined()
-    expect(readFileDataUrl).toHaveBeenCalledWith('/Users/mahmoud/Downloads/DEVIS_signed.pdf')
+    expect(readFileDataUrl).toHaveBeenCalledWith('/Users/devuser/Downloads/DEVIS_signed.pdf')
   })
 
   it('flags the chip uploadState=error when the eager upload fails, keeping the path so submit can retry', async () => {

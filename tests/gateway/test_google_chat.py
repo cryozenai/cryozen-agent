@@ -574,7 +574,7 @@ class TestExtractMessagePayload:
     the two alternative formats so the multi-format helper does not
     regress when operators have non-standard Chat app configurations.
 
-    Patterns adapted from PR #14965 by @ArnarValur.
+    Patterns adapted from PR #14965.
     """
 
     def test_native_chat_api_format_extracts_msg_and_space(self):
@@ -693,7 +693,7 @@ class TestBuildMessageEvent:
         Isolate to its own session so old top-level chatter doesn't
         leak in.
 
-        Without this isolation the bug Ramón reported reappears: he
+        Without this isolation the reported bug reappears: a user
         opens a new thread, says 'Hola!', asks 'dime los mensajes
         anteriores' and the bot answers with messages from OTHER
         threads — because all DM threads were sharing one session."""
@@ -1098,7 +1098,7 @@ class TestSetupFilesSlashCommand:
                     chat_name="DM",
                     chat_type="dm",
                     user_id="users/1",
-                    user_name="Ramón",
+                    user_name="Alice",
                     thread_id="spaces/S/threads/T",
                 ),
                 raw_message={},
@@ -1124,7 +1124,7 @@ class TestUserOAuthHelper:
         ``a@B.com`` and ``A@b.com`` must collapse to the same key, and
         path-traversal characters must NOT escape into the filename."""
         from plugins.platforms.google_chat.oauth import _sanitize_email
-        assert _sanitize_email("Ramon@NTTData.com") == "ramon@nttdata.com"
+        assert _sanitize_email("Alice@Example.com") == "alice@example.com"
         assert _sanitize_email("user+tag@x.io") == "user_tag@x.io"
         # Slashes are stripped (path separator); dots inside names are
         # preserved for the .com / .json suffix UX. The resulting filename
@@ -1449,7 +1449,7 @@ class TestOutboundRetry:
     errors with exponential backoff + jitter; permanent errors (auth,
     client errors) bubble up on the first attempt.
 
-    Pattern lifted from PR #14965 by @ArnarValur.
+    Pattern lifted from PR #14965.
     """
 
     @pytest.mark.asyncio
@@ -1490,7 +1490,7 @@ class TestFormatMessage:
     unmatched syntax, mixed bold+italic), and the Unicode strip's
     interaction with composite emoji.
 
-    Pattern lifted from PR #14965 by @ArnarValur.
+    Pattern lifted from PR #14965.
     """
 
     def test_bold_double_asterisk_to_single(self):

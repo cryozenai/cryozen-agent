@@ -214,7 +214,7 @@ class TestResolveApproval:
         }
 
         with patch("tools.approval.resolve_gateway_approval", return_value=1) as mock_resolve:
-            await adapter._resolve_approval(1, "once", "Norbert", open_id="ou_user1", chat_id="oc_12345")
+            await adapter._resolve_approval(1, "once", "Alice", open_id="ou_user1", chat_id="oc_12345")
 
         mock_resolve.assert_called_once_with("agent:main:feishu:group:oc_12345", "once")
         assert 1 not in adapter._approval_state
@@ -474,7 +474,7 @@ class TestCardActionCallbackResponse:
         assert 8 in adapter._update_prompt_state
         mock_submit.assert_not_called()
 
-    # Scenarios below are adapted from @liuliu0223's regression suite in
+    # Scenarios below are adapted from the regression suite in
     # #99021: DM paired-mode (empty allowlist) positive paths, fail-closed
     # rejection of missing operator identity, and forwarded-card rejection.
 

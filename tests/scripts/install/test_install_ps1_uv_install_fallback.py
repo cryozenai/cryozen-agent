@@ -10,7 +10,7 @@ Issue #69216: Windows installs died with only the generic message
    identified in #69366).
 2. There was exactly one install source, ``astral.sh``.  Corporate proxies
    commonly block astral.sh while the byte-identical installer published at
-   GitHub releases downloads fine (diagnosed by @gakugaku on #69216).
+   GitHub releases downloads fine (diagnosed on #69216).
 
 The fix installs a three-rung ladder inside ``Install-Uv``:
 

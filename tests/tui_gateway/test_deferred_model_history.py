@@ -1,4 +1,4 @@
-"""Bounded Desktop hydration salvaged from Benjamin Brumbaugh's PR #106838."""
+"""Bounded Desktop hydration salvaged from PR #106838."""
 
 import threading
 

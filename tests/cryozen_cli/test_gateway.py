@@ -425,7 +425,7 @@ def test_gateway_install_noninteractive_skips_legacy_unit_prompt(monkeypatch, tm
     """In non-TTY, the legacy-unit removal prompt in systemd_install is skipped.
 
     Covers the second hidden prompt that --start-now/--start-on-login do not
-    guard. Originally contributed via PR #42124 (kyssta-exe).
+    guard. Originally contributed via PR #42124.
     """
     monkeypatch.setattr(gateway, "has_legacy_cryozen_units", lambda: True)
 

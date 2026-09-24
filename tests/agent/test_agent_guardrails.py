@@ -1,6 +1,6 @@
 """Unit tests for AIAgent pre/post-LLM-call guardrails.
 
-Covers three static methods on AIAgent (inspired by PR #1321 — @alireza78a):
+Covers three static methods on AIAgent (inspired by PR #1321):
   - _sanitize_api_messages()    — Phase 1: orphaned tool pair repair
   - _cap_delegate_task_calls()  — Phase 2a: subagent concurrency limit
   - _deduplicate_tool_calls()   — Phase 2b: identical call deduplication

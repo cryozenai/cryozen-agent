@@ -16,8 +16,8 @@
  * Those callers get `null` and the pane keeps explaining the mismatch instead
  * of failing silently — see `isRemoteLoopbackUrl` in preview-pane.tsx.
  *
- * The lease/capability shape here is adapted from tuancookiez-hub's #87243,
- * which solved the same problem for Windows SSH previews.
+ * The lease/capability shape here follows #87243, which solved the same
+ * problem for Windows SSH previews.
  */
 
 /** Hosts that mean "the machine this resolved on" — the whole problem class. */

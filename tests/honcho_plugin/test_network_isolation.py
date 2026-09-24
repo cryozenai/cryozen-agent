@@ -21,7 +21,7 @@ from plugins.memory.honcho.session import HonchoSession, HonchoSessionManager
 def _session(**kw) -> HonchoSession:
     return HonchoSession(
         key=kw.get("key", "cli:isolation"),
-        user_peer_id="eri",
+        user_peer_id="ann",
         assistant_peer_id="cryozen",
         honcho_session_id=kw.get("sid", "cli-isolation"),
         messages=kw.get("messages", []),

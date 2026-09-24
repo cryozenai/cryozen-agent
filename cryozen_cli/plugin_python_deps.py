@@ -12,7 +12,7 @@ touching the live venv or disabling anything already installed. After an update,
 re-applied; if core moved and the union no longer resolves, non-memory plugins are dropped first and
 disabled with a loud warning, because a Cryozen that boots without memory reads as data loss.
 
-Lifted in shape from ethernet8023's ``pm/plugin_declarations.py`` / ``pm/workspace.py`` (#102765).
+Lifted in shape from the ``pm/plugin_declarations.py`` / ``pm/workspace.py`` (#102765).
 """
 
 from __future__ import annotations

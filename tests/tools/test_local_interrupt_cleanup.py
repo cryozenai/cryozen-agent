@@ -185,7 +185,7 @@ def test_wait_for_process_kills_subprocess_on_keyboardinterrupt():
         assert _wait_for_pgid_exit(pgid), (
             f"subprocess group {pgid} is STILL ALIVE after worker received "
             f"KeyboardInterrupt — orphan bug regressed.  This is the "
-            f"sleep-300-survives-SIGTERM scenario from Physikal's Apr 2026 "
+            f"sleep-300-survives-SIGTERM scenario from the original "
             f"report.  See tools/environments/base.py _wait_for_process "
             f"except-block.\n{_process_group_snapshot(pgid)}"
         )

@@ -34,7 +34,7 @@ from plugins.memory.honcho.session_peers import HonchoPeerUnresolvedError
 def _make_session(**kwargs) -> HonchoSession:
     return HonchoSession(
         key=kwargs.get("key", "cli:test"),
-        user_peer_id=kwargs.get("user_peer_id", "eri"),
+        user_peer_id=kwargs.get("user_peer_id", "ann"),
         assistant_peer_id=kwargs.get("assistant_peer_id", "cryozen"),
         honcho_session_id=kwargs.get("honcho_session_id", "cli-test"),
         messages=kwargs.get("messages", []),

@@ -50,7 +50,7 @@ cryozen [global-options] <command> [subcommand/options]
 | `cryozen whatsapp` | Configure and pair the WhatsApp bridge. |
 | `cryozen whatsapp-cloud` | Configure the official Meta WhatsApp Business Cloud API adapter (Business account + public webhook required). Distinct from `cryozen whatsapp` (Baileys personal-account bridge). |
 | `cryozen slack` | Slack helpers (currently: generate the app manifest with every command as a native slash). |
-| `cryozen auth` | Manage credentials — add, list, remove, reset, status, logout. Handles OAuth flows for Codex, Anthropic, xAI, and other OAuth-backed providers. |
+| `cryozen auth` | Manage credentials — add, list, remove, reset, status, logout. Handles OAuth flows for Codex, xAI, and other OAuth-backed providers. |
 | `cryozen login` / `logout` | **Deprecated** — use `cryozen auth` instead. |
 | `cryozen send` | Send a one-shot message to a configured messaging platform (Telegram, Discord, Slack, Signal, SMS, …). Useful from shell scripts, cron jobs, CI hooks, and monitoring daemons — no agent loop, no LLM. |
 | `cryozen peer` | Register peer Cryozen gateways on other machines and DM their agents' canonical Bot Chats (`cryozen peer dm <peer>[/<agent>] "…"`). The transport behind cross-machine bot-to-bot messaging. |
@@ -267,7 +267,7 @@ cryozen model
 
 Use this when you want to:
 - **add a new provider** (OpenRouter, Anthropic, Copilot, DeepSeek, custom, etc.)
-- log into OAuth-backed providers (Anthropic, Copilot, Codex, xAI)
+- log into OAuth-backed providers (Copilot, Codex, xAI)
 - enter or update API keys
 - pick from provider-specific model lists
 - configure a custom/self-hosted endpoint
@@ -653,7 +653,7 @@ cryozen auth list                                         # Show all pools
 cryozen auth list openrouter                              # Show specific provider
 cryozen auth add openrouter --api-key sk-or-v1-xxx        # Add API key
 cryozen auth add openrouter --type oauth                  # Browser login (OpenRouter PKCE) mints a key for you
-cryozen auth add anthropic --type oauth                   # Add OAuth credential
+cryozen auth add anthropic --type api-key                 # Add an Anthropic API key (prompted securely)
 cryozen auth add openai-codex --type oauth --priority 0   # Add an account and try it first
 cryozen auth add openai-codex --browser                   # Codex: browser auth-code + PKCE on localhost:1455 instead of device code
 cryozen auth remove openrouter 2                          # Remove by index
@@ -671,7 +671,7 @@ Subcommands: `add`, `list`, `remove`, `reset`, `priority`, `refresh`, `status`, 
 ## `cryozen usage`
 
 The account-limits block of the `/usage` slash command — Codex 5-hour / weekly windows, plan and banked
-resets; Anthropic OAuth windows; OpenRouter credits — without starting a session, so shell scripts and cron
+resets; OpenRouter credits — without starting a session, so shell scripts and cron
 jobs can read it.
 
 ```bash

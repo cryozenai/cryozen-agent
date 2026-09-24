@@ -1,6 +1,6 @@
 """Transaction-boundary regression for Windows venv recreation (#83149).
 
-Review finding on PR #83194 (egilewski): the rollback source (the parked
+Review finding on PR #83194: the rollback source (the parked
 previous venv) was deleted as soon as ``Install-Venv`` saw a working
 interpreter in the replacement — but ``Install-Dependencies`` is a separate,
 later stage (a separate *process* under the stage-per-process bootstrap) and

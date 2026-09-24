@@ -7,7 +7,7 @@ succeeds: advancing first and running the wake best-effort afterwards let a
 failed wake permanently lose the event — the exact bug class the non-push
 (api_server) self-post branch already guards against with rewind/retry.
 
-Residual insight extracted from closed PR #84191 (@MaximCrabbe).
+Residual insight extracted from closed PR #84191.
 """
 
 import asyncio

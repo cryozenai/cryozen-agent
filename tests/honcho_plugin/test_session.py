@@ -540,8 +540,8 @@ class TestBaseContextSummary:
         provider = HonchoMemoryProvider()
         ctx = {
             "summary": "Testing Honcho tools and dialectic depth.",
-            "representation": "Eri is a developer.",
-            "card": "Name: Eri Barrett",
+            "representation": "Ann is a developer.",
+            "card": "Name: Ann Example",
         }
         formatted = provider._format_first_turn_context(ctx)
         assert "## Session Summary" in formatted
@@ -1029,7 +1029,7 @@ class TestDialecticLifecycleSmoke:
         # Program the dialectic responses in the exact order they'll be requested.
         # An extra or missing call fails the test — strong smoke signal.
         responses = iter([
-            "prewarm: user is eri, works on cryozen",      # session-start prewarm
+            "prewarm: user is ann, works on cryozen",      # session-start prewarm
             "cadence fire: long query synthesis",         # turn 4 queue_prefetch
             "",                                           # turn 7 fire: silent failure
             "retry success: fresh synthesis",             # turn 8 queue_prefetch retry
@@ -1386,12 +1386,12 @@ class TestInjectionAuditLog:
         provider._injection_log_path = str(tmp_path / "nested" / "injection.log")
         provider._turn_count = 3
         provider._session_key = "cli:test"
-        assert provider._log_injection("injected", "## User Peer Card\nName: Eri") == "## User Peer Card\nName: Eri"
+        assert provider._log_injection("injected", "## User Peer Card\nName: Ann") == "## User Peer Card\nName: Ann"
         assert provider._log_injection("trivial-prompt") == ""
         records = [json.loads(line) for line in (tmp_path / "nested" / "injection.log").read_text().splitlines()]
         assert [r["reason"] for r in records] == ["injected", "trivial-prompt"]
         assert records[0]["turn"] == 3 and records[0]["session_key"] == "cli:test"
-        assert records[0]["bytes"] == len("## User Peer Card\nName: Eri".encode()) and records[1]["bytes"] == 0
+        assert records[0]["bytes"] == len("## User Peer Card\nName: Ann".encode()) and records[1]["bytes"] == 0
 
     def test_unwritable_path_never_raises(self, tmp_path):
         provider = _provider_with_raw({})

@@ -1,6 +1,6 @@
 """Regression: the timeout watchdog must not release the client's FDs.
 
-Salvaged from PR #72260 (@necoweb3 / dsad), adapted to the re-armable
+Salvaged from PR #72260, adapted to the re-armable
 no-progress watchdog introduced in PR #99660.
 
 ``close()`` from a thread that does not own the in-flight httpx connection

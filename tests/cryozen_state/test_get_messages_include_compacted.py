@@ -174,7 +174,7 @@ class TestDisplayDedupe:
 
     @pytest.mark.parametrize("read_only", [False, True])
     def test_legacy_page_retains_only_bounded_payloads(self, tmp_path, read_only):
-        """Benjamin Brumbaugh's PR #106838: backfill and fallback retain identities, not payloads."""
+        """PR #106838: backfill and fallback retain identities, not payloads."""
         path = tmp_path / "legacy-large.db"
         db = SessionDB(path)
         sid = "legacy-large"

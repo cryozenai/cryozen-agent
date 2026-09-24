@@ -8,7 +8,7 @@ import pytest
 import gateway.hosted_room_replicas as replicas
 import gateway.hosted_rooms as rooms
 
-USER = {"kind": "user", "id": "tek"}
+USER = {"kind": "user", "id": "dan"}
 MEMBERS = [{"kind": "bot", "id": "planner"}, {"kind": "bot", "id": "coder"}]
 
 AUTH_A = "install:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"

@@ -1752,13 +1752,13 @@ class TestEnsureUserSystemdEnv:
 class TestPreflightUserSystemd:
     """Tests for _preflight_user_systemd() — D-Bus reachability before systemctl --user.
 
-    Covers issue #5130 / Rick's RHEL 9.6 SSH scenario: setup tries to start the
+    Covers issue #5130 / the RHEL 9.6 SSH scenario: setup tries to start the
     gateway via ``systemctl --user start`` in a shell with no user D-Bus session,
     which previously failed with a raw ``CalledProcessError`` and no remediation.
     """
 
     def test_raises_when_linger_disabled_and_loginctl_denied(self, monkeypatch):
-        """Rick's scenario: no D-Bus, no linger, non-root SSH → clear error."""
+        """Scenario: no D-Bus, no linger, non-root SSH → clear error."""
         monkeypatch.setattr(
             gateway_cli, "_user_dbus_socket_path",
             lambda: type("P", (), {"exists": lambda self: False})(),
@@ -2077,7 +2077,7 @@ class TestDockerAwareGateway:
 class TestLegacyCryozenUnitDetection:
     """Tests for _find_legacy_cryozen_units / has_legacy_cryozen_units.
 
-    These guard against the scenario that tripped Luis in April 2026: an
+    These guard against the scenario reported in April 2026: an
     older install left a ``cryozen.service`` unit behind when the service was
     renamed to ``cryozen-gateway.service``. After PR #5646 (signal recovery
     via systemd), the two services began SIGTERM-flapping over the same
@@ -2207,7 +2207,7 @@ class TestRemoveLegacyCryozenUnits:
     def test_does_not_touch_profile_units_during_migration(
         self, tmp_path, monkeypatch, capsys
     ):
-        """Teknium's constraint: profile units (cryozen-gateway-coder.service)
+        """Constraint: profile units (cryozen-gateway-coder.service)
         must survive a migration call, even if we somehow include them in the
         search dir."""
         user_dir, _, _ = self._setup(tmp_path, monkeypatch, as_root=True)

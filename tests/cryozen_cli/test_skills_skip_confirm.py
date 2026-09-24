@@ -6,7 +6,7 @@ Slash commands always skip confirmation (input() hangs in TUI).
 Cache invalidation is deferred by default; --now opts into immediate
 invalidation (at the cost of breaking prompt cache mid-session).
 
-Based on PR #1595 by 333Alden333 (salvaged).
+Based on PR #1595 (salvaged).
 Updated for PR #3586 (cache-aware install/uninstall).
 """
 

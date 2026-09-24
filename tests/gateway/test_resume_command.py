@@ -819,7 +819,7 @@ class TestHandleSessionsCommand:
 
     @pytest.mark.asyncio
     async def test_resume_persisted_fallback_fails_closed_on_user_id_alt(self, tmp_path):
-        """egilewski/CodeRabbit probe: Signal/Feishu key the session participant
+        """CodeRabbit probe: Signal/Feishu key the session participant
         on ``user_id_alt or user_id`` (build_session_key), but the sessions table
         stores only user_id. So a persisted per-user row that a caller shares the
         user_id of — but NOT the user_id_alt — maps to a DIFFERENT live session

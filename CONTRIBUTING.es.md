@@ -394,7 +394,7 @@ Todo skill nuevo o modernizado — incluido, opcional o contribuido — debe cum
 
 3. **El campo `platforms:` auditado contra las importaciones reales del script.** Las habilidades que usen primitivos solo de POSIX deben declarar sus plataformas soportadas.
 
-4. **`author` da crédito primero al colaborador humano.**
+4. **`author` es exactamente `Cryozen`.** Toda habilidad incluida usa `author: Cryozen`, sin nombres personales ni usuarios de GitHub.
 
 5. **El cuerpo de SKILL.md usa el orden moderno de secciones:** título, intro de 2-3 oraciones, luego: `## Cuándo Usar`, `## Prerequisitos`, `## Cómo Ejecutar`, `## Referencia Rápida`, `## Procedimiento`, `## Problemas Conocidos`, `## Verificación`.
 

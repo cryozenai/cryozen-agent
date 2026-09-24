@@ -955,7 +955,7 @@ def _restart_launchd_gateway_after_update(*, supervision_verify: bool = True) ->
     command. Returns ``(restarted_labels, failed_labels)``; with ``supervision_verify``
     success also requires a fresh supervised PID ("the call returned" is not "supervised").
 
-    74973 (salvage #75021 by @jeff-mettel): the restart used to be gated on ``launchctl list <label>``
+    74973 (#75021): the restart used to be gated on ``launchctl list <label>``
     exiting 0. A *booted-out* job — plist present, definition deregistered from launchd (crashed helper,
     manual bootout, failed prior update) — fails that check, so the whole branch silently skipped: no
     restart, no message, ``KeepAlive`` unable to revive a definition launchd no longer knows, and the update

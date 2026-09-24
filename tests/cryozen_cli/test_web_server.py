@@ -965,7 +965,7 @@ class TestWebServerEndpoints:
                     "mode": "local_external",
                     "api_url": "http://localhost:8888",
                     "api_key": "hs-test-key",
-                    "bank_id": "ben-bank",
+                    "bank_id": "bob-bank",
                     "recall_budget": "high",
                 }
             },
@@ -980,7 +980,7 @@ class TestWebServerEndpoints:
         provider_config = json.loads(config_path.read_text(encoding="utf-8"))
         assert provider_config["mode"] == "local_external"
         assert provider_config["api_url"] == "http://localhost:8888"
-        assert provider_config["bank_id"] == "ben-bank"
+        assert provider_config["bank_id"] == "bob-bank"
         assert provider_config["recall_budget"] == "high"
         assert "api_key" not in provider_config
 
@@ -1051,7 +1051,7 @@ class TestWebServerEndpoints:
                     "baseUrl": "https://honcho.example.dev",
                     "environment": "local",
                     "workspace": "myws",
-                    "peerName": "eri",
+                    "peerName": "ann",
                     "aiPeer": "cryozen",
                     "sessionStrategy": "per-repo",
                 }
@@ -1067,7 +1067,7 @@ class TestWebServerEndpoints:
         # baseUrl is root-scoped; the rest live in the active host block.
         assert cfg["baseUrl"] == "https://honcho.example.dev"
         assert cfg["hosts"]["cryozen"]["workspace"] == "myws"
-        assert cfg["hosts"]["cryozen"]["peerName"] == "eri"
+        assert cfg["hosts"]["cryozen"]["peerName"] == "ann"
         assert cfg["hosts"]["cryozen"]["environment"] == "local"
         assert cfg["hosts"]["cryozen"]["sessionStrategy"] == "per-repo"
         # The key lands where the client reads first; GET keeps it write-only.

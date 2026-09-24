@@ -1377,7 +1377,7 @@ class TelegramAdapter(BasePlatformAdapter):
 
         The rich endpoint is reserved for constructs where raw markdown materially improves output: pipe
         tables (MarkdownV2 has no table syntax and rewrites them into bullet lists), GFM task lists,
-        collapsible ``<details>`` blocks, and block math. Adapted from #45995 (@YonganZhang).
+        collapsible ``<details>`` blocks, and block math. Adapted from #45995.
         """
         if not content:
             return False
@@ -3326,7 +3326,7 @@ class TelegramAdapter(BasePlatformAdapter):
             current_task)
         awaitable_tasks = [t for t in pending_tasks if asyncio.isfuture(t) or asyncio.iscoroutine(t)]
         # Hold-queue redispatch must be cancellable+awaitable on teardown so it cannot dispatch
-        # handle_message into a torn-down session (same lifecycle rule teknium called out on #72037 for
+        # handle_message into a torn-down session (same lifecycle rule as #72037 for
         # shielded flush dispatch).
         for task in pending_tasks:
             task.cancel()

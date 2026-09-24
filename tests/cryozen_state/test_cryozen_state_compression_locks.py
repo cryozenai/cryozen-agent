@@ -2,7 +2,7 @@
 
 These cover the atomic per-session lock that prevents two compression
 paths from racing on the same ``session_id`` and producing orphan child
-sessions (Damien's "parent → two orphan children" repro shape, see
+sessions (the "parent → two orphan children" repro shape, see
 ``tests/agent/test_compression_concurrent_fork.py`` for the
 behavioural regression test).
 
@@ -198,7 +198,7 @@ def test_unstructured_holder_waits_for_ttl(
 
 
 def test_concurrent_acquire_only_one_winner(db: SessionDB) -> None:
-    """Damien's race shape: N threads call acquire on the same session_id;
+    """The reported race shape: N threads call acquire on the same session_id;
     exactly one must win, the rest must be cleanly rejected."""
     results: list[bool] = []
     barrier = threading.Barrier(8)

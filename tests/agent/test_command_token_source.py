@@ -354,7 +354,7 @@ class TestExplicitCallableSurvivesCustomResolution:
     main runtime's callable credential via ``_try_main_provider_route``) and every
     resolution branch must pass it through *uncalled*: ``.strip()`` on it raised
     AttributeError (#88667); ``str()`` sent the object repr as the bearer.
-    Adapted from SiaoZeng's #107344.
+    Adapted from #107344.
     """
 
     TOK = CommandTokenSource("printf minted-token", "dbx")

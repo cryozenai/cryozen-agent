@@ -7,7 +7,7 @@ actually displayed. cua-driver's `get_desktop_state` does a real composited
 full-screen grab; the `screen`/`fullscreen`/`all` sentinels now route there,
 while `desktop` keeps the shell-window lane (with clickable elements).
 
-Salvaged from @2ndNatureAI's PR #60081 (enumeration-hang bypass) and extended
+Salvaged from PR #60081 (enumeration-hang bypass) and extended
 with the sentinel split + no-elements guidance note.
 """
 

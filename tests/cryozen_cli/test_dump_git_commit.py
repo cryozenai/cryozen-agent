@@ -32,7 +32,7 @@ def test_get_git_commit_uses_live_git_when_available(tmp_path):
 def test_get_git_commit_output_format_identical_between_sources(tmp_path):
     """Regression guard: live-git and baked-SHA outputs share the same shape.
 
-    Ben explicitly asked for identical output between Docker and source installs
+    The requirement is identical output between Docker and source installs
     so support tooling that parses ``cryozen dump`` doesn't have to special-case
     container builds.  Both paths must return a bare 8-char SHA — no prefix,
     no suffix, no annotation.

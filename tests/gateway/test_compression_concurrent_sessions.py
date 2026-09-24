@@ -179,7 +179,7 @@ def test_concurrent_compressions_same_session_serialize(tmp_path: Path) -> None:
     )
     assert rotated == 1, (
         f"Expected exactly one agent to rotate session_id, got {rotated}. "
-        "Both agents rotating produces a session fork (Damien's incident shape)."
+        "Both agents rotating produces a session fork (the reported incident shape)."
     )
 
     # The lock must be released so future compression on the NEW session_id works.

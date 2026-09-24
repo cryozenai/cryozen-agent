@@ -30,7 +30,7 @@ def _wire_event(message_type: str, **extra):
         "chat_id": "chan-1",
         "chat_type": "dm",
         "user_id": "u-1",
-        "user_name": "ben",
+        "user_name": "bob",
     }
     return {
         "text": "",

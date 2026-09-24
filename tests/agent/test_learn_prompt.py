@@ -24,7 +24,7 @@ class TestBuildLearnPrompt:
 
 
     def test_separates_sources_from_requirements(self):
-        # The reported bug (@GrenFX, Jun 2026): when a request leads with a
+        # The reported bug: when a request leads with a
         # path/URL, the agent fetched it and ignored the trailing prose. The
         # prompt must tell the agent the request can MIX sources and
         # requirements, and that prose after a source is authoring guidance to

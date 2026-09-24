@@ -20,7 +20,7 @@ tools):
   exact bytes are registered with the browser-result redaction boundary so
   no later browser tool call can echo them back to the model.
 
-Ported design from Merit-Systems/OpenInstinct (MIT): opaque-handle vault
+Ported design from Merit-Systems/OpenInstinct (MIT; see NOTICE): opaque-handle vault
 autofill (kernel-login-autofill.ts / fill_from_vault.ts).
 """
 

@@ -310,7 +310,7 @@ class TestBindFollowsPrecedence:
     session that the response chain or an explicit body id selected would
     rewrite THAT conversation's routing key to this request's header: the
     original conversation could no longer be recovered by its own key, and the
-    header key would recover it instead (@andrexibiza on #98811).
+    header key would recover it instead (#98811).
     """
 
     @staticmethod
@@ -607,7 +607,7 @@ def _stub_agent(adapter, session_id, seen):
 
     Replacing `_run_agent` itself cannot exercise its settlement block, which
     is where a caller-local name leaked in and raised `NameError` on every
-    opted-in bind while mocked tests stayed green (@andrexibiza on #98811).
+    opted-in bind while mocked tests stayed green (#98811).
     Stubbing one layer lower — `_create_agent` — leaves that block real.
     """
     agent = MagicMock()

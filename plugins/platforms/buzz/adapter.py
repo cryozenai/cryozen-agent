@@ -960,8 +960,8 @@ class BuzzAdapter(BasePlatformAdapter):
 
     # ── Inbound: WebSocket transport (NIP-42) — same _handle_event() as the poll loop ──────
 
-    # ── Inbound: WebSocket transport (NIP-42 authenticated) ────────────── Push transport contributed in PR
-    # #73636 by @ScaleLeanChris, adapted to dispatch through the same _handle_event() machinery as the poll
+    # ── Inbound: WebSocket transport (NIP-42 authenticated) ────────────── Push transport from PR
+    # #73636, adapted to dispatch through the same _handle_event() machinery as the poll
     # loop so de-dupe, mention gating, DM latching, and the allow-list behave identically on both
     # transports.
     def _websocket_url(self) -> str:

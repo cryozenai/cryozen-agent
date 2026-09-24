@@ -1,6 +1,6 @@
 """Host-wide singleton rendezvous: one lock + one record per ROLE per OS user.
 
-Multiplex-only (Teknium ruling): exactly ONE ``cryozen serve`` and ONE ``cryozen gateway run``
+Multiplex-only: exactly ONE ``cryozen serve`` and ONE ``cryozen gateway run``
 per host, each multiplexing every profile. The per-``CRYOZEN_HOME`` gateway lock/PID files
 (``gateway.status``) cannot express that — N profiles are N homes, so N processes each take
 their own flock and none of them ever sees the others. This module adds the missing layer:

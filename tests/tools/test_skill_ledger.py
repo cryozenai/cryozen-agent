@@ -4,7 +4,7 @@ Covers tracker #79686 P3: ledger entries on patch/edit/delete/archive, blob
 dedupe, single-entry rollback (incl. fail-closed safety capture), actor
 tagging, and the skills.ledger config gate.
 
-The first four tests are adapted from PR #50261 by @yu-xin-c (autonomous
+The first four tests are adapted from PR #50261 (autonomous
 skill history), reshaped for the all-actor JSONL ledger design.
 """
 
@@ -52,7 +52,7 @@ def _create(name="my-skill", content=VALID_SKILL_CONTENT):
 
 
 # ---------------------------------------------------------------------------
-# Adapted from PR #50261 (@yu-xin-c)
+# Adapted from PR #50261
 # ---------------------------------------------------------------------------
 
 

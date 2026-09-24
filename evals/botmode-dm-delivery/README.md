@@ -102,6 +102,6 @@ The first fixture attempt (`before.log`) used the wrong default row label; the
 actual Desktop label is Cryozen. No production failure is claimed for that attempt.
 Full cron directory: **1346 passed, 1 skipped across 116 files**; sibling mailbox,
 DM, gateway consumer and profile tests: **124 passed, 3 skipped across 4 files**.
-Credit @fangliquanflq's #104066 for the root-boundary diagnosis and anchoring fix;
+The root-boundary diagnosis and anchoring fix come from #104066;
 this combined branch reuses its already-resolved destination instead of repeating
 name resolution. No retry or receipt semantics change.

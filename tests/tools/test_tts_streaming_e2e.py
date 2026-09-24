@@ -1,6 +1,6 @@
 """End-to-end tests for streaming TTS providers. Gated on real API keys.
 
-Salvaged from PR #47588 (@Cdddo) and adapted to the current provider ABC
+Salvaged from PR #47588 and adapted to the current provider ABC
 (``StreamingTTSProvider(tts_config, section)``). These tests are SKIPPED by
 default — they only run when the relevant credential is present. They're
 useful for catching provider-API drift and verifying the integration

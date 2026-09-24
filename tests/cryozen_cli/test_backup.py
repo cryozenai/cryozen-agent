@@ -1564,7 +1564,7 @@ class TestQuickSnapshot:
 # ---------------------------------------------------------------------------
 
     # -- security: path traversal regression coverage -----------------------
-    # Per @egilewski audit on PR #9217: restore_quick_snapshot must reject
+    # Per the audit on PR #9217: restore_quick_snapshot must reject
     # malicious snapshot_id values (the directory selector) AND malicious
     # rel paths inside the manifest (the per-file selector). Both surfaces
     # need explicit regression tests because they validate independent

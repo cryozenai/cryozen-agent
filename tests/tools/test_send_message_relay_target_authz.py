@@ -202,7 +202,7 @@ def test_react_refuses_an_arbitrary_relay_target(relay_env):
 # ── B-1: the guard must authorize the RESOLVED destination ──────────────────
 #
 # Slack `@handle` / `U...` targets are internal PSEUDO-ids
-# (`user_name:ben`, `user:U...`) until `_resolve_slack_user_target` opens the
+# (`user_name:bob`, `user:U...`) until `_resolve_slack_user_target` opens the
 # DM and returns the real `D...` conversation. Provenances only ever hold
 # resolved ids, so authorizing the pseudo-id compares a handle against a set
 # of channel ids and refuses every Slack DM — an OUTAGE caused by a security
@@ -231,7 +231,7 @@ def slack_relay_env(tmp_path, monkeypatch):
                 "updated_at": None,
                 # The DM conversation id — what resolution produces, and the
                 # only form any provenance ever stores.
-                "platforms": {"slack": [{"id": SLACK_DM, "name": "ben", "type": "im"}]},
+                "platforms": {"slack": [{"id": SLACK_DM, "name": "bob", "type": "im"}]},
             }
         ),
         encoding="utf-8",
@@ -283,13 +283,13 @@ def _send_slack(target: str, sent, *, resolves_to: str | None = SLACK_DM):
 
 @pytest.mark.parametrize(
     "target",
-    [f"slack:@ben", f"slack:{SLACK_USER}", f"slack:<@{SLACK_USER}>"],
+    [f"slack:@bob", f"slack:{SLACK_USER}", f"slack:<@{SLACK_USER}>"],
 )
 def test_slack_user_targets_resolve_then_authorize(slack_relay_env, target):
     """An attested DM must SEND regardless of which alias names it.
 
     Fails if the guard runs before resolution: the pseudo-id
-    (`user_name:ben` / `user:U...`) is not in any provenance, so the send is
+    (`user_name:bob` / `user:U...`) is not in any provenance, so the send is
     refused and `sent` stays empty.
     """
     sent: list[str] = []

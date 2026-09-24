@@ -3,7 +3,7 @@
 Under a multiplexed profile turn, ``os.environ`` can hold another profile's
 value. ``get_env_value`` previously returned it before any scope check;
 its siblings (``get_env_value_prefer_dotenv``, ``gateway.config._getenv``)
-were already scope-aware. Salvaged premise from PR #67065 (@webtecnica),
+were already scope-aware. Salvaged premise from PR #67065,
 reimplemented to delegate policy fully to ``agent.secret_scope.get_secret``
 (the PR's own diff fell through to ``os.environ`` on a scoped miss,
 re-opening the leak it targeted).

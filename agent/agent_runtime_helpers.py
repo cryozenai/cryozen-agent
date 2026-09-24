@@ -2923,7 +2923,7 @@ def _dedupe_tool_call_ids(messages: List[Dict[str, Any]]) -> List[Dict[str, Any]
                 # Consume EVERY variant of the matched call; ids are re-armed by the next call reusing them.
                 # Consume the whole alias group so a SECOND result replaying any sibling spelling falls into
                 # the drop branch below — strict providers reject duplicate tool_call_ids with HTTP 400
-                # (#58327, #66974). Credit: #55436.
+                # (#58327, #66974). See #55436.
                 group_id = min(candidate_groups)
                 for variant in outstanding_groups.pop(group_id, frozenset()):
                     if outstanding.get(variant) == group_id:

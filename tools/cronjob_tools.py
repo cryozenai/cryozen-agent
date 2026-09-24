@@ -277,7 +277,7 @@ def _run_claimed_job(job: Dict[str, Any], extra_prompt: Optional[str] = None) ->
         # In-flight dedupe: the fire claim's TTL is routinely outlived by real jobs, so
         # register in the scheduler's shared running set (same guard the ticker uses;
         # also visible to the gateway shutdown drain).
-        # In-flight dedupe (idea from #53395 by @izumi0uu): the fire claim's TTL (300s) is routinely
+        # In-flight dedupe (idea from #53395): the fire claim's TTL (300s) is routinely
         # outlived by real jobs, so it alone cannot stop a manual run from double-firing a job the ticker
         # (or another manual run) is still executing.
         if not try_register_running_job(job_id):
@@ -293,7 +293,7 @@ def _run_claimed_job(job: Dict[str, Any], extra_prompt: Optional[str] = None) ->
         # Manual runs invoked from a gateway agent execute outside the scheduler ticker, but they still
         # share the process with the live platform adapters. Calling those clients from run_one_job's
         # standalone asyncio.run() loop raises errors like "Timeout context manager should be used inside a
-        # task" and can break encrypted Matrix delivery (#61495 — salvaged from #63586 by @Fly-onlyone).
+        # task" and can break encrypted Matrix delivery (#61495, from #63586).
         runner = runner_ref() if callable(runner_ref) else None
         adapters = getattr(runner, "adapters", None) if runner is not None else None
         gateway_loop = getattr(runner, "_gateway_loop", None) if runner is not None else None

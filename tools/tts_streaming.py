@@ -280,7 +280,7 @@ class OpenAIStreamer(StreamingTTSProvider):
 class GeminiStreamer(StreamingTTSProvider):
     """Gemini ``streamGenerateContent?alt=sse`` → SSE feed of base64 PCM chunks (24 kHz), bounded streamed body.
 
-    Salvaged from PR #47588 (@Cdddo) and rebased onto the post-campaign infrastructure: credentials via the
+    From PR #47588, rebased onto the post-campaign infrastructure: credentials via the
     provider-secret resolver, requests (not httpx) with a bounded streamed body, and main's provider ABC.
     """
 
@@ -340,7 +340,7 @@ class XAIStreamer(StreamingTTSProvider):
     sync path. ``_collect_async`` bridges the async WS loop to the sync iterator contract (test
     seam).
 
-    Salvaged from PR #47588 (@Cdddo): xAI's chunked TTS API is WebSocket-only (``wss://api.x.ai/v1/tts``).
+    From PR #47588: xAI's chunked TTS API is WebSocket-only (``wss://api.x.ai/v1/tts``).
     """
 
     @staticmethod

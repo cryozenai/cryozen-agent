@@ -1,7 +1,7 @@
 """Tests for the github merged skill (formerly six github-* skills).
 
-The issue-to-pr workflow (originally the github-issue-to-pr skill,
-author benbarclay) now lives complete in references/issue-to-pr.md of the
+The issue-to-pr workflow (originally the github-issue-to-pr skill) now
+lives complete in references/issue-to-pr.md of the
 merged software-development/github skill. Frontmatter contracts apply to
 the merged SKILL.md; the content pins that guarded the issue-to-pr
 disciplines now check the reference body.

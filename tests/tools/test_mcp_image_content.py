@@ -6,8 +6,8 @@ MCP tool results may include ``ImageContent`` blocks (screenshots from
 Playwright / Blockbench / Puppeteer / any server that returns renders).
 The tool result handler in ``tools/mcp_tool.py`` used to iterate content
 blocks looking only for ``block.text`` — image blocks were silently dropped
-and the agent saw an empty result. Distilled from @c3115644151's PR #17915
-and @gnanirahulnutakki's PR #10848 (both too stale to cherry-pick); this
+and the agent saw an empty result. Distilled from PR #17915
+and PR #10848 (both too stale to cherry-pick); this
 test file locks in #10848's approach of plumbing the bytes through
 Cryozen' existing ``cache_image_from_bytes`` so a ``MEDIA:<path>`` tag
 goes back to the agent and through to messaging adapters that render

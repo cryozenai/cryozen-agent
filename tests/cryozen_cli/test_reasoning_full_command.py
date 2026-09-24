@@ -1,7 +1,7 @@
 """Tests for the CLI `/reasoning full` / `/reasoning clamp` recap toggle.
 
 The post-response "Reasoning" recap box clamps long thinking to the first
-10 lines. `/reasoning full` opts into uncapped display (Taelin's "show all
+10 lines. `/reasoning full` opts into uncapped display (the "show all
 thinking tokens" ask); `/reasoning clamp` restores the 10-line collapse.
 These assert the toggle sets the instance flag, persists to config.yaml,
 and that the clamp gate honours the flag.

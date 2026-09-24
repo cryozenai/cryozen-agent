@@ -745,7 +745,7 @@ def try_register_running_job(job_id: str) -> bool:
     This is the single dedupe owner shared by the ticker's ``_submit_with_guard`` and manual runs
     (``tools/cronjob_tools``): the fire claim alone cannot prevent a double-fire because its TTL (300s) is
     routinely outlived by real jobs, after which a manual ``cronjob(action='run')`` would claim successfully
-    and run the same job concurrently (idea from #53395 by @izumi0uu).
+    and run the same job concurrently (idea from #53395).
     Registration also makes the run visible to ``get_running_job_ids`` (the gateway shutdown drain, #60432)
     and ``mark_running_jobs_interrupted``. Dedupe is per PROFILE: the key carries the active cron
     scope's home, so one multiplexing process never treats two profiles' same-named jobs as one.

@@ -1,6 +1,6 @@
 """Defer never-started cron outputs behind unsupported Bot Chat owners.
 
-Inspired by 686f6c61's queue proposal (#100319). Unlike retrying failed CLI
+Inspired by the queue proposal in #100319. Unlike retrying failed CLI
 turns, only pending requests are eligible: a persisted claim never expires.
 """
 from __future__ import annotations

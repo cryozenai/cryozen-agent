@@ -71,7 +71,7 @@ def _seed_board(slug: str = "alpha") -> dict[str, str]:
             conn, title="worktree task", assignee="coder",
             workspace_kind="worktree", workspace_path="/exporter/repo",
         )
-        kb.add_comment(conn, ids["scratch"], "brooklyn", "a comment")
+        kb.add_comment(conn, ids["scratch"], "testuser", "a comment")
         kb.link_tasks(conn, ids["scratch"], ids["worktree"])
         kb.store_attachment_bytes(
             conn, ids["scratch"], "notes.txt", b"hello attachment", board=slug

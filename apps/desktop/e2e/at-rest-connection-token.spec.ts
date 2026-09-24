@@ -69,9 +69,8 @@
  *   git merge-base --is-ancestor 51c68d4ab1a9e3c62fb1048fccb84144c409f0e7 HEAD  -> 0 (IS an ancestor)
  *   git log -S 'Fall through to plaintext' upstream/main -- apps/desktop        -> (no commits)
  *
- * `d3d177283` exists only on `upstream/bb/gui-mainmerge-tmp`,
- * `brooklyn/gui-installer-prereqs`, and the `desktop-pr20059-installers`
- * pre-release tag. Mainline NEVER shipped a code path that wrote a plaintext
+ * `d3d177283` exists only on two unmerged feature branches and the
+ * `desktop-pr20059-installers` pre-release tag. Mainline NEVER shipped a code path that wrote a plaintext
  * gateway token: `51c68d4ab` ("Add Cryozen desktop app (#20059)"), the commit
  * that brought the desktop app to mainline, already contained the strict
  * throw ("Secure token storage is unavailable, …") in `hardening.cjs`.

@@ -869,7 +869,7 @@ DEFAULT_CONFIG = {
         "focus_saved_tool_progress": "all",
         "skin": "default",
         # UI language for static messages (approval prompts, some gateway slash replies); not agent
-        # responses/logs/tool outputs. en, zh, ja, de, es, fr, tr, uk; unknown → en.
+        # responses/logs/tool outputs. see agent/i18n.py SUPPORTED_LANGUAGES; unknown → en.
         "language": "en",
         # TUI busy indicator: kaomoji | emoji | unicode (braille) | ascii. `/indicator <style>`.
         "tui_status_indicator": "kaomoji",

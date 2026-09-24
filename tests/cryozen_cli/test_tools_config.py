@@ -129,7 +129,7 @@ def test_get_platform_tools_homeassistant_toolset_enabled_for_cron_when_hass_tok
     shouldn't also strip HA from platforms (like cron) that run through
     _get_platform_tools without an explicit saved toolset list.
 
-    Regression guard for Norbert's HA cron breakage after #14798 made cron
+    Regression guard for the HA cron breakage after #14798 made cron
     honor per-platform tool config.
     """
     monkeypatch.setenv("HASS_TOKEN", "fake-test-token")

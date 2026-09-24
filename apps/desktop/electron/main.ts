@@ -12056,7 +12056,7 @@ async function stopRegistryConnectionBackends(connectionId) {
 // It also reports whether a prompt turn currently leases the backend: a
 // foreground dial that must retire a resident skips leased ones early. That
 // flag is an optimisation, never the proof — the backend probe is (see
-// pool-retire.ts). Shape from #104871 by @bounce12340.
+// pool-retire.ts). Shape from #104871.
 function touchPoolBackend(profile, options: { activeTurn?: boolean } = {}) {
   for (const key of poolTouchKeys(profile)) {
     const entry = backendPool.get(key)
@@ -12353,7 +12353,7 @@ async function runPoolBackendStart(
   // backend (remote-primary desktop asked for a forced-local child) rejects
   // here, and logging "Starting" first left an orphaned line with no READY
   // and no exit — the exact undiagnosable burst signature in remote-gateway
-  // user bundles (Aug 2026, Dash's report).
+  // user bundles.
   assertLocalProfileCanStart(profile, profileDeletionGate, key =>
     directoryExists(path.join(CRYOZEN_HOME, 'profiles', key))
   )
@@ -14890,7 +14890,7 @@ function createWindow() {
         mainWindow.webContents.reload()
       },
       onCrashLoopSuppressed: details => {
-        // #38216 renderer flavor (same recovery as #56726, credit @Sahil-SS9):
+        // #38216 renderer flavor (same recovery as #56726):
         // a deterministic Windows renderer crash loop with the sandbox
         // breakpoint signature gets one --no-sandbox relaunch instead of a
         // dead window. Gated on the exit code so unrelated crash loops don't

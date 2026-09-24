@@ -2,7 +2,7 @@
 
 Two scenarios for _agent_home's resolution order (#86313 post-merge findings):
 
-1. MULTIPLEX INVERSION (@kshitijk4poor): the messaging gateway hands every
+1. MULTIPLEX INVERSION: the messaging gateway hands every
    agent the shared launch-home state.db but binds the profile home per turn
    via the CRYOZEN_HOME ContextVar (copy_context into the worker). A bound
    override must WIN over the db-derived launch home, else the shared-db
@@ -11,7 +11,7 @@ Two scenarios for _agent_home's resolution order (#86313 post-merge findings):
 2. BARE THREAD (the original #86313 fix): no override bound — the db-derived
    home must still win over ambient env resolution.
 
-Plus the full-prompt wiring test (@helix4u): build_system_prompt_parts on a
+Plus the full-prompt wiring test: build_system_prompt_parts on a
 bare thread with the bot's session DB must produce a prompt whose identity
 (SOUL.md), skills block, and profile line ALL belong to the bot — reverting
 any single call-site wire breaks this test.
@@ -154,7 +154,7 @@ def test_full_prompt_scoped_to_bot_on_bare_thread(tmp_path, monkeypatch):
 
 def test_plugin_session_info_profile_from_agent_home(tmp_path, monkeypatch):
     """Plugin prompt metadata must carry the agent's own profile name, not the
-    ambient one (@helix4u's plugin half)."""
+    ambient one (the plugin half)."""
     from agent import system_prompt
 
     root = tmp_path / "root"

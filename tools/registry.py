@@ -763,8 +763,8 @@ class ToolRegistry:
                 # the exact module: a submodule's handler is still the package's to remove.
                 # A handler defined in ``cryozen_plugins.pkg.handlers`` is still owned by the
                 # ``cryozen_plugins.pkg`` package — exact string equality would wrongly block root-module
-                # cleanup code from removing tools registered by a submodule of the same plugin (egilewski
-                # review on #55840).
+                # cleanup code from removing tools registered by a submodule of the same plugin (review
+                # on #55840).
                 same_plugin = bool(owner and caller_owner == owner)
                 if (
                     caller_owner is not None

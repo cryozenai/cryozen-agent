@@ -5,7 +5,7 @@
 ; click Install, wait for the install to finish, click Launch, and wait for
 ; the real Cryozen.exe (Electron desktop) window to appear.
 ;
-; Adapted from @ethernet8023's e2e/windows/install-cryozen-desktop.ahk
+; Adapted from e2e/windows/install-cryozen-desktop.ahk
 ; (PR #68183) -- same ImageSearch approach; the install-button template was
 ; re-captured from a live CI frame (the #68183 templates predated the
 ; installer UI restyle to the "[ INSTALL ]" bracket look and never matched).

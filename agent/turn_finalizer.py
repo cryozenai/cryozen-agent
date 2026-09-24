@@ -347,8 +347,8 @@ def _append_file_mutation_footer(agent, final_response, logger):
     """Append the verifier advisory when ``write_file`` / ``patch`` calls failed and were
     never superseded by a successful write to the same path (surfaces over-claiming)."""
     try:
-        # File-mutation verifier footer. This catches the specific case — reported by Ben Eng
-        # (#15524-adjacent) — where a model issues a batch of parallel patches, half of them fail with
+        # File-mutation verifier footer. This catches the specific case
+        # (#15524-adjacent) where a model issues a batch of parallel patches, half of them fail with
         # "Could not find old_string", and the model summarises the turn claiming every file was edited. The
         # user then has to manually run ``git status`` to catch the lie. With this footer the truth is
         # surfaced on every turn, so over-claiming is structurally impossible past the model. Gate: only

@@ -577,7 +577,7 @@ _ENV_ASSIGNMENT_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*=.*")
 _COMMAND_WRAPPER_WORDS = {"sudo", "env", "exec", "nohup", "setsid", "time", "command", "builtin",
                           "nice", "timeout", "stdbuf", "ionice", "chrt", "taskset", "chroot"}
 _SUDO_OPTIONS_WITH_ARG = {"-c", "--close-from", "-g", "--group", "-h", "--host", "-p", "--prompt", "-u", "--user"}
-# Adapted from embwl0x's command-position work in #76063. Option operands are
+# Command-position handling follows #76063. Option operands are
 # data, not executable positions; option spelling remains case-sensitive.
 _COMMAND_WRAPPER_OPTIONS_WITH_ARG = {
     "chroot": {"--groups", "--userspec"},

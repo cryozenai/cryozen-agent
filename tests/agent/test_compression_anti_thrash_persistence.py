@@ -6,7 +6,7 @@ threshold. Historically ``_ineffective_compression_count`` was in-memory only:
 a fresh compressor bound to a resumed (already-compacted) session started at
 ``compression_count == 0`` with a disarmed guard, so a near-threshold session
 could legally re-compact once per process restart, forever — the exact
-residual @lanyusea identified in #54923.
+residual identified in #54923.
 
 The counter now round-trips the durable session-state channel exactly like
 ``compression_failure_cooldown_until`` (#54465) and the fallback streak

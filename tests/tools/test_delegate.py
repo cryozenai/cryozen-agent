@@ -205,7 +205,7 @@ class TestStripBlockedTools(unittest.TestCase):
         ):
             self.assertIn(toolset_name, disabled)
         # code_execution is deliberately NOT denied — children keep
-        # execute_code for programmatic tool calling (Teknium, Jul 2026).
+        # execute_code for programmatic tool calling.
         self.assertNotIn("code_execution", disabled)
 
         definitions = model_tools.get_tool_definitions(
@@ -934,8 +934,7 @@ class TestBlockedTools(unittest.TestCase):
 
     def test_execute_code_not_blocked(self):
         """Children retain execute_code (programmatic tool calling) so they
-        can batch mechanical work instead of burning reasoning iterations
-        (Teknium, Jul 2026)."""
+        can batch mechanical work instead of burning reasoning iterations."""
         self.assertNotIn("execute_code", DELEGATE_BLOCKED_TOOLS)
 
 class TestDelegationCredentialResolution(unittest.TestCase):

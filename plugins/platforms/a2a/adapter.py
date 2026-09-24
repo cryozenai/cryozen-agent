@@ -309,7 +309,7 @@ class A2AAdapter(BasePlatformAdapter):
         otherwise reject peers (identity is a token-derived name or IP). Wrong credentials still 401.
 
         This is authorization delegated to the A2A bearer-token transport, not a fail-open: every request is
-        401'd if the credential is wrong. Reported by kuangmi-bit (PR #41711 comment, Jun 27).
+        401'd if the credential is wrong (PR #41711).
         """
         return True
 

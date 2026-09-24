@@ -41,9 +41,8 @@ Every new or modernised skill — bundled, optional, or contributed — meets al
    bash heredocs, `osascript`, `apt`, `systemctl`) require a platform declaration. Fix cross-platform
    first (`tempfile.gettempdir`, `pathlib.Path`, `psutil.pid_exists`, Python filtering instead of
    `grep`); gate narrower only when the dependency is genuinely platform-bound.
-4. **`author` credits the human first.** External contributor's real name + GitHub handle first,
-   "Cryozen Agent" second. A commit authored as "Cryozen Agent" (they drafted with Cryozen) is replaced
-   with the human's name — credit the human, not the tool.
+4. **`author` is exactly `Cryozen`.** Every bundled skill, contributed or not, uses `author: Cryozen`.
+   No personal names, GitHub handles or co-author credits in the frontmatter or the body.
 5. **Modern section order:** `# <Skill> Skill`, 2–3 sentence intro (what it does and doesn't),
    `## When to Use`, `## Prerequisites`, `## How to Run`, `## Quick Reference`, `## Procedure`,
    `## Pitfalls`, `## Verification`. ~200 lines for a complex skill, ~100 simple. Cut intro fluff,

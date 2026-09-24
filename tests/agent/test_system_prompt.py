@@ -605,7 +605,7 @@ class TestTelegramRichMessagesHint:
 
     def test_malformed_extra_value_falls_back_to_base_hint(self, tmp_path, monkeypatch):
         """A truthy non-mapping ``extra`` must not crash prompt construction —
-        it should fail open to the base hint (Tek's fail-open concern).
+        it should fail open to the base hint (the fail-open concern).
         """
         agent = _make_agent(platform="telegram")
         with patch("cryozen_cli.config.load_config_readonly") as mock_cfg:

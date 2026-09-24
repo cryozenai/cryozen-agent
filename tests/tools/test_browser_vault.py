@@ -706,7 +706,7 @@ class TestSaveLoginPrompt:
 
         def prompt(origin, site):
             seen["origin"], seen["site"] = origin, site
-            return {"identifier": "tek@acme.test", "password": "hunter2-very-secret"}
+            return {"identifier": "dan@acme.test", "password": "hunter2-very-secret"}
 
         unlock_mod.set_save_login_prompt_callback(prompt)
         monkeypatch.setattr(browser_vault_tool, "_current_page_origin", lambda task_id: "https://acme.test")
@@ -717,11 +717,11 @@ class TestSaveLoginPrompt:
             out = json.loads(browser_vault_tool.browser_vault_save_login(task_id="t1"))
         unlock_mod.set_save_login_prompt_callback(None)
 
-        assert out["success"] is True and out["identifier"] == "tek@acme.test"
+        assert out["success"] is True and out["identifier"] == "dan@acme.test"
         assert "hunter2" not in json.dumps(out)
         assert seen == {"origin": "https://acme.test", "site": "acme.test"}
         [meta] = store.list_items()
-        assert meta.origin == "https://acme.test" and meta.identifier == "tek@acme.test"
+        assert meta.origin == "https://acme.test" and meta.identifier == "dan@acme.test"
 
     def test_declined_or_headless_stores_nothing(self, store, monkeypatch):
         from agent.vault_backends import unlock as unlock_mod
@@ -771,7 +771,7 @@ class TestTwoFactor:
         seed = "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ"  # "12345678901234567890"
         assert totp_now(seed, digits=8, at=59) == "94287082"
         assert totp_now(seed, at=1111111109) == "081804"
-        assert normalize_otp_secret("otpauth://totp/GitHub:tek?secret=jbsw y3dp ehpk3pxp&issuer=GitHub") == "JBSWY3DPEHPK3PXP"
+        assert normalize_otp_secret("otpauth://totp/GitHub:dan?secret=jbsw y3dp ehpk3pxp&issuer=GitHub") == "JBSWY3DPEHPK3PXP"
         with pytest.raises(VaultError):
             normalize_otp_secret("not base32!")
         # Non-default otpauth parameters are kept and honoured (RFC 6238 SHA-256 / 8-digit vector at T=59).
@@ -788,7 +788,7 @@ class TestTwoFactor:
         from agent.vault_backends import unlock as unlock_mod
         from tools import browser_vault_tool
 
-        meta = store.add_item("login", "gh", {"identifier_type": "username", "identifier": "tek", "password": "pw",
+        meta = store.add_item("login", "gh", {"identifier_type": "username", "identifier": "dan", "password": "pw",
                                               "otp_secret": "JBSWY3DPEHPK3PXP"}, origin="https://github.com")
         assert store.get_meta(meta.id).has_otp is True
         asked = []

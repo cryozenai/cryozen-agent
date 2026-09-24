@@ -157,7 +157,7 @@ def _call_aux(verb: str, task_id: str, *, aux_task: str, system: str, user: str,
         return None, "auxiliary client unavailable"
     # Specify/decompose run outside any agent turn (CLI, dashboard route, gateway watcher), so no
     # conversation affinity scope is bound and the relay-affinity headers (x-opencode-session, the
-    # OpenRouter/Portal sticky key) are omitted — the OpenCode Go relay rejects that with 400
+    # OpenRouter sticky key) are omitted — the OpenCode Go relay rejects that with 400
     # MissingSessionID (#112043). Declare a per-task scope, but only when none is already bound so an
     # in-turn caller keeps its conversation's key.
     from agent.conversation_context import get_affinity_scope, reset_affinity_scope, set_affinity_scope

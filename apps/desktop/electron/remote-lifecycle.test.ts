@@ -240,7 +240,7 @@ test('POSIX relaunch gate rechecks after token upload immediately before process
 
 test('readRemoteInstallId reads the backend identity without spawning a dashboard or minting one', async () => {
   const ssh = fakeSsh([
-    [/CRYOZEN_HOME/, '/Users/zillajr/.cryozen-agent\n'],
+    [/CRYOZEN_HOME/, '/Users/devuser/.cryozen-agent\n'],
     [/cat .*install_id/, '0f8a1c2b3d4e5f60718293a4b5c6d7e8\n']
   ])
 
@@ -256,13 +256,13 @@ test('readRemoteInstallId reports the INSTALL root id for a profile-pinned home'
   // The whole point of the id: two ssh connections to one machine — one pinned at a profile,
   // one at the root — must report the SAME backend so their roster rows collapse.
   const pinned = fakeSsh([
-    [/CRYOZEN_HOME/, '/Users/zillajr/.cryozen-agent/profiles/dixie\n'],
+    [/CRYOZEN_HOME/, '/Users/devuser/.cryozen-agent/profiles/dixie\n'],
     [/cat .*install_id/, '0f8a1c2b3d4e5f60718293a4b5c6d7e8\n']
   ])
 
   assert.equal(await readRemoteInstallId(pinned), '0f8a1c2b3d4e5f60718293a4b5c6d7e8')
   assert.equal(
-    pinned.calls.some(cmd => cmd.includes('/Users/zillajr/.cryozen-agent/install_id')),
+    pinned.calls.some(cmd => cmd.includes('/Users/devuser/.cryozen-agent/install_id')),
     true
   )
   assert.equal(
@@ -274,7 +274,7 @@ test('readRemoteInstallId reports the INSTALL root id for a profile-pinned home'
 test('readRemoteInstallId reports no id rather than a bad one', async () => {
   for (const payload of ['', 'not-an-id\n', 'ABCDEF\n', '0f8a1c2b3d4e5f60718293a4b5c6d7e8extra\n']) {
     const ssh = fakeSsh([
-      [/CRYOZEN_HOME/, '/Users/zillajr/.cryozen-agent\n'],
+      [/CRYOZEN_HOME/, '/Users/devuser/.cryozen-agent\n'],
       [/cat .*install_id/, payload]
     ])
 
@@ -286,7 +286,7 @@ test('readRemoteInstallId reports no id rather than a bad one', async () => {
 
 test('listRemoteCryozenProfiles inventories Mini-style profile dirs without spawning a dashboard', async () => {
   const ssh = fakeSsh([
-    [/CRYOZEN_HOME/, '/Users/zillajr/.cryozen-agent\n'],
+    [/CRYOZEN_HOME/, '/Users/devuser/.cryozen-agent\n'],
     [/ls -1/, 'bob\ndixie\ngoose\nrambo\nbob.rollback-old\n']
   ])
 

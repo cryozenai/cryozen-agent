@@ -107,12 +107,9 @@ python evals/compaction/scripts/jev_cycles.py /path/lineage.json 160000 60 > cyc
 python evals/compaction/scripts/jev_cycles_report.py cycles-*.json      # markdown table
 ```
 
-Threshold 500000 ≈ Cryozen' 1M-window posture; 160000 ≈ a 200K-window host.
-Each cycle costs 1–8 Jev requests (< 1¢); a 40-cycle run is ~$0.20. The
-2026-09-19 runs are committed under `results/jev-cycles-2026-09-19/` (counts
-only, no transcript content) and summarised in `SCORECARD-2026-09-19-jev.md`:
-freed-per-cycle decayed 63% → 8% / 76% → 20% / 89% → 55% over 32–40 cycles,
-one 200K run was stuck after 0.42M tokens of work, one transcript never fit.
+Threshold 500000 ≈ Cryozen's 1M-window posture; 160000 ≈ a 200K-window host.
+Each cycle costs 1–8 Jev requests (< 1¢); a 40-cycle run is ~$0.20.
+Run outputs are local artifacts and are not committed.
 
 ## Notes
 

@@ -176,7 +176,7 @@ def _aux_task_takes_reasoning(task: str) -> bool:
 def _prompt_aux_reasoning_effort(task: str, current: str) -> Optional[str]:
     """Effort step for an aux task: a level, "none", "" (provider default / inherit parent), or None to
     keep current. The empty-value row is "Inherit parent" for delegation (a child inherits the parent's
-    effort; wording from #105431 by @fangliquanflq) and "Provider default" for aux tasks."""
+    effort; wording from #105431) and "Provider default" for aux tasks."""
     from cryozen_constants import VALID_REASONING_EFFORTS
     label = "Inherit parent" if task == _DELEGATION_TASK_KEY else "Provider default"
     return _prompt_reasoning_effort_selection(

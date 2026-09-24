@@ -2,7 +2,7 @@ import { Buffer } from 'node:buffer'
 
 import { httpStatusError } from './api-transport'
 
-// Response-stream extraction based on Bartok9's #99135 (original issue #72530).
+// Response-stream extraction based on #99135 (original issue #72530).
 export interface OauthResponseLike {
   on(event: 'data', cb: (chunk: Buffer) => void): void
   on(event: 'error', cb: (error: Error) => void): void

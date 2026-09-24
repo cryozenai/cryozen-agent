@@ -183,7 +183,7 @@ def _resolve_server_lazy(name: str, config: dict) -> bool:
     """True when ``mcp_servers.<name>.lazy`` defers connect to first tool use (default off).
 
     Gated per-server by ``mcp_servers.<name>.lazy`` in config (default OFF), following the same per-server
-    key pattern as ``idle_timeout_seconds``. Design from #56832 (Vansh5632).
+    key pattern as ``idle_timeout_seconds``. Design from #56832.
     """
     return _parse_boolish(config.get("lazy", False), default=False)
 

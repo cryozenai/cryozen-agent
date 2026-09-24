@@ -5,7 +5,7 @@ removes it. While it exists the cron scheduler, kanban dispatcher and new gatewa
 turns skip work; in-flight work is never killed. The check is one or two uncached
 ``os.stat`` calls (process home + fleet root when they differ). The body is optional
 JSON ``{"reason", "engaged_at"}``; a corrupt/empty file still counts as engaged
-(fail safe, e.g. ``touch ~/.cryozen-agent/ESTOP``). Ported from gastownhall/gastown estop.go (MIT).
+(fail safe, e.g. ``touch ~/.cryozen-agent/ESTOP``). Ported from gastownhall/gastown estop.go (MIT; see NOTICE).
 """
 
 from __future__ import annotations

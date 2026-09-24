@@ -915,7 +915,7 @@ def _macos_create_signing_identity(
         # with "MAC verification failed". `-legacy` restores the accepted
         # RC2/SHA-1 format but only exists on OpenSSL 3 — so try plain first and
         # fall back to `-legacy` when the IMPORT fails with that signature.
-        # (Verified E2E on macOS 26.3.1 / OpenSSL 3.6.3 by @ctaylor86 on PR #77189.)
+        # (Verified E2E on macOS 26.3.1 / OpenSSL 3.6.3 on PR #77189.)
         def _export_p12(extra_args: list) -> None:
             subprocess.run(
                 [

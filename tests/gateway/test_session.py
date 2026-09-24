@@ -786,7 +786,7 @@ class TestWhatsAppSessionKeyConsistency:
             platform=Platform.DISCORD,
             chat_id="channel-1",
             chat_type="group",
-            user_id="cthulhu",
+            user_id="devuser",
             prospective_thread_id="msg-100",
         )
         # A follow-up that actually arrives inside that thread.
@@ -795,7 +795,7 @@ class TestWhatsAppSessionKeyConsistency:
             chat_id="channel-1",
             chat_type="thread",
             thread_id="msg-100",
-            user_id="cthulhu",
+            user_id="devuser",
         )
         key_init = build_session_key(initiating)
         key_follow = build_session_key(follow_up)
@@ -810,14 +810,14 @@ class TestWhatsAppSessionKeyConsistency:
             platform=Platform.DISCORD,
             chat_id="channel-1",
             chat_type="group",
-            user_id="cthulhu",
+            user_id="devuser",
             prospective_thread_id="msg-100",
         )
         second = SessionSource(
             platform=Platform.DISCORD,
             chat_id="channel-1",
             chat_type="group",
-            user_id="cthulhu",
+            user_id="devuser",
             prospective_thread_id="msg-200",
         )
         assert build_session_key(first) != build_session_key(second)
@@ -833,7 +833,7 @@ class TestWhatsAppSessionKeyConsistency:
             chat_type="thread",
             thread_id="real-thread",
             prospective_thread_id="ignored",
-            user_id="cthulhu",
+            user_id="devuser",
         )
         assert build_session_key(source).endswith(":real-thread")
 

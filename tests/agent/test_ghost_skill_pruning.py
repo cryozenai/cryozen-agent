@@ -14,8 +14,7 @@ instructions are gone. The defense has three layers:
   call and deterministically re-injected if the model paraphrased them
   away — including on the static fallback path.
 
-Test patterns for the marker emit checks adapted from PR #32375
-(@LeonSGP43) with credit.
+Test patterns for the marker emit checks adapted from PR #32375.
 """
 
 from unittest.mock import MagicMock, patch
@@ -70,7 +69,7 @@ def _skill_view_pair(call_id, skill_name, size=6000):
 
 
 class TestSkillPrunedMarkerEmit:
-    """Marker emit — patterns adapted from PR #32375 (@LeonSGP43)."""
+    """Marker emit — patterns adapted from PR #32375."""
 
     def test_skill_view_summary_marks_pruned_content(self):
         summary = _summarize_tool_result(

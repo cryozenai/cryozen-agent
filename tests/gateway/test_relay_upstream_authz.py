@@ -69,7 +69,7 @@ def _relay_source(**kw) -> SessionSource:
         platform=Platform.RELAY,
         user_id="428014785045725184",
         chat_id="1400724139874058314",
-        user_name="definitely_not_cthulhu",
+        user_name="definitely_not_devuser",
         chat_type="group",
     )
     base.update(kw)

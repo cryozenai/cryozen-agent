@@ -1060,10 +1060,10 @@ def test_terminal_task_cwd_local_backend_uses_session_cwd(monkeypatch, tmp_path)
 
 def test_terminal_task_cwd_ssh_uses_remote_path_unvalidated(monkeypatch):
     """SSH (non-local) backend: the configured remote cwd is used verbatim even
-    though it does not exist on the local host. This is the jonbohz fix — host
+    though it does not exist on the local host. This is the SSH cwd fix — host
     `isdir()` validation would otherwise discard the remote path and fall back
     to os.getcwd(), running commands against the wrong machine."""
-    remote = "/home/jonboh/workspace/proj"  # does not exist on this host
+    remote = "/home/devuser/workspace/proj"  # does not exist on this host
     assert not os.path.isdir(remote)
     monkeypatch.setenv("TERMINAL_ENV", "ssh")
     monkeypatch.setenv("TERMINAL_CWD", remote)
@@ -1073,7 +1073,7 @@ def test_terminal_task_cwd_ssh_uses_remote_path_unvalidated(monkeypatch):
 
 def test_terminal_task_cwd_ssh_falls_back_to_config(monkeypatch):
     """When TERMINAL_CWD is unset, the SSH path reads terminal.cwd from config."""
-    remote = "/home/jonboh/workspace/from-config"
+    remote = "/home/devuser/workspace/from-config"
     monkeypatch.setenv("TERMINAL_ENV", "ssh")
     monkeypatch.delenv("TERMINAL_CWD", raising=False)
     monkeypatch.setattr(server, "_load_cfg", lambda: {"terminal": {"cwd": remote}})
@@ -20213,7 +20213,7 @@ class TestResolveRuntimeWithFallback:
 
     def test_fallback_entry_key_env_resolves_api_key(self, monkeypatch):
         """A fallback entry naming its key via key_env passes the resolved
-        env value as explicit_api_key (#43861, @VrtxOmega)."""
+        env value as explicit_api_key (#43861)."""
         from cryozen_cli.auth import AuthError
 
         monkeypatch.setenv("FB_TEST_KEY", "env-resolved-key")

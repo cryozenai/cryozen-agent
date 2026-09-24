@@ -13,9 +13,7 @@ Two data sources:
    LobeHub, well-known endpoints, and the GitHub taps
    (openai/skills, anthropics/skills, huggingface/skills, VoltAgent, etc.).
 
-Legacy fallback: if the unified index is missing AND ``skills/index-cache/``
-contains pre-baked JSON dumps, we read those (preserves behaviour from before
-the unified index existed).
+If the unified index is missing, only local skills are extracted.
 """
 
 import json
@@ -31,7 +29,6 @@ LOCAL_SKILL_DIRS = [
     ("optional-skills", "optional"),
 ]
 UNIFIED_INDEX_PATH = os.path.join(REPO_ROOT, "website", "static", "api", "skills-index.json")
-LEGACY_INDEX_CACHE_DIR = os.path.join(REPO_ROOT, "skills", "index-cache")
 # Output to static/api/ so the file is CDN-served at /api/skills.json
 # rather than bundled into the page's JS chunk. At 50k+ skills the
 # bundled payload was ~26 MB; lazy-fetch keeps the initial page load
@@ -99,15 +96,6 @@ GITHUB_TAP_LABELS = {
     "garrytan/gstack": "gstack",
     "MiniMax-AI/cli": "MiniMax",
 }
-
-# Legacy filename -> label mapping for the deprecated skills/index-cache/
-# fallback. Used only when website/static/api/skills-index.json is absent.
-LEGACY_SOURCE_LABELS = {
-    "anthropics_skills": "Anthropic",
-    "openai_skills": "OpenAI",
-    "lobehub": "LobeHub",
-}
-
 
 def _extract_overview(body: str) -> str:
     """Pull the first non-heading paragraph from a SKILL.md body."""
@@ -347,8 +335,8 @@ def extract_unified_index_skills():
     Returns ``(skills, meta)`` where ``meta`` carries the index's
     ``generated_at`` timestamp and total count so the Skills Hub page can
     show a "Last refreshed …" badge. Returns ``(None, None)`` when the
-    index file is absent or malformed (caller falls back to the legacy
-    cache).
+    index file is absent or malformed (caller then extracts local skills
+    only).
     """
     if not os.path.isfile(UNIFIED_INDEX_PATH):
         return None, None
@@ -440,76 +428,6 @@ def extract_unified_index_skills():
         })
 
     return out, meta
-
-
-def extract_legacy_cache_skills():
-    """Read the deprecated skills/index-cache/ snapshots — fallback only."""
-    skills = []
-
-    if not os.path.isdir(LEGACY_INDEX_CACHE_DIR):
-        return skills
-
-    for filename in os.listdir(LEGACY_INDEX_CACHE_DIR):
-        if not filename.endswith(".json"):
-            continue
-
-        filepath = os.path.join(LEGACY_INDEX_CACHE_DIR, filename)
-        try:
-            with open(filepath, encoding="utf-8") as f:
-                data = json.load(f)
-        except (json.JSONDecodeError, OSError):
-            continue
-
-        stem = filename.replace(".json", "")
-        source_label = "community"
-        for key, label in LEGACY_SOURCE_LABELS.items():
-            if key in stem:
-                source_label = label
-                break
-
-        if isinstance(data, dict) and "agents" in data:
-            for agent in data["agents"]:
-                if not isinstance(agent, dict):
-                    continue
-                skills.append({
-                    "name": agent.get("identifier", agent.get("meta", {}).get("title", "unknown")),
-                    "description": (agent.get("meta", {}).get("description", "") or "").split("\n")[0][:200],
-                    "category": _guess_category(agent.get("meta", {}).get("tags", [])),
-                    "categoryLabel": "",
-                    "source": source_label,
-                    "tags": agent.get("meta", {}).get("tags", []),
-                    "platforms": [],
-                    "author": agent.get("author", ""),
-                    "version": "",
-                })
-            continue
-
-        if isinstance(data, list):
-            for entry in data:
-                if not isinstance(entry, dict) or not entry.get("name"):
-                    continue
-                if "skills" in entry and isinstance(entry["skills"], list):
-                    continue
-                skills.append({
-                    "name": entry.get("name", ""),
-                    "description": entry.get("description", ""),
-                    "category": "uncategorized",
-                    "categoryLabel": "",
-                    "source": source_label,
-                    "tags": entry.get("tags", []),
-                    "platforms": [],
-                    "author": "",
-                    "version": "",
-                })
-
-    for s in skills:
-        if not s["categoryLabel"]:
-            s["categoryLabel"] = CATEGORY_LABELS.get(
-                s["category"],
-                s["category"].replace("-", " ").title() if s["category"] else "Uncategorized",
-            )
-
-    return skills
 
 
 TAG_TO_CATEGORY = {}
@@ -627,12 +545,12 @@ def main():
         external = unified
         external_source = "unified index"
     else:
-        external = extract_legacy_cache_skills()
-        external_source = "legacy index-cache"
+        external = []
+        external_source = "none"
         index_meta = None
         print(
             f"[extract-skills] WARNING: unified index not found at "
-            f"{UNIFIED_INDEX_PATH}; falling back to {external_source}. "
+            f"{UNIFIED_INDEX_PATH}; extracting local skills only. "
             f"Run `python3 scripts/build_skills_index.py` to refresh."
         )
 

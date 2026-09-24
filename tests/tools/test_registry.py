@@ -743,7 +743,7 @@ class TestDeregisterAuthorization:
         tool whose handler was defined in cryozen_plugins.pkg.handlers.  The
         exact module strings differ, but they share the same plugin package root
         (cryozen_plugins.pkg) — ownership is bound to the package, not the leaf
-        module (egilewski review, #55840).
+        module (review, #55840).
         """
         reg = ToolRegistry()
         reg.register_plugin_override_policy("cryozen_plugins.pkg", False)
@@ -768,7 +768,7 @@ class TestDeregisterAuthorization:
         ``_plugin_override_policy.get("cryozen_plugins.allowed.cleanup")`` →
         False and wrongly raised PermissionError.  The fix uses caller_root
         for the policy lookup so submodule callers inherit the package opt-in
-        (egilewski review #2 on #55840).
+        (review #2 on #55840).
         """
         reg = ToolRegistry()
         reg.register(

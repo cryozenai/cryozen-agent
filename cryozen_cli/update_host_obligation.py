@@ -1,6 +1,6 @@
 """Host-scoped update→restart obligation for ``cryozen update``.
 
-Multiplex-only (Teknium ruling): exactly ONE ``cryozen gateway run`` per host serves every
+Multiplex-only: exactly ONE ``cryozen gateway run`` per host serves every
 profile, so "this pull still owes the fleet a restart" is a property of the HOST, not of one
 profile's ``CRYOZEN_HOME``. The legacy ``$CRYOZEN_HOME/fleet_restart_pending`` marker was
 per-home: ``cryozen -p coder update`` armed and cleared coder's copy while restarting the

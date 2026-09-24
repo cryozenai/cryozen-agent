@@ -2966,7 +2966,7 @@ class TestReactions:
         adapter._app.client.reactions_add = AsyncMock()
         adapter._app.client.reactions_remove = AsyncMock()
         adapter._app.client.users_info = AsyncMock(
-            return_value={"user": {"profile": {"display_name": "Tyler"}}}
+            return_value={"user": {"profile": {"display_name": "Alice"}}}
         )
 
         event = {
@@ -3368,7 +3368,7 @@ class TestAssistantThreadLifecycle:
         self, assistant_adapter
     ):
         assistant_adapter._app.client.users_info = AsyncMock(
-            return_value={"user": {"profile": {"display_name": "Tyler"}}}
+            return_value={"user": {"profile": {"display_name": "Alice"}}}
         )
         assistant_adapter._app.client.reactions_add = AsyncMock()
         assistant_adapter._app.client.reactions_remove = AsyncMock()
@@ -3427,7 +3427,7 @@ class TestAssistantThreadLifecycle:
         self, assistant_adapter
     ):
         assistant_adapter._app.client.users_info = AsyncMock(
-            return_value={"user": {"profile": {"display_name": "Tyler"}}}
+            return_value={"user": {"profile": {"display_name": "Alice"}}}
         )
         assistant_adapter._app.client.reactions_add = AsyncMock()
         assistant_adapter._app.client.reactions_remove = AsyncMock()
@@ -3467,21 +3467,21 @@ class TestUserNameResolution:
     async def test_resolves_display_name(self, adapter):
         adapter._app.client.users_info = AsyncMock(
             return_value={
-                "user": {"profile": {"display_name": "Tyler", "real_name": "Tyler B"}}
+                "user": {"profile": {"display_name": "Alice", "real_name": "Alice B"}}
             }
         )
         name = await adapter._resolve_user_name("U123")
-        assert name == "Tyler"
+        assert name == "Alice"
 
     @pytest.mark.asyncio
     async def test_falls_back_to_real_name(self, adapter):
         adapter._app.client.users_info = AsyncMock(
             return_value={
-                "user": {"profile": {"display_name": "", "real_name": "Tyler B"}}
+                "user": {"profile": {"display_name": "", "real_name": "Alice B"}}
             }
         )
         name = await adapter._resolve_user_name("U123")
-        assert name == "Tyler B"
+        assert name == "Alice B"
 
 
 # ---------------------------------------------------------------------------

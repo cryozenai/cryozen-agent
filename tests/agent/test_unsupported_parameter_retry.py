@@ -4,8 +4,7 @@
 The original temperature-specific detector (PR #15621) was generalized so the
 same reactive-retry strategy covers any provider that rejects an arbitrary
 request parameter — ``max_tokens``, ``seed``, ``top_p``, future quirks — not
-just ``temperature``. Credit @nicholasrae (PR #15416) for the generalization
-pattern.
+just ``temperature``. The generalization pattern comes from PR #15416.
 
 These tests lock in:
   * ``_is_unsupported_parameter_error(exc, param)`` across common phrasings

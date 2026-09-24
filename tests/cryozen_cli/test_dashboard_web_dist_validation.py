@@ -6,7 +6,7 @@ obvious cause (same failure mode as issue #23817, reached via the env-var
 path instead of --skip-build). The env-var branch must now fail fast when
 the dist has no index.html, and proceed when it does.
 
-Design credit: PR #17845 (@Caelier).
+Design from PR #17845.
 """
 
 import os

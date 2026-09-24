@@ -467,8 +467,8 @@ class CompressionCommitFence:
         # FUTURE commit is admitted.
         self._admission_revoked = False
         # Holder-scoped release published by the worker once it owns the durable lock (no ABA on a NEW holder).
-        # Holder-qualified durable-lock release hook (#76354 review F4; transplanted from PR #71569 by
-        # @ciabata-git). The worker publishes an idempotent, holder-scoped release callable once it owns the
+        # Holder-qualified durable-lock release hook (#76354 review F4; transplanted from PR #71569).
+        # The worker publishes an idempotent, holder-scoped release callable once it owns the
         # durable compression lock; a timed-out host invokes it to free the lease without racing a NEW
         # holder (DB release is holder-qualified, so a stale release can never delete a replacement's row —
         # no ABA).
@@ -615,8 +615,8 @@ class CompressionCommitFence:
     # ── Holder-qualified durable-lease cancellation: release is DELETE WHERE
     # holder = ?, so a stale release can never free a NEW holder's lease (no ABA).
 
-    # ── Holder-qualified durable-lease cancellation (#76354 F4) ────────── Transplanted from PR #71569
-    # (@ciabata-git): the worker publishes an idempotent, holder-scoped release hook once it owns the
+    # ── Holder-qualified durable-lease cancellation (#76354 F4) ────────── Transplanted from PR #71569:
+    # the worker publishes an idempotent, holder-scoped release hook once it owns the
     # durable compression lock, and the host invokes it after winning cancellation. ABA safety comes from
     # SessionDB.release_compression_lock being holder-qualified (DELETE ... WHERE holder = ?), so a stale
     # release can never free a NEW holder's lease.

@@ -159,7 +159,7 @@ def test_top_level_response_format_kwarg_is_translated_not_dropped():
     from a fixed allow-list of kwargs, so before this an unrecognized
     top-level kwarg was dropped on the floor: the request succeeded, but the
     schema contract silently became prompt compliance. Pin-test pattern from
-    PR #85626 (Matt McClean), adapted from strip to translate semantics.
+    PR #85626, adapted from strip to translate semantics.
     """
     schema = {
         "type": "object",

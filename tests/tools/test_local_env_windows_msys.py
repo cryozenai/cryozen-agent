@@ -61,7 +61,7 @@ class TestMsysToWindowsPath:
         # On a non-Windows host the function must never rewrite the path
         # — POSIX-style paths are real paths there.
         assert _msys_to_windows_path("/c/Users/NVIDIA") == "/c/Users/NVIDIA"
-        assert _msys_to_windows_path("/home/teknium") == "/home/teknium"
+        assert _msys_to_windows_path("/home/devuser") == "/home/devuser"
 
     @pytest.mark.windows_only
     def test_translates_drive_path(self):
@@ -300,13 +300,13 @@ class TestWrapCommandWindowsNativeCwd:
         with patch.object(
             LocalEnvironment, "init_session", autospec=True, return_value=None
         ):
-            env = LocalEnvironment(cwd=r"C:\Users\liush", timeout=10)
+            env = LocalEnvironment(cwd=r"C:\Users\alice", timeout=10)
 
         env._snapshot_ready = True
-        wrapped = env._wrap_command("pwd", r"C:\Users\liush")
+        wrapped = env._wrap_command("pwd", r"C:\Users\alice")
 
-        assert "builtin cd -- /c/Users/liush || exit 126" in wrapped
-        assert r"builtin cd -- C:\Users\liush || exit 126" not in wrapped
+        assert "builtin cd -- /c/Users/alice || exit 126" in wrapped
+        assert r"builtin cd -- C:\Users\alice || exit 126" not in wrapped
 
     def test_init_session_bootstrap_rewrites_backslash_snapshot_paths(self, monkeypatch):
         captured = {}

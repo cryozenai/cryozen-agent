@@ -114,11 +114,11 @@ const oneSecondTicks = (spy: IntervalSpy) =>
 
 // ── AppLayout harness ────────────────────────────────────────────────
 //
-// teknium1's review of this file was right that mounting StatusRule alone
-// proves the store pauses timers but NOT that the overlay in question covers
-// the status rule.  These props render the real AppLayout so the rule sits in
-// its true position relative to PromptZone / FloatingOverlays / the widget
-// slot, and the assertions can read what is actually on screen.
+// Mounting StatusRule alone proves the store pauses timers but NOT that the
+// overlay in question covers the status rule.  These props render the real
+// AppLayout so the rule sits in its true position relative to PromptZone /
+// FloatingOverlays / the widget slot, and the assertions can read what is
+// actually on screen.
 
 const gatewayStub = {
   gw: {
@@ -344,9 +344,9 @@ describe('status-chrome timers under an occluding overlay', () => {
   })
 })
 
-// teknium1's review of #12463 called out that its test asserted on a `picker`
-// overlay state that no longer exists.  Pin the gate to fields the current
-// OverlayState actually carries so a rename breaks this file loudly.
+// #12463's test asserted on a `picker` overlay state that no longer exists.
+// Pin the gate to fields the current OverlayState actually carries so a
+// rename breaks this file loudly.
 describe('status-chrome timers track the current overlay model', () => {
   // Everything that genuinely paints over the rule: the modal widget slot,
   // plus the FloatingOverlays set (with the rule at its default `top`).
@@ -401,7 +401,7 @@ describe('status-chrome timers track the current overlay model', () => {
   })
 })
 
-// The visibility gate teknium1 asked for: mount the REAL AppLayout so the
+// The visibility gate: mount the REAL AppLayout so the
 // status rule sits in its true position relative to PromptZone (normal flow,
 // above ComposerPane) and FloatingOverlays (absolute, growing upward), then
 // assert on what is actually on screen rather than on the store alone.

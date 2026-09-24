@@ -1,7 +1,9 @@
 import { chromium } from '../../node_modules/playwright/index.mjs'
 import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
 import { execFileSync } from 'node:child_process'
-const artifact = process.env.NAVIGATION_ARTIFACT_DIR ?? '/home/teknium/.cryozen-agent/cache/desktop-bugs-74848ed3/navigation-markdown'
+const artifact = process.env.NAVIGATION_ARTIFACT_DIR ?? path.join(os.tmpdir(), 'navigation-markdown')
 const tag = process.argv[2] ?? 'after'
 const browser = await chromium.launch({headless: true, args: ['--no-sandbox']})
 const context = await browser.newContext({permissions: ['clipboard-read', 'clipboard-write']})

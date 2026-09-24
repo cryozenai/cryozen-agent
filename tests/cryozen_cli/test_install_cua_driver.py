@@ -1562,7 +1562,7 @@ class TestWindowsAutostartRepair:
 
         def fake_which(name: str):
             if name == "cua-driver":
-                return r"C:\Users\Ha Trung\AppData\Local\Programs\Cua\cua-driver\bin\cua-driver.exe"
+                return r"C:\Users\Dev User\AppData\Local\Programs\Cua\cua-driver\bin\cua-driver.exe"
             return None
 
         with patch.object(tools_config.shutil, "which", side_effect=fake_which), \
@@ -1581,7 +1581,7 @@ class TestWindowsAutostartRepair:
             "powershell", "-NoProfile", "-ExecutionPolicy", "Bypass",
         ]
         repair.assert_called_once_with(
-            r"C:\Users\Ha Trung\AppData\Local\Programs\Cua\cua-driver\bin\cua-driver.exe",
+            r"C:\Users\Dev User\AppData\Local\Programs\Cua\cua-driver\bin\cua-driver.exe",
             verbose=False,
         )
 
@@ -1594,7 +1594,7 @@ class TestWindowsAutostartRepair:
 
         calls = []
         driver = (
-            r"C:\Users\Ha Trung\AppData\Local\Programs\Cua"
+            r"C:\Users\Dev User\AppData\Local\Programs\Cua"
             r"\cua-driver\bin\cua-driver.exe"
         )
 
@@ -1645,7 +1645,7 @@ class TestWindowsAutostartRepair:
         create_no_window = 0x08000000
         calls = []
         driver = (
-            r"C:\Users\Ha Trung\AppData\Local\Programs\Cua"
+            r"C:\Users\Dev User\AppData\Local\Programs\Cua"
             r"\cua-driver\bin\cua-driver.exe"
         )
 

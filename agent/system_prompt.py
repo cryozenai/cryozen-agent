@@ -231,7 +231,7 @@ def _agent_home(agent: Any) -> Optional[Path]:
     1. Surfaces that multiplex several profiles over ONE shared session DB (the messaging gateway:
     ``gateway/run.py`` hands every agent the launch-home ``state.db`` and binds the profile home per turn
     via ``_profile_runtime_scope`` + ``copy_context``) would otherwise have the db-derived launch home STOMP
-    the correctly-bound profile — inverting the leak this helper exists to fix (found by @kshitijk4poor's
+    the correctly-bound profile — inverting the leak this helper exists to fix (found by a
     post-merge probe on #86313). 2. Fallback: the home containing the agent's ``_session_db.db_path``
     (``<home>/state.db``) — ground truth on threads that lost the ContextVar (ContextVars don't propagate
     into ``threading.Thread``), where the unbound build previously fell back to the launch home and leaked

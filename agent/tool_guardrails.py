@@ -320,7 +320,7 @@ class ToolCallGuardrailController:
         # result resets it, so re-reads after edits and varied polling are never flagged.
         # Identical-call loop-breaker state (agent.stall_guards): tracks the CONSECUTIVE streak of identical
         # (tool, canonical args) calls whose results were also identical. Per-turn, like everything else
-        # here. NOTE: open PR #85352 (patrykkopycinski) tracks no-progress loops ACROSS turns via a
+        # here. NOTE: open PR #85352 tracks no-progress loops ACROSS turns via a
         # detection window — a different mechanism from this per-turn consecutive streak. Coordinate future
         # work there.
         self._identical_streak_sig: ToolCallSignature | None = None

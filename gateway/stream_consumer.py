@@ -3,7 +3,7 @@
 on_delta() queues deltas from the agent's worker thread; the async run() task buffers,
 rate-limits and progressively edits one platform message (send, then editMessageText;
 draft/native transports are optional per adapter).
-Credit: jobless0x (#774, #1312), OutThisLife (#798), clicksingh (#697).
+See #774, #1312, #798, #697.
 """
 
 from __future__ import annotations

@@ -4,7 +4,7 @@ Stopping consumption on supersession returned a ``completed`` response missing i
 delivered a truncated reply. Supersession must fence only the live callbacks (text/reasoning deltas,
 commentary, first-delta) and still assemble the complete final response.
 
-Grafted from PR #69502 (@byungsker) onto the Relay-backed ``run_codex_stream``.
+Grafted from PR #69502 onto the Relay-backed ``run_codex_stream``.
 """
 
 from types import SimpleNamespace

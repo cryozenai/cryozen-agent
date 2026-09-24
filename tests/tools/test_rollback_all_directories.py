@@ -3,7 +3,7 @@
 Bare /rollback searched only TERMINAL_CWD's project; checkpoints created
 under a different session cwd were invisible ("No checkpoints found for
 /home/user" while checkpoints existed seconds earlier). Reapply of PR
-#10633 by @nightq onto the v2 single-store layout.
+#10633 onto the v2 single-store layout.
 """
 
 import json

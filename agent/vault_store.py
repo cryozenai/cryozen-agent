@@ -10,7 +10,7 @@ Design notes:
 - Follows the repo's "default frictionless, 0600 files OK" policy: the key
   file and vault file are created 0600 under ``<CRYOZEN_HOME>/vault/``.
 - Ported design (opaque-handle vault fill) from Merit-Systems/OpenInstinct
-  (MIT): lib/manager/server/secret-store.ts + vault services.
+  (MIT; see NOTICE): lib/manager/server/secret-store.ts + vault services.
 - Three item kinds: ``login`` (password-only secret), ``payment`` (card fields) and
   ``address``; ``PAYMENT_FIELDS`` / ``ADDRESS_FIELDS`` are the canonical payload names.
 """

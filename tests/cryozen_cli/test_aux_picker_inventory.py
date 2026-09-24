@@ -8,9 +8,9 @@ provider universe as ``/model``.
 Two independent contributor PRs fixed the same two call sites for exactly
 this reason:
 
-- #52642 (@deepjia) — user ``providers:`` / ``custom_providers:`` entries
+- #52642 — user ``providers:`` / ``custom_providers:`` entries
   were invisible because the aux picker never forwarded them.
-- #66624 (@Drexuxux) — providers with a fully rate-limited credential pool
+- #66624 — providers with a fully rate-limited credential pool
   were hidden because the aux picker never forwarded ``for_picker``.
 
 Both were per-call-site kwarg patches, so the next aux picker would have

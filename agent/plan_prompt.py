@@ -7,7 +7,7 @@ so system prompt and history stay untouched (prompt-cache safe).
 
 from __future__ import annotations
 
-# Ground rules + authoring craft (writing-craft adapted from obra/superpowers).
+# Ground rules + authoring craft (writing-craft adapted from obra/superpowers; MIT, see NOTICE).
 _PLAN_MODE_RULES = """\
 For this turn, you are in PLAN MODE — planning only.
 

@@ -229,7 +229,7 @@ class TestOneIdentityReadPerResolution:
 
     Resolution is memoized per transcript segment, so this was never on the
     per-API-call hot path (#79017) — but reading the same row twice per
-    resolution was one read too many (@teknium1 on #98811), and a ``SessionDB``
+    resolution was one read too many (#98811), and a ``SessionDB``
     that predates the combined view has to keep the path it had.
     """
 
@@ -603,7 +603,7 @@ class TestPeerIdentityIsSourceQualified:
     row rotate this conversation's affinity identity, while
     ``find_latest_gateway_session_for_peer`` correctly refused to cross the
     same line — the physical identity stayed put while the affinity identity
-    moved under it (@andrexibiza on #98811).
+    moved under it (#98811).
     """
 
     KEY = "shared-key-string"
@@ -652,7 +652,7 @@ class TestGenerationSurvivesPruning:
     row, and bulk prune selects ended rows, so an aggregate over
     `_RESET_END_REASONS` boundaries can return a pair it already emitted:
     `(1, T1) -> (2, T2) -> delete boundary B -> (1, T1)`, handing a new
-    conversation a retired affinity identity (@andrexibiza on #98811).
+    conversation a retired affinity identity (#98811).
 
     The counter therefore lives in `conversation_generations`, outside session
     history, and only ever increments.
@@ -763,7 +763,7 @@ class TestSourceOverrideDomain:
     persistence uses ``_session_source_for_agent``, which honors
     ``CRYOZEN_SESSION_SOURCE``. Under an override both sides of a ``/new``
     queried the platform domain, missed the boundary stored under the
-    override, and hashed the same scope (@andrexibiza on #98811).
+    override, and hashed the same scope (#98811).
     """
 
     KEY = "agent:main:telegram:dm:888"

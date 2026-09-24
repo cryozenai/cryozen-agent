@@ -16,7 +16,7 @@ AND the type-pinned lock-skip flag is set, the attempt is refunded and the
 turn ends (when it cannot proceed) with a soft ``compression_deferred``
 result distinct from ``compression_exhausted``.
 
-Salvaged from PR #49874 (@helix4u), rebuilt on the landed #69870 signal.
+Salvaged from PR #49874, rebuilt on the landed #69870 signal.
 """
 
 from __future__ import annotations

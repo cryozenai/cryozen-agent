@@ -8,7 +8,7 @@ the dead runtime — silently dropped, never reaching the
 ``get_or_create_session`` routing self-heal (#54878). The guard evicts the
 stale slot at routing time so the message falls through to the cold path.
 
-Salvaged from PR #99183 (@Finn763).
+Salvaged from PR #99183.
 """
 
 import time

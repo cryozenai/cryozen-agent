@@ -1962,7 +1962,7 @@ class ProcessRegistry(ProcessCheckpointMixin):
         # conflate the two via falsiness).
         # An explicit offset=0 means "start from the first line" — previously it was conflated with the
         # default and silently returned the TAIL instead of the head (same falsy-coercion class as the
-        # wait() timeout guard; salvaged from PR #60004, credit @isheng-eqi).
+        # wait() timeout guard; from PR #60004).
         if offset is None and limit > 0:
             selected = lines[-limit:]
             observed_completion_output = bool(selected) or total_lines == 0
@@ -2160,7 +2160,7 @@ class ProcessRegistry(ProcessCheckpointMixin):
             # scope: a daemonized descendant may survive the wrapper PID.
             # If this recovered session also carries an owned systemd scope, stop that scope before
             # returning: a daemonized descendant may still be alive there even though the wrapper PID exited
-            # or was recycled across the gateway restart (#70716, teknium1 review).
+            # or was recycled across the gateway restart (#70716).
             if not self._host_pid_is_ours(session.pid, session.host_start_time):
                 if session.systemd_unit:
                     _stop_systemd_unit(session.systemd_unit)
@@ -2177,8 +2177,8 @@ class ProcessRegistry(ProcessCheckpointMixin):
             return {
                 # Reject non-positive timeouts — the schema declares minimum=1, but not every caller
                 # enforces schemas before dispatch. timeout=0 is falsy, so without this guard it silently
-                # fell through (`0 or max_timeout`) to the DEFAULT wait instead of erroring. Salvaged from
-                # PR #60004 (credit @isheng-eqi).
+                # fell through (`0 or max_timeout`) to the DEFAULT wait instead of erroring. From
+                # PR #60004.
                 "status": "error",
                 "error": "Recovered process cannot be killed after restart because "
                          "its original runtime handle is no longer available",

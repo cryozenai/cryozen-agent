@@ -4,7 +4,7 @@
 3. POST .../files with {"upload_id"} → ``file_info`` for a RichMedia message.
 biz_code 40093001 = part_finish retryable until ``retry_timeout``; 40093002 = daily
 quota (UploadDailyLimitExceededError); other API/I/O failures raise RuntimeError.
-Ported from WideLee's qqbot-agent-sdk v1.2.2 (authorship via Co-authored-by).
+Ported from tencent-connect/qqbot-agent-sdk v1.2.2 (MIT; see NOTICE).
 """
 
 from __future__ import annotations

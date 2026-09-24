@@ -86,7 +86,7 @@ def _wait_until(predicate, timeout=30.0, interval=0.02):
     after the poll gives up and the assertion sees an empty list. The generous
     ceiling here is only reached on genuine failure; the common path returns the
     instant the condition holds, adding no latency to green runs.
-    (Ported from PR #63522 by @jethac.)
+    (Ported from PR #63522.)
     """
     deadline = time.monotonic() + timeout
     result = predicate()

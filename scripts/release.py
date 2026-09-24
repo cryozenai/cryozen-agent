@@ -387,15 +387,15 @@ def generate_changelog(commits, tag_name, semver, repo_url="https://github.com/c
     # Group commits by category
     categories = defaultdict(list)
     all_authors = set()
-    teknium_aliases = {"@teknium1"}
+    maintainer_aliases = {"@cryozenai"}
 
     for commit in commits:
         categories[commit["category"]].append(commit)
         author = commit["github_author"]
-        if author not in teknium_aliases:
+        if author not in maintainer_aliases:
             all_authors.add(author)
         for coauthor in commit.get("coauthors", []):
-            if coauthor not in teknium_aliases:
+            if coauthor not in maintainer_aliases:
                 all_authors.add(coauthor)
 
     # Category display order and emoji
@@ -430,7 +430,7 @@ def generate_changelog(commits, tag_name, semver, repo_url="https://github.com/c
             else:
                 parts.append(f"([`{commit['short_sha']}`]({repo_url}/commit/{commit['sha']}))")
 
-            if author not in teknium_aliases:
+            if author not in maintainer_aliases:
                 parts.append(f"— {author}")
 
             lines.append(" ".join(parts))
@@ -443,10 +443,10 @@ def generate_changelog(commits, tag_name, semver, repo_url="https://github.com/c
         author_counts = defaultdict(int)
         for commit in commits:
             author = commit["github_author"]
-            if author not in teknium_aliases:
+            if author not in maintainer_aliases:
                 author_counts[author] += 1
             for coauthor in commit.get("coauthors", []):
-                if coauthor not in teknium_aliases:
+                if coauthor not in maintainer_aliases:
                     author_counts[coauthor] += 1
 
         sorted_authors = sorted(author_counts.items(), key=lambda x: -x[1])

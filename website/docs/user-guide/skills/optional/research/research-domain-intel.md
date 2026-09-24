@@ -115,7 +115,3 @@ All queries are **passive** — no port scanning, no vulnerability testing:
 - Some WHOIS servers redact registrant info (GDPR) — mention this to the user
 - crt.sh can be slow for very popular domains (thousands of certs) — set reasonable expectations
 - The availability check is heuristic-based (3 passive signals) — not authoritative like a registrar API
-
----
-
-*Contributed by [@FurkanL0](https://github.com/FurkanL0)*

@@ -602,7 +602,7 @@ out to ordinary pinned installs; nothing new exists at runtime.
 ```yaml
 name: voice-assistant-pack
 description: STT + streaming TTS + approval relay
-author: hyper
+author: Your Name
 version: 1.0.0
 plugins:
   - name: cryozen-telegram-business       # bare plugin-catalog name…

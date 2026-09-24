@@ -12,17 +12,199 @@ affiliated with, sponsored by, or endorsed by the authors of that software.
 
 Third-party material
 --------------------
-The following bundled material is used under its own license, which applies
-to that material in place of the root LICENSE:
+The following material is used under its own license, which applies to that
+material in place of the root LICENSE. Each entry names the upstream
+project, its source, the copyright notice from its license, and the files in
+this repository that contain ported or adapted portions of it. Tests covering
+those files may carry the same material. Source comments in those files name
+the upstream project and point here.
 
-- agent/pet/generate/atlas.py: segmentation, fit and residue logic adapted
-  from OpenAI's hatch-pet skill. Apache License 2.0; the license text is in
-  LICENSES/Apache-2.0.txt.
-- apps/desktop/src/lib/preview-act/identity.ts: element re-binding ladder
-  adapted from anchortree. Apache License 2.0; the license text is in
-  LICENSES/Apache-2.0.txt.
+MIT License
+~~~~~~~~~~~
+The full text of each license, with its original copyright notice, is in the
+named file under LICENSES/.
+
+- OpenInstinct: https://github.com/Merit-Systems/OpenInstinct
+  Copyright (c) 2026 Merit Systems, Inc.
+  License: MIT; see LICENSES/MIT-openinstinct.txt.
+  Used in: agent/vault_login_classifier.py, agent/vault_store.py and
+           tools/browser_vault_tool.py (login-control classifier and
+           opaque-handle vault design).
+
+- Gas Town: https://github.com/gastownhall/gastown
+  Copyright (c) 2025 Steve Yegge
+  License: MIT; see LICENSES/MIT-gastown.txt.
+  Used in: agent/estop.py and cryozen_cli/subcommands/pause.py (emergency
+           stop).
+
+- qqbot-agent-sdk: https://github.com/tencent-connect/qqbot-agent-sdk
+  Copyright (c) 2025 walli
+  License: MIT; see LICENSES/MIT-qqbot-agent-sdk.txt.
+  Used in: gateway/platforms/qqbot/chunked_upload.py and
+           gateway/platforms/qqbot/keyboards.py (ported from v1.2.2).
+
+- yuanbao-openclaw-plugin: https://github.com/Tencent/yuanbao-openclaw-plugin
+  Copyright (C) 2026 Tencent.  All rights reserved.
+  License: MIT; see LICENSES/MIT-yuanbao-openclaw-plugin.txt.
+  Used in: gateway/platforms/yuanbao_sticker.py and the Yuanbao chunking
+           helpers in gateway/platforms/helpers.py.
+
+- Grok CLI: https://github.com/superagent-ai/grok-cli
+  Copyright (c) [year] [copyright holders] (as stated in the upstream license)
+  License: MIT; see LICENSES/MIT-grok-cli.txt.
+  Used in: agent/verify/, tui_gateway/slash_fuzzy.py and
+           ui-tui/src/app/slash/fuzzyScore.ts.
+
+- IronClaw: https://github.com/nearai/ironclaw
+  Copyright (c) 2026 NEAR AI (dual-licensed MIT or Apache-2.0; used under MIT)
+  License: MIT; see LICENSES/MIT-ironclaw.txt.
+  Used in: agent/redact.py, gateway/platforms/base.py, tools/file_tools.py and
+           tools/file_tools_write_guards.py.
+
+- OpenClaw: https://github.com/openclaw/openclaw
+  Copyright (c) 2026 OpenClaw Foundation
+  License: MIT; see LICENSES/MIT-openclaw.txt.
+  Used in: agent/redact.py, cryozen_state_wal.py, gateway/config.py,
+           gateway/stream_consumer.py, gateway/stream_consumer_transport.py,
+           plugins/platforms/discord/adapter.py,
+           plugins/platforms/telegram/adapter.py and
+           tools/process_registry.py.
+
+- NanoClaw: https://github.com/nanocoai/nanoclaw (formerly qwibitai/nanoclaw)
+  Copyright (c) 2026 Gavriel
+  License: MIT; see LICENSES/MIT-nanoclaw.txt.
+  Used in: gateway/slash_commands.py, tools/approval.py,
+           tools/environments/docker.py and
+           scripts/whatsapp-bridge/bridge_helpers.js.
+
+- OpenCode: https://github.com/anomalyco/opencode
+  Copyright (c) 2025 opencode
+  License: MIT; see LICENSES/MIT-opencode.txt.
+  Used in: agent/prompt_builder.py (Gemini guidance adapted from gemini.txt),
+           agent/error_classifier.py, tools/mcp_tool.py,
+           tools/mcp_tool_errors.py, tools/mcp_tool_health.py,
+           tools/mcp_tool_transport.py, tools/schema_sanitizer.py and
+           plugins/memory/hindsight/embedded.py.
+
+- Kilo Code: https://github.com/Kilo-Org/kilocode
+  Copyright (c) 2026 Kilo Code; Copyright (c) 2025 opencode
+  License: MIT; see LICENSES/MIT-kilocode.txt.
+  Used in: agent/context_compressor.py, cryozen_cli/models.py,
+           cryozen_state_repair.py and tools/terminal_tool_result.py.
+
+- pi: https://github.com/earendil-works/pi
+  Copyright (c) 2025 Mario Zechner
+  License: MIT; see LICENSES/MIT-pi.txt.
+  Used in: agent/context_compressor.py, agent/gemini_native_adapter.py and
+           agent/prompt_builder.py.
+
+- oh-my-pi: https://github.com/can1357/oh-my-pi
+  Copyright (c) 2025 Mario Zechner; Copyright (c) 2025-2026 Can Bölük;
+    Copyright (c) 2026 Stencil Labs, Inc.
+  License: MIT; see LICENSES/MIT-oh-my-pi.txt.
+  Used in: agent/title_generator.py, agent/tool_guardrails.py and
+           tools/approval_floors.py.
+
+- prime-agent: https://github.com/PrimeIntellect-ai/prime-agent
+  Copyright (c) 2025 Mario Zechner; Copyright (c) 2026 Prime Intellect
+  License: MIT; see LICENSES/MIT-prime-agent.txt.
+  Used in: acp_adapter/session.py, cryozen_cli/models_reasoning_caps.py,
+           cryozen_cli/update_cmd.py, cryozen_cli/update_cmd_maint.py and
+           plugins/model-providers/openrouter/__init__.py.
+
+- Kimi Code: https://github.com/MoonshotAI/kimi-code
+  Copyright (c) 2026 Moonshot AI
+  License: MIT; see LICENSES/MIT-kimi-code.txt.
+  Used in: tools/file_operations.py, tools/mcp_tool_content.py and
+           tools/mcp_tool_handlers.py.
+
+- Superpowers: https://github.com/obra/superpowers
+  Copyright (c) 2025 Jesse Vincent
+  License: MIT; see LICENSES/MIT-superpowers.txt.
+  Used in: agent/plan_prompt.py (writing-craft guidance).
+
+- Paperclip: https://github.com/paperclipai/paperclip
+  Copyright (c) 2025 Paperclip AI
+  License: MIT; see LICENSES/MIT-paperclip.txt.
+  Used in: cryozen_cli/skills_hub.py (explicit merge mode for local edits).
+
+- book-to-skill: https://github.com/virgiliojr94/book-to-skill
+  Copyright (c) 2025 virgiliojr94
+  License: MIT; see LICENSES/MIT-book-to-skill.txt.
+  Used in: agent/learn_prompt.py (knowledge-base skill layout).
+
+- condensed-milk-pi: https://github.com/tomooshi/condensed-milk-pi
+  Copyright (c) 2026 tomooshi
+  License: MIT; see LICENSES/MIT-condensed-milk-pi.txt.
+  Used in: apps/desktop/src/lib/summarize-command.ts (command dispatcher).
+
+- fast-jev-compaction: https://github.com/tamaratran/fast-jev-compaction
+  Copyright (c) 2025 (as stated in the upstream license)
+  License: MIT; see LICENSES/MIT-fast-jev-compaction.txt.
+  Used in: evals/compaction/jev_arm.py.
+
+- Phosphor Icons: https://github.com/phosphor-icons/core
+  Copyright (c) 2023 Phosphor Icons
+  License: MIT; see LICENSES/MIT-phosphor-icons.txt.
+  Used in: icon paths inlined in apps/desktop/src/components/ui/tool-icon.tsx.
+
+Apache License 2.0
+~~~~~~~~~~~~~~~~~~
+The license text is in LICENSES/Apache-2.0.txt. The portions listed below
+were modified: they were reimplemented or adapted for Cryozen Agent (in most
+cases translated to another language and restructured for this codebase).
+
+- hatch-pet skill (OpenAI):
+  https://github.com/openai/skills/tree/main/skills/.curated/hatch-pet
+  Used in: agent/pet/generate/atlas.py: segmentation, fit and residue logic.
+
+- anchortree: https://github.com/truffle-dev/anchortree
+  Used in: apps/desktop/src/lib/preview-act/identity.ts: element re-binding
+           ladder.
+
+- Codex: https://github.com/openai/codex
+  Attribution from the upstream NOTICE file: OpenAI Codex, Copyright 2025
+  OpenAI
+  Used in: agent/turn_context.py, cryozen_cli/_subprocess_compat.py,
+           tools/ansi_strip.py, tools/approval_detection.py,
+           tools/approval_smart.py and tools/pty_query_responder.py.
+
+- Cline: https://github.com/cline/cline
+  Copyright 2026 Cline Bot Inc.
+  Used in: agent/prompt_builder.py (parallel tool-call guidance),
+           cryozen_cli/foreign_sessions.py, tools/arg_coercion.py and
+           tools/fuzzy_match.py.
+
+- Qwen Code: https://github.com/QwenLM/qwen-code
+  Copyright 2025 Google LLC; Copyright 2025 Qwen
+  Used in: agent/title_generator.py and tools/vision_tools_image_prep.py.
+
+- Gemini CLI: https://github.com/google-gemini/gemini-cli
+  Copyright 2025 Google LLC (as stated in the upstream source headers)
+  Used in: agent/gemini_native_adapter.py, cryozen_cli/cli_init_mixin.py,
+           cryozen_cli/cli_loops_mixin.py and
+           cryozen_cli/cli_session_mixin.py.
+
+- goose: https://github.com/aaif-goose/goose (formerly block/goose)
+  Copyright 2024 Block, Inc.
+  Used in: tools/schema_sanitizer.py, tools/ansi_strip.py and
+           tools/osv_check.py.
+
+- Buzz: https://github.com/block/buzz
+  Copyright 2026 Block, Inc.
+  Used in: apps/desktop/src/app/chat/composer/index.tsx,
+           apps/desktop/src/app/chat/composer/url-refs.ts,
+           apps/desktop/src/components/chat/transcript-video.tsx and
+           apps/desktop/src/store/video-playback-speed.ts.
+
+- Roo Code: https://github.com/RooCodeInc/Roo-Code
+  Copyright 2025 Roo Code, Inc.
+  Used in: tools/file_tools_write_guards.py (protected-path rules).
+
+SIL Open Font License 1.1
+~~~~~~~~~~~~~~~~~~~~~~~~~
 - JetBrains Mono font files bundled with the desktop app and web dashboard.
-  SIL Open Font License 1.1; the license text ships next to the font files.
+  The license text ships next to the font files.
 
 Python and JavaScript dependencies installed from package registries are not
 redistributed in this repository and remain under their own licenses.

@@ -171,7 +171,7 @@ class TestAgentSwitchModelDefenseInDepth:
 
 
 class TestStaleConfigDefaultDoesNotWedgeResolver:
-    """Regression for the real bug Quentin hit.
+    """Regression for a real reported bug.
 
     When ``model.default`` in config.yaml is an OpenCode Anthropic-routed model
     (e.g. ``claude-sonnet-4-6`` on opencode-zen) and the user does ``/model

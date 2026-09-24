@@ -1365,7 +1365,7 @@ class GatewayTurnMixin:
         except HygieneTurnHoldExceeded:
             # Availability boundary, not a failure — already logged at INFO by the turn-hold handler.
             # Must not hit the generic "auto-compress failed" warning below: that log is how thinking-model
-            # deployments read as permanently broken (#97963; surfaced by @686f6c61 in PR #99657).
+            # deployments read as permanently broken (#97963; surfaced in PR #99657).
             pass
         except Exception as e:
             logger.warning("Session hygiene auto-compress failed: %s", e)

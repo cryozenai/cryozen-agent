@@ -1364,7 +1364,7 @@ class TestRunStillCurrentGuard:
 # Regression guard for the /think tag leak: when the stream consumer is
 # NOT inside a think block, stray close tags like </think> must be
 # stripped before text is accumulated — otherwise they leak to Telegram.
-# (Reported by Tony on 2026-06-09.)
+# (Reported on 2026-06-09.)
 
 
 class TestStripOrphanCloseTags:

@@ -7,7 +7,7 @@ unconditionally, silently, for the whole session lifetime. A user asking
 "send me that file again" got a reply reading "here it is" with no
 attachment and nothing in the logs.
 
-Fix (salvaged from PR #74158 by @webtecnica, widened to the streaming
+Fix (salvaged from PR #74158, widened to the streaming
 sibling):
 
 * Non-streaming (``BasePlatformAdapter._process_message_background``):

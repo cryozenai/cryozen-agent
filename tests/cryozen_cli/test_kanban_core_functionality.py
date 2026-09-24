@@ -574,7 +574,7 @@ def test_claim_task_recovers_from_invariant_leak(kanban_home):
 
 
 # -------------------------------------------------------------------------
-# Pre-merge audit by @erosika (issue #16102 comment 4331125835) — fixes
+# Pre-merge audit (issue #16102 comment 4331125835) — fixes
 # -------------------------------------------------------------------------
 
 def test_unblock_invariant_recovery(kanban_home):
@@ -585,7 +585,7 @@ def test_unblock_invariant_recovery(kanban_home):
         tid = kb.create_task(conn, title="unblock invariant", assignee="worker")
         # Start on running, then open a run, then force to 'blocked' but
         # leave current_run_id pointing at the open run — simulate the
-        # invariant violation erosika flagged.
+        # invariant violation the audit flagged.
         kb.claim_task(conn, tid)
         leaked_run_id = kb.latest_run(conn, tid).id
         # Force the bad state.

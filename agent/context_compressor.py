@@ -1021,9 +1021,6 @@ _ANCHOR_PATTERNS: "list[tuple[str, re.Pattern[str], int]]" = [
     ("handles", re.compile(r"@[A-Za-z0-9-]{3,30}\b"), 40),
     ("urls", re.compile(r"https?://[^\s)\"']{10,110}"), 30),
 ]
-_ANCHOR_NOISE = frozenset({
-    "@teknium", "@teknium1",  # session owner, in every transcript
-})
 
 
 def _build_anchor_index(turns: List[Dict[str, Any]]) -> str:
@@ -1038,8 +1035,6 @@ def _build_anchor_index(turns: List[Dict[str, Any]]) -> str:
         last_seen: dict[str, int] = {}
         for n, m in enumerate(pattern.finditer(text)):
             val = m.group(0).strip().rstrip(".,;:")
-            if val.lower() in _ANCHOR_NOISE:
-                continue
             counts[val] = counts.get(val, 0) + 1
             last_seen[val] = n
         if not counts:

@@ -515,7 +515,7 @@ def _register_from_cache_sync(name: str, config: dict, entry: dict) -> List[str]
     through ``_ensure_lazy_server_connected``). Trust metadata is recorded first so the
     call-time gate is identical for live and cached registrations.
 
-    Lazy startup (#56832, design by Vansh5632): tools appear in the registry immediately; the first real
+    Lazy startup (#56832): tools appear in the registry immediately; the first real
     call routes through ``_get_connected_server_for_call`` → ``_ensure_lazy_server_connected``.
     """
     from tools.mcp_schema_cache import config_fingerprint, tools_from_cache_entry, utility_tools_from_cache_entry

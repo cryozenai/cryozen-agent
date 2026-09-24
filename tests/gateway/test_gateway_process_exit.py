@@ -22,7 +22,7 @@ def test_main_terminates_via_os_exit_not_systemexit(monkeypatch):
     fixes (#53107). If main() ever regresses to sys.exit(), SystemExit would
     propagate instead of our os._exit sentinel and this test would fail.
 
-    Test contributed by @AgenticSpark (PR #53122, duplicate of #53121)."""
+    Test from PR #53122 (duplicate of #53121)."""
     async def fake_start_gateway(config=None):
         return False
 

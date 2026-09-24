@@ -5,8 +5,7 @@ sessions — test scripts, temp outputs, cron logs, stale chrome profiles.
 <!-- no-tmp: ok — documents the legacy scratch scope this plugin cleans up -->
 Scoped strictly to `$CRYOZEN_HOME` and `/tmp/cryozen-*`.
 
-Originally contributed by [@LVT382009](https://github.com/LVT382009) as a
-skill in PR #12212.  Ported to the plugin system so the behaviour runs
+Originally a skill in PR #12212.  Ported to the plugin system so the behaviour runs
 automatically via `post_tool_call` and `on_session_end` hooks — the agent
 never needs to remember to call a tool.
 

@@ -132,7 +132,7 @@ case "$MODE" in
     [ "$fails" -eq 0 ] && say "gate matrix: all pass" || { say "gate matrix: $fails FAILED"; exit 1; }
     ;;
   launch)
-    # Terminal-lifecycle matrix (gille round 2): launch acceptance is part
+    # Terminal-lifecycle matrix: launch acceptance is part
     # of the outcome. Each case runs the REAL orchestrator (--no-ui) against
     # a fake install whose `cryozen` stub exits 0 instantly, so the flow
     # reaches finish() with FINAL_CODE=0 and exercises the launch leg.

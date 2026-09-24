@@ -102,7 +102,7 @@ Good defaults:
 | Provider | What it is | How to set up |
 |----------|-----------|---------------|
 | **OpenAI Codex** | ChatGPT or Codex subscription, uses Codex models | Device code auth via `cryozen model` → **ChatGPT or Codex Subscription** |
-| **Anthropic** | Claude models directly — Max plan + extra usage credits (OAuth), or API key for pay-per-token | `cryozen model` → OAuth login (requires Max + extra credits), or an Anthropic API key |
+| **Anthropic** | Claude models directly, pay-per-token with an Anthropic API key (Claude subscriptions are not supported) | `cryozen model` → **Anthropic**, then paste your API key |
 | **OpenRouter** | Multi-provider routing across many models | Enter your API key |
 | **Fireworks AI** | Direct OpenAI-compatible model API | Set `FIREWORKS_API_KEY` |
 | **Z.AI** | GLM / Zhipu-hosted models | Set `GLM_API_KEY` / `ZAI_API_KEY` (also accepts `Z_AI_API_KEY`) |

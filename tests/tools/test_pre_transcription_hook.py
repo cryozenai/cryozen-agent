@@ -35,7 +35,7 @@ import cryozen_cli.plugins as plugins_mod
 from tools import transcription_tools
 
 
-PROMPT = "Cryozen, Teknium, Cryozen, kanban"
+PROMPT = "Cryozen, Alice, Cryozen, kanban"
 
 
 # ---------------------------------------------------------------------------

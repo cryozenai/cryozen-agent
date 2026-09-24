@@ -1,6 +1,6 @@
 """A codex app-server thread started from scratch is seeded with the session's prior turns (#26035, #74712).
 
-Direction from #26081 (@LeonSGP43). A resumed codex thread already holds the conversation, so only a
+Direction from #26081. A resumed codex thread already holds the conversation, so only a
 fresh ``thread/start`` carries the seed, and the recorded prompt composition stays the bare prompt so
 the seed never makes the next turn retire the thread.
 """

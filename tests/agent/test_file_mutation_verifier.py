@@ -10,7 +10,7 @@ Covers the three moving pieces:
 3. ``AIAgent._format_file_mutation_failure_footer`` — renders the dict
    as a user-visible advisory.
 
-Regression target: the "Ben Eng llm-wiki" session where grok-4.1-fast
+Regression target: the "llm-wiki" session where grok-4.1-fast
 batched parallel patches, half failed, and the model summarised the
 turn claiming every file was edited.  This verifier makes over-claiming
 structurally impossible past the model: the user always sees the real

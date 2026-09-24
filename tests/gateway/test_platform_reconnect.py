@@ -1100,9 +1100,9 @@ class TestRequeueHealsDeadReconnectWatcher:
 
 
 class TestSupervisionExhaustionHasAnOwner:
-    """The witness @andrexibiza asked for on #90448: recovery with NO new event.
+    """The witness requested on #90448: recovery with NO new event.
 
-    The predecessor architecture (#72366, salvage of #71867 by @ygd58)
+    The predecessor architecture (#72366, salvage of #71867)
     established that a reconnect watcher which dies while work is queued must
     be respawned by something *autonomous*, because the only other trigger --
     a fresh fatal error from another platform -- may never arrive. Supervised
@@ -1111,7 +1111,7 @@ class TestSupervisionExhaustionHasAnOwner:
     stops.
 
     Past that point the system is back in exactly the state #72366 described.
-    And #81036 (salvage of #80700, preserving @HexLab98) makes the missing
+    And #81036 (salvage of #80700) makes the missing
     event less likely rather than more: it publishes the queue *before*
     disconnect and drops the failed adapter from the live map, so there may be
     no adapter left to emit the callback recovery was waiting on.

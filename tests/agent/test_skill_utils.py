@@ -248,8 +248,8 @@ def test_skill_support_path_uses_explicit_discovery_root_not_cwd(tmp_path, monke
 class TestSkillMatchesPlatformTermux:
     """Termux is Linux userland on Android. Skills tagged platforms:[linux]
     must load there regardless of whether Python reports sys.platform as
-    "linux" (pre-3.13) or "android" (3.13+). Reported by user @LikiusInik
-    in May 2026 — only 3 built-in skills appeared on Termux because every
+    "linux" (pre-3.13) or "android" (3.13+). Reported by a user:
+    only 3 built-in skills appeared on Termux because every
     github/productivity/mlops skill is tagged platforms:[linux,macos,windows]
     and sys.platform=="android" did not start with "linux".
     """

@@ -161,7 +161,7 @@ def test_generate_xai_tts_uses_oauth_pinned_base_url(tmp_path, monkeypatch):
 def test_generate_xai_tts_prefers_explicit_api_key_over_oauth(tmp_path, monkeypatch):
     """TTS requires API billing even when chat OAuth is configured (#87045).
 
-    Adapted from PR #87081 (@enwaiax): the precedence now lives in the shared
+    Adapted from PR #87081: the precedence now lives in the shared
     resolver behind ``prefer_api_key=True`` instead of an inline early return,
     so the key is read via ``resolve_provider_secret`` and the base URL
     override goes through the same *.x.ai origin validation as OAuth.

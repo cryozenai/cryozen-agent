@@ -145,12 +145,12 @@ When provider resolution selects `anthropic`, Cryozen uses:
 - the native Anthropic Messages API
 - `agent/anthropic_adapter.py` for translation
 
-Credential resolution for native Anthropic now prefers refreshable Claude Code credentials over copied env tokens when both are present. In practice that means:
+Native Anthropic is API-key only. In practice that means:
 
-- Claude Code credential files are treated as the preferred source when they include refreshable auth
-- manual `ANTHROPIC_TOKEN` / `CLAUDE_CODE_OAUTH_TOKEN` values still work as explicit overrides
-- Cryozen preflights Anthropic credential refresh before native Messages API calls
-- Cryozen still retries once on a 401 after rebuilding the Anthropic client, as a fallback path
+- the credential is `ANTHROPIC_API_KEY` (resolved profile-scoped by `agent/anthropic_credentials.py::resolve_anthropic_token()`) or an API-key entry in the `anthropic` credential pool
+- Claude subscription OAuth / setup tokens (`sk-ant-oat...`) are refused wherever they appear: in `ANTHROPIC_API_KEY`, in `cryozen auth add anthropic`, and in pool rows persisted by older releases, which are dropped on load
+- Cryozen re-reads `ANTHROPIC_API_KEY` before native Messages API calls, so a rotated key takes effect without a restart
+- Cryozen still retries once on a 401 after rebuilding the Anthropic client with the re-read key, as a fallback path
 
 ## OpenAI Codex path
 

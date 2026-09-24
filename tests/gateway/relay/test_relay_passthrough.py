@@ -127,7 +127,7 @@ async def test_discord_interaction_routes_through_handle_message(adapter, monkey
             "channel_id": "chan-9",
             "guild_id": "guild-7",
             "data": {"name": "summarize"},
-            "member": {"user": {"id": "user-3", "username": "ben"}},
+            "member": {"user": {"id": "user-3", "username": "bob"}},
         }
     )
     await stub.push_passthrough(fwd, buffer_id=None)
@@ -183,7 +183,7 @@ async def test_discord_interaction_stamps_routed_profile(adapter, monkeypatch):
             "channel_id": "chan-9",
             "guild_id": "guild-7",
             "data": {"name": "summarize"},
-            "member": {"user": {"id": "user-3", "username": "ben"}},
+            "member": {"user": {"id": "user-3", "username": "bob"}},
         },
         profile="reviewer",
     )
@@ -222,7 +222,7 @@ async def test_application_command_subcommand_nesting_renders_names_then_values(
                     }
                 ],
             },
-            "member": {"user": {"id": "u5", "username": "ben"}},
+            "member": {"user": {"id": "u5", "username": "bob"}},
         }
     )
     await stub.push_passthrough(fwd)
@@ -253,7 +253,7 @@ async def test_dm_interaction_keys_as_discord_dm(adapter, monkeypatch):
             "type": 2,
             "channel_id": "dm-chan-1",
             "data": {"name": "sethome"},
-            "user": {"id": "u9", "username": "ben"},
+            "user": {"id": "u9", "username": "bob"},
         }
     )
     await stub.push_passthrough(fwd)
@@ -281,7 +281,7 @@ async def test_routed_profile_round_trips_on_every_egress_frame(adapter, monkeyp
     fwd = _interaction_forward(
         {
             "id": "interaction-3", "type": 2, "channel_id": "chan-9", "guild_id": "guild-7",
-            "data": {"name": "summarize"}, "member": {"user": {"id": "user-3", "username": "ben"}},
+            "data": {"name": "summarize"}, "member": {"user": {"id": "user-3", "username": "bob"}},
         },
         profile="reviewer",
     )

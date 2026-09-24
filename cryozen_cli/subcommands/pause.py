@@ -2,7 +2,7 @@
 
 ``pause`` writes the ESTOP sentinel at ``$CRYOZEN_HOME/ESTOP``; cron, kanban and new gateway
 turns halt on their next check (in-flight work is never killed). ``resume`` removes it and
-operation resumes on the next tick — no restart. Ported from gastownhall/gastown estop.go (MIT).
+operation resumes on the next tick — no restart. Ported from gastownhall/gastown estop.go (MIT; see NOTICE).
 """
 
 from __future__ import annotations

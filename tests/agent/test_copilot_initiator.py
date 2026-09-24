@@ -7,7 +7,7 @@ user prompts never consumed premium requests and were throttled as agent
 traffic. The fix marks the FIRST API call of each user turn as "user" and
 lets tool-loop follow-ups keep the "agent" default.
 
-Salvaged from PR #4097 (@tjp2021); adapted to the post-refactor layout
+Salvaged from PR #4097; adapted to the post-refactor layout
 (conversation_loop.py owns the injection site, the codex transport now
 accepts extra_headers).
 """

@@ -118,7 +118,7 @@ class TestCmdStatus:
             host = "cryozen"
             base_url = None
             ai_peer = "cryozen"
-            peer_name = "eri"
+            peer_name = "ann"
             recall_mode = "hybrid"
             user_observe_me = True
             user_observe_others = False
@@ -172,7 +172,7 @@ class TestCmdStatus:
             host = "cryozen"
             base_url = None
             ai_peer = "cryozen"
-            peer_name = "eri"
+            peer_name = "ann"
             recall_mode = "hybrid"
             user_observe_me = True
             user_observe_others = False
@@ -248,8 +248,8 @@ class TestCloneHonchoForProfile:
             "apiKey": "***",
             "hosts": {
                 "cryozen": {
-                    "userPeerAliases": {"7654321": "eri", "discord-491827364": "eri"},
-                    "peerName": "eri",
+                    "userPeerAliases": {"7654321": "ann", "discord-491827364": "ann"},
+                    "peerName": "ann",
                 },
             },
         }
@@ -257,7 +257,7 @@ class TestCloneHonchoForProfile:
         ok = honcho_cli.clone_honcho_for_profile("coder")
         assert ok is True
         new_block = written["cfg"]["hosts"]["cryozen_coder"]
-        assert new_block["userPeerAliases"] == {"7654321": "eri", "discord-491827364": "eri"}
+        assert new_block["userPeerAliases"] == {"7654321": "ann", "discord-491827364": "ann"}
 
     def test_runtime_peer_prefix_carries_into_cloned_profile(self, monkeypatch, tmp_path):
         cfg = {
@@ -265,7 +265,7 @@ class TestCloneHonchoForProfile:
             "hosts": {
                 "cryozen": {
                     "runtimePeerPrefix": "telegram_",
-                    "peerName": "eri",
+                    "peerName": "ann",
                 },
             },
         }
@@ -281,7 +281,7 @@ class TestCloneHonchoForProfile:
             "hosts": {
                 "cryozen": {
                     "sessionAiPeerPrefix": True,
-                    "peerName": "eri",
+                    "peerName": "ann",
                 },
             },
         }
@@ -297,7 +297,7 @@ class TestCloneHonchoForProfile:
             "hosts": {
                 "cryozen": {
                     "pinPeerName": True,
-                    "peerName": "eri",
+                    "peerName": "ann",
                 },
             },
         }
@@ -311,7 +311,7 @@ class TestCloneHonchoForProfile:
     def test_unset_identity_keys_do_not_appear_in_cloned_profile(self, monkeypatch, tmp_path):
         cfg = {
             "apiKey": "***",
-            "hosts": {"cryozen": {"peerName": "eri"}},
+            "hosts": {"cryozen": {"peerName": "ann"}},
         }
         honcho_cli, written = self._setup_clone_env(monkeypatch, tmp_path, cfg)
         ok = honcho_cli.clone_honcho_for_profile("coder")
@@ -370,7 +370,7 @@ class TestSetupWizardDeploymentShape:
             def resolve_session_name(self):
                 return "cryozen-test"
             workspace_id = "cryozen"
-            peer_name = "eri"
+            peer_name = "ann"
             ai_peer = "hermetika"
             observation_mode = "directional"
             write_frequency = "async"
@@ -409,7 +409,7 @@ class TestSetupWizardDeploymentShape:
         answers = [
             "cloud",           # deployment
             "",                # api key (keep)
-            "eri",             # peer name
+            "ann",             # peer name
             "hermetika",       # ai peer
             "cryozen",          # workspace
             "1",               # tree: just me ← key answer
@@ -431,7 +431,7 @@ class TestSetupWizardDeploymentShape:
         answers = [
             "cloud",           # deployment
             "",                # api key (keep)
-            "eri",             # peer name
+            "ann",             # peer name
             "hermetika",       # ai peer
             "cryozen",          # workspace
             "3",               # tree: only other people
@@ -449,7 +449,7 @@ class TestSetupWizardDeploymentShape:
         answers = [
             "cloud",           # deployment
             "",                # api key (keep)
-            "eri",             # peer name
+            "ann",             # peer name
             "hermetika",       # ai peer
             "cryozen",          # workspace
             "2",               # tree: me + other people
@@ -463,8 +463,8 @@ class TestSetupWizardDeploymentShape:
         host = self._run_setup(monkeypatch, tmp_path, answers=answers)
         assert host["pinUserPeer"] is False
         assert host["userPeerAliases"] == {
-            "7654321": "eri",
-            "491827364": "eri",
+            "7654321": "ann",
+            "491827364": "ann",
         }
         assert "runtimePeerPrefix" not in host
 
@@ -480,7 +480,7 @@ class TestSetupWizardDeploymentShape:
             }},
         }
         answers = [
-            "cloud", "", "eri", "hermetika", "cryozen", "s",
+            "cloud", "", "ann", "hermetika", "cryozen", "s",
         ]
         host = self._run_setup(monkeypatch, tmp_path, answers=answers, initial_cfg=initial_cfg)
         assert host["pinUserPeer"] is True
@@ -495,12 +495,12 @@ class TestSetupWizardDeploymentShape:
         """
         initial_cfg = {
             "apiKey": "***",
-            "hosts": {"cryozen": {"pinPeerName": True, "peerName": "eri"}},
+            "hosts": {"cryozen": {"pinPeerName": True, "peerName": "ann"}},
         }
         answers = [
             "cloud",           # deployment
             "",                # api key (keep)
-            "eri",             # peer name
+            "ann",             # peer name
             "hermetika",       # ai peer
             "cryozen",          # workspace
             "3",               # tree: only others — triggers the orphan guard
@@ -513,11 +513,11 @@ class TestSetupWizardDeploymentShape:
         ]
         host = self._run_setup(monkeypatch, tmp_path, answers=answers, initial_cfg=initial_cfg)
         assert host["pinUserPeer"] is False
-        assert host["userPeerAliases"] == {"7654321": "eri"}
+        assert host["userPeerAliases"] == {"7654321": "ann"}
 
 
     def test_mapping_step_points_at_peers_map(self, monkeypatch, tmp_path, capsys):
-        self._run_setup(monkeypatch, tmp_path, answers=["cloud", "", "eri", "hermetika", "cryozen", "s"])
+        self._run_setup(monkeypatch, tmp_path, answers=["cloud", "", "ann", "hermetika", "cryozen", "s"])
         assert "cryozen honcho peers map" in capsys.readouterr().out
 
     def test_host_pin_user_peer_true_is_detected_as_single(self, monkeypatch, tmp_path):
@@ -530,13 +530,13 @@ class TestSetupWizardDeploymentShape:
         """
         initial_cfg = {
             "apiKey": "***",
-            "hosts": {"cryozen": {"pinUserPeer": True, "peerName": "eri"}},
+            "hosts": {"cryozen": {"pinUserPeer": True, "peerName": "ann"}},
         }
         # Exhaust the iterator before the choice prompt so the scripted
         # mock falls through to the prompt's default (the detected shape →
         # choice "1").  Scripting an explicit "" would NOT exercise that
         # fallthrough — the mock returns it literally.
-        answers = ["cloud", "", "eri", "hermetika", "cryozen"]
+        answers = ["cloud", "", "ann", "hermetika", "cryozen"]
         host = self._run_setup(monkeypatch, tmp_path, answers=answers, initial_cfg=initial_cfg)
         # Scrub-then-write normalises onto the canonical pinUserPeer.
         assert host["pinUserPeer"] is True
@@ -549,29 +549,29 @@ class TestSetupWizardDeploymentShape:
         """
         initial_cfg = {
             "apiKey": "***",
-            "userPeerAliases": {"7654321": "eri"},
-            "hosts": {"cryozen": {"peerName": "eri"}},
+            "userPeerAliases": {"7654321": "ann"},
+            "hosts": {"cryozen": {"peerName": "ann"}},
         }
-        answers = ["cloud", "", "eri", "hermetika", "cryozen"]
+        answers = ["cloud", "", "ann", "hermetika", "cryozen"]
         host = self._run_setup(monkeypatch, tmp_path, answers=answers, initial_cfg=initial_cfg)
         assert host["pinUserPeer"] is False
         # Hybrid materialises the root aliases into the host so subsequent
         # operator edits live on the host block they're inspecting.
-        assert host["userPeerAliases"] == {"7654321": "eri"}
+        assert host["userPeerAliases"] == {"7654321": "ann"}
 
     @pytest.mark.parametrize("initial_cfg, expected_pin", [
         (None, True),
         ({"apiKey": "***", "hosts": {"cryozen": {}}}, True),
-        ({"apiKey": "***", "hosts": {"cryozen": {"pinUserPeer": False, "peerName": "eri"}}}, False),
-        ({"apiKey": "***", "hosts": {"cryozen": {"enabled": True, "workspace": "cryozen", "peerName": "eri"}}}, False),
-        ({"apiKey": "***", "enabled": True, "workspace": "cryozen", "peerName": "eri"}, False),
+        ({"apiKey": "***", "hosts": {"cryozen": {"pinUserPeer": False, "peerName": "ann"}}}, False),
+        ({"apiKey": "***", "hosts": {"cryozen": {"enabled": True, "workspace": "cryozen", "peerName": "ann"}}}, False),
+        ({"apiKey": "***", "enabled": True, "workspace": "cryozen", "peerName": "ann"}, False),
     ], ids=["fresh-config-defaults-to-single", "empty-host-block-defaults-to-single",
             "configured-multi-keeps-multi", "existing-install-without-mapping-keys-keeps-multi",
             "legacy-root-level-install-keeps-multi"])
     def test_choice_default_follows_config(self, monkeypatch, tmp_path, initial_cfg, expected_pin):
         """Enter on a fresh config picks the pinned personal shape. An existing install, with or
         without mapping keys, keeps its detected shape so Enter never merges every account onto one peer."""
-        answers = ["cloud", "", "eri", "hermetika", "cryozen"]
+        answers = ["cloud", "", "ann", "hermetika", "cryozen"]
         host = self._run_setup(monkeypatch, tmp_path, answers=answers, initial_cfg=initial_cfg)
         assert host["pinUserPeer"] is expected_pin
 
@@ -581,9 +581,9 @@ class TestSetupWizardDeploymentShape:
         the 'configure anyway?' prompt leaves identity mapping untouched."""
         initial_cfg = {
             "apiKey": "***",
-            "hosts": {"cryozen": {"peerName": "eri"}},
+            "hosts": {"cryozen": {"peerName": "ann"}},
         }
-        answers = ["cloud", "", "eri", "hermetika", "cryozen", "n"]
+        answers = ["cloud", "", "ann", "hermetika", "cryozen", "n"]
         host = self._run_setup(
             monkeypatch, tmp_path, answers=answers, initial_cfg=initial_cfg,
             gateway_platforms=[],
@@ -597,9 +597,9 @@ class TestSetupWizardDeploymentShape:
         whether the gateway is running; 'no' skips the mapping step."""
         initial_cfg = {
             "apiKey": "***",
-            "hosts": {"cryozen": {"peerName": "eri"}},
+            "hosts": {"cryozen": {"peerName": "ann"}},
         }
-        answers = ["cloud", "", "eri", "hermetika", "cryozen", "n"]
+        answers = ["cloud", "", "ann", "hermetika", "cryozen", "n"]
         host = self._run_setup(
             monkeypatch, tmp_path, answers=answers, initial_cfg=initial_cfg,
             gateway_platforms=None,
@@ -610,16 +610,16 @@ class TestSetupWizardDeploymentShape:
         """The [e] escape hatch lets a power user set pinUserPeer + an alias +
         prefix directly, bypassing the intent tree."""
         answers = [
-            "cloud", "", "eri", "hermetika", "cryozen",
+            "cloud", "", "ann", "hermetika", "cryozen",
             "e",               # tree: edit raw keys
             "false",           # pinUserPeer
-            "99887766=eri",    # one alias pair
+            "99887766=ann",    # one alias pair
             "",                # finish aliases
             "discord_",        # runtimePeerPrefix
         ]
         host = self._run_setup(monkeypatch, tmp_path, answers=answers)
         assert host["pinUserPeer"] is False
-        assert host["userPeerAliases"] == {"99887766": "eri"}
+        assert host["userPeerAliases"] == {"99887766": "ann"}
         assert host["runtimePeerPrefix"] == "discord_"
 
 
@@ -635,7 +635,7 @@ class TestCloneCarriesPinUserPeer:
 
         cfg = {
             "apiKey": "***",
-            "hosts": {"cryozen": {"pinUserPeer": True, "peerName": "eri"}},
+            "hosts": {"cryozen": {"pinUserPeer": True, "peerName": "ann"}},
         }
         cfg_path = tmp_path / "config.json"
         cfg_path.write_text("{}")
@@ -707,7 +707,7 @@ class TestCmdSetupDeviceFlow:
             def resolve_session_name(self):
                 return "cryozen-test"
             workspace_id = "cryozen"
-            peer_name = "eri"
+            peer_name = "ann"
             ai_peer = "hermetika"
             observation_mode = "directional"
             write_frequency = "async"
@@ -833,8 +833,8 @@ class TestSetupApiKeyReplacesStaleGrant:
         assert shown in capsys.readouterr().out
 
 
-_OAUTH_DEFAULT = {"peerName": "eri", "hosts": {"cryozen": {
-    "enabled": True, "apiKey": "hch-at-live", "workspace": "cryozen", "peerName": "eri", "oauth": {"refreshToken": "hch-rt-live"},
+_OAUTH_DEFAULT = {"peerName": "ann", "hosts": {"cryozen": {
+    "enabled": True, "apiKey": "hch-at-live", "workspace": "cryozen", "peerName": "ann", "oauth": {"refreshToken": "hch-rt-live"},
 }}}
 _KEYLESS_DEFAULT = {"hosts": {"cryozen": {"workspace": "cryozen"}}}
 

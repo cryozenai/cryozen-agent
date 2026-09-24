@@ -456,7 +456,7 @@ class TestPinUserPeerAlias:
         config_file = tmp_path / "honcho.json"
         config_file.write_text(json.dumps({
             "apiKey": "***",
-            "peerName": "eri",
+            "peerName": "ann",
             "hosts": {"cryozen": {"pinPeerName": True}},
         }))
         config = HonchoClientConfig.from_global_config(config_path=config_file)

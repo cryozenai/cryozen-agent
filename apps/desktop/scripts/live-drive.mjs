@@ -9,7 +9,7 @@
 //   node scripts/live-drive.mjs eval "expr"     — arbitrary page eval
 //
 // Attaches to the page target directly (no perf-harness deps) so it works on
-// the app Brooklyn actually runs, with her profile, her sessions, her layout.
+// the app the user actually runs, with their profile, sessions, and layout.
 
 import { WebSocket } from 'ws'
 

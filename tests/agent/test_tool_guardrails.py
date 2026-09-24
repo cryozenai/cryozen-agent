@@ -292,7 +292,7 @@ def test_web_search_cap_blocks_after_limit_regardless_of_hard_stop():
 
 
 
-# ── Legitimate flows must survive hard stops (Teknium, Sep 2026) ────────────
+# ── Legitimate flows must survive hard stops ────────────────────────────────
 # Hard stops default ON for unattended platforms. These pin the flows that
 # must NEVER be cut off there: edit -> re-run loops, diagnostic sweeps of
 # distinct red commands, and browser retry-after-action — while the pure

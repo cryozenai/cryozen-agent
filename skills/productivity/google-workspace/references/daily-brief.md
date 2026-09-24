@@ -2,8 +2,6 @@
 
 Produce an action-oriented start-of-day or next-day brief from Gmail and Google Calendar. Load this reference when the user asks for a morning brief, "what's on my calendar and what email needs attention," meeting preparation, or tomorrow's deadlines and conflicts. The main SKILL.md owns the commands; this reference owns the brief-composition procedure.
 
-Credit: workflow contributed by Ben Barclay (benbarclay).
-
 ## Procedure
 
 ### 1. Resolve day and identity

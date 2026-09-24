@@ -1,8 +1,8 @@
 """``cryozen usage`` — the account-limits block of the REPL ``/usage`` without starting a session.
 
-Script-friendly Codex / Anthropic / OpenRouter quota view (issue #33094): same fetch and renderer as
+Script-friendly Codex / OpenRouter quota view (issue #33094): same fetch and renderer as
 ``/usage`` (``agent.account_usage``), same credential resolution as a session with no live agent, plus
-``--json`` for cron jobs and shell loops. Slim redo of #81819 (@himanusia).
+``--json`` for cron jobs and shell loops. Slim redo of #81819.
 """
 
 from __future__ import annotations
@@ -63,7 +63,7 @@ def build_usage_parser(subparsers) -> None:
     usage_parser = subparsers.add_parser(
         "usage", help="Show account rate-limit windows (the /usage block) without starting a session",
         description="Fetch the configured provider's account limits (Codex 5h/weekly windows, plan, banked "
-                    "resets; Anthropic OAuth windows; OpenRouter credits) — the same block the /usage slash "
+                    "resets; OpenRouter credits) — the same block the /usage slash "
                     "command prints — and exit. Exit code 1 when no credential is configured or the fetch fails.",
     )
     usage_parser.add_argument(

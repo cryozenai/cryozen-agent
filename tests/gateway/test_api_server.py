@@ -2992,7 +2992,7 @@ class TestRequestRelayMetadata:
 class TestDirectModelRequestsGate:
     """Bare ``model`` (no ``provider``) is opt-in on OpenAI-compatible
     endpoints so generic clients hardcoding "gpt-4o" keep falling back to
-    the gateway default (idea credit: PR #22825 by @mssteuer)."""
+    the gateway default (idea from PR #22825)."""
 
     def test_bare_model_dropped_when_disallowed(self):
         overrides = _request_agent_overrides(
@@ -3064,7 +3064,7 @@ class TestRouteWithoutModelKeepsDefault:
 
 # ---------------------------------------------------------------------------
 # Empty-model recovery + provider-auth error typing in _create_agent
-# (salvaged from PR #57947 by @FvanW)
+# (salvaged from PR #57947)
 # ---------------------------------------------------------------------------
 
 

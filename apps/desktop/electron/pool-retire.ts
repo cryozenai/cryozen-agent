@@ -29,8 +29,6 @@ export function selectRetirementCandidates<K, E extends PoolRetireEntry>(
 
 /** One arbiter owns foreground recovery, idle reaping and stale LRU eviction.
  * A permit freezes backend admission; a GET snapshot never authorizes a kill.
- * Credit: @bounce12340's occupied-not-busy diagnosis, @austinpickett's parking,
- * @chelsealong's backend-work proof and @sharkenstein3d's shared stop boundary.
  */
 export function createPoolRetirer<E extends PoolRetireEntry>(deps: PoolRetirerDeps<E>) {
   let serial: Promise<unknown> = Promise.resolve()

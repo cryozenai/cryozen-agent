@@ -257,7 +257,7 @@ def test_looks_like_human_speaker():
     for s in ("", "   ", "Unknown", "unknown", "You", "you", "Cryozen Agent", "cryozen agent"):
         assert not _looks_like_human_speaker(s, "Cryozen Agent"), f"{s!r} should NOT be human"
     # Real names → human (barge-in)
-    for s in ("Alice", "Bob Lee", "@teknium"):
+    for s in ("Alice", "Bob Lee", "@devuser"):
         assert _looks_like_human_speaker(s, "Cryozen Agent"), f"{s!r} SHOULD be human"
 
 

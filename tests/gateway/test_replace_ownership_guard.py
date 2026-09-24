@@ -1,7 +1,7 @@
 """Tests for issue #89315 — ``--replace`` must never signal a gateway it
 cannot prove belongs to this CRYOZEN_HOME.
 
-Design contract (v3, after andrexibiza's second review): ownership is decided
+Design contract (v3, after the second review): ownership is decided
 by the persisted identity record ALONE — exact ``_same_cryozen_home`` equality
 bound to the live target by exact PID + start-time. A readable live argv
 carries no CRYOZEN_HOME, so it can never prove home ownership; it only feeds a

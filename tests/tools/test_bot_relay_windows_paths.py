@@ -35,10 +35,10 @@ ENV = {"id": "d" * 32, "target_handle": "researcher", "target_connection": "ssh-
 def test_waiter_argv_uses_forward_slashes_on_windows():
     """On native Windows the reply path rides as a forward-slash argv element, like the delivery
     runner's paths: Git Bash runs those, and parses a backslash path as a command name."""
-    parts = shlex.split(bot_relay.waiter_command("C:\\Users\\joshu\\.cryozen-agent", ENV))
+    parts = shlex.split(bot_relay.waiter_command("C:\\Users\\alice\\.cryozen-agent", ENV))
 
     assert "-c" not in parts and "--wait-reply" in parts
-    assert parts[parts.index("--wait-reply") + 1] == f"C:/Users/joshu/.cryozen-agent/bot_relay/replies/{ENV['id']}.json"
+    assert parts[parts.index("--wait-reply") + 1] == f"C:/Users/alice/.cryozen-agent/bot_relay/replies/{ENV['id']}.json"
     assert not any("\\" in part for part in parts)
 
 

@@ -11,8 +11,8 @@ ContextVar override the gateway multiplexer / dashboard use — and assert
 client identity, not internals.
 
 The two-profile repro mirrors issue #69123's minimal in-process repro;
-per-config-identity caching was first proposed in #69142 (NaMinhyeok) and
-extended in #81401 (angel12).
+per-config-identity caching was first proposed in #69142 and
+extended in #81401.
 """
 
 import json

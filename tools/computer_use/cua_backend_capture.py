@@ -321,7 +321,7 @@ class _CaptureMixin:
         Never enumerates, so it also works when Windows UIA hangs. Pixels only — `elements` is empty and `note` points
         the model at the interactive lanes. ``capture_scope`` is switched to desktop for the call and restored afterwards.
 
-        Bonus resilience (2ndNatureAI, #60081): this lane works even when Windows UIA enumeration
+        Bonus resilience (#60081): this lane works even when Windows UIA enumeration
         (`list_windows` / `list_apps`) hangs (trycua/cua#2110/#2113), because it never enumerates.
         """
         self._clear_active_target()

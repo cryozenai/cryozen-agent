@@ -255,7 +255,7 @@ def _build_job_prompt(
 
     When provided, the script is not re-executed and the cached result is used for prompt injection. When
     omitted, the script (if any) runs inline as before. extra_prompt: Optional per-run context (from
-    ``cronjob(action='run')``, 57331 — salvaged from #57342 by @liuhao1024).
+    ``cronjob(action='run')``, 57331, from #57342).
     """
     user_prompt = str(job.get("prompt") or "")
     if extra_prompt:

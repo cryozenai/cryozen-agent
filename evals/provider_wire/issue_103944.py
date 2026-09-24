@@ -2,6 +2,7 @@
 
 import json
 import os
+import pwd
 import sys
 from pathlib import Path
 
@@ -66,7 +67,7 @@ def audit(event, args):
 
 
 sys.addaudithook(audit)
-assert Path(os.environ["HOME"]) != Path("/home/teknium")
+assert Path(os.environ["HOME"]) != Path(pwd.getpwuid(os.getuid()).pw_dir)
 assert Path(os.environ["CRYOZEN_HOME"]).is_relative_to(Path(os.environ["HOME"]))
 assert not any(k for k in os.environ if "API_KEY" in k or "TOKEN" in k or "SECRET" in k)
 

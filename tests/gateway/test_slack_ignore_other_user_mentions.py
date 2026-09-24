@@ -5,7 +5,7 @@ When enabled, the bot stays silent on a channel/thread message that opens by
 unless the bot is also mentioned. This is Slack parity for the Discord option
 of the same name (PR #33501), adapted to Slack's thread model: the trigger is a
 *leading* mention, so a message that merely references another user mid-sentence
-(e.g. "loop in @rasha") still reaches the bot.
+(e.g. "loop in @carol") still reaches the bot.
 
 Helper-level tests exercise the real config/parse methods directly; the
 integration tests drive the real ``SlackAdapter._handle_slack_message`` so the
@@ -196,7 +196,7 @@ async def test_free_response_replies_when_bot_mentioned_in_pipe_form(adapter):
     await _run(
         adapter,
         _event(
-            f"<@{OTHER_USER_ID}|rasha> and <@{BOT_USER_ID}|cryozen> please compare",
+            f"<@{OTHER_USER_ID}|carol> and <@{BOT_USER_ID}|cryozen> please compare",
             ts="1700000000.000004",
         ),
     )
@@ -206,7 +206,7 @@ async def test_free_response_replies_when_bot_mentioned_in_pipe_form(adapter):
 
 @pytest.mark.asyncio
 async def test_mentioned_thread_ignores_followup_addressed_to_other_user(adapter):
-    """Ben's case: once the bot has been mentioned in a thread it auto-follows,
+    """Reported case: once the bot has been mentioned in a thread it auto-follows,
     but a follow-up addressed to another human should not wake it."""
     thread_ts = "1700000000.000010"
     adapter._mentioned_threads.add(thread_ts)

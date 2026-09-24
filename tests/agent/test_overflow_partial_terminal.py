@@ -76,7 +76,7 @@ class TestOverflowTerminalStub:
     def test_payload_too_large_partial_is_not_made_terminal(
         self, _mock_close, mock_create, monkeypatch,
     ):
-        """Review P1 (andrexibiza): payload_too_large (413) has its own byte-scored
+        """Review P1: payload_too_large (413) has its own byte-scored
         recovery owner and must NOT be collapsed into the context-overflow terminal
         contract — the partial keeps its normal continuation stub."""
         def _overflowing_stream():

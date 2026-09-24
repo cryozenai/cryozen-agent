@@ -79,7 +79,7 @@ def _is_streamable_http_rejection(exc: BaseException) -> bool:
     """True when a Streamable-HTTP connect failure looks like a transport mismatch rather than a
     broken server: a 400-family rejection of the initialize POST, or the SDK's opaque INTERNAL_ERROR
     (-32603 ``Server returned an error response``) it maps such rejections to on mcp >= 2.0 (error
-    class per PR #104363, @RohithPariki). Timeouts and auth errors never qualify — neither carries
+    class per PR #104363). Timeouts and auth errors never qualify — neither carries
     these markers — so a slow or 401ing server is not retried on the wrong transport.
     """
     root = _unwrap_exception_group(exc)

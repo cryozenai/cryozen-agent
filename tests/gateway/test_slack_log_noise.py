@@ -242,7 +242,7 @@ class TestClarifyLogPrivacy:
                 ],
             },
             "channel": {"id": "C1"},
-            "user": {"name": "norbert", "id": "U_NORBERT"},
+            "user": {"name": "alice", "id": "U_ALICE"},
         }
         action = {"action_id": "cryozen_clarify_choice_1", "value": "cid-priv|1"}
 

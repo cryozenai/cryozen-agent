@@ -18,8 +18,8 @@ logger = logging.getLogger("tools.mcp_tool")
 # spillover threshold so ordinary large results reach spillover intact; only floods are lossy.
 # This is the FIRST line of defense against a buggy or malicious MCP server returning multi-megabyte text:
 # without it the full payload is allocated, JSON-encoded and handed downstream before the budget/spillover
-# layer ever sees it (#56059). Distilled from #56060 (Stoltemberg), #56072 (AlexFucuson9) and #56511
-# (Tranquil-Flow), which capped at get_max_bytes() (50K) — correct protection, but at that level it would
+# layer ever sees it (#56059). Distilled from #56060, #56072 and #56511,
+# which capped at get_max_bytes() (50K) — correct protection, but at that level it would
 # truncate before spillover could preserve the data. The 40% head / 60% tail split is #56511's shape.
 _MCP_HARD_RESULT_CAP_CHARS = 2_000_000
 # Cap on decoded resource bytes per block (a misbehaving server can't fill the cache disk).

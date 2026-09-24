@@ -5,7 +5,7 @@ in model response text for native media delivery.
 Covers: path matching, code-block exclusion, URL rejection, tilde expansion,
 deduplication, text cleanup, and extension routing.
 
-Based on PR #1636 by sudoingX (salvaged + hardened).
+Based on PR #1636 (salvaged + hardened).
 """
 
 from unittest.mock import patch

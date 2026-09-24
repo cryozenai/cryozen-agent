@@ -203,8 +203,8 @@ def test_summarize_api_error_decorates_xai_entitlement_403():
 def test_summarize_api_error_does_not_accuse_subscribers():
     """Hint must not confidently say the user has no subscription.
 
-    Don Piedro reported his subscription is active. The hint must not
-    contradict him — leading with the X Premium+ gotcha gives subscribers
+    A user reported their subscription is active. The hint must not
+    contradict them — leading with the X Premium+ gotcha gives subscribers
     a plausible reason ("oh, I'm on Premium+ not pure SuperGrok") instead
     of accusing them of lying about having a subscription.
     """
@@ -349,7 +349,7 @@ def test_codex_reasoning_replay_includes_encrypted_content_for_xai():
 @pytest.mark.parametrize(
     "message",
     [
-        # The exact wire text RaidenTyler and Don Piedro captured.
+        # The exact wire text captured in the reports.
         "You have either run out of available resources or do not have an "
         "active Grok subscription. Manage at https://grok.com",
         # Permission-style variant from the same 403 body.

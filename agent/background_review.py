@@ -1019,7 +1019,7 @@ def build_cache_parity_fork(
         inherited_scope = resolve_prompt_cache_scope_safe(agent)
         if inherited_scope:
             review_agent._inherited_cache_scope = inherited_scope
-        # Same reason for the Portal ``conversation=`` tag: with no DB the fork's own
+        # Same reason for the conversation root id: with no DB the fork's own
         # _conversation_root_id() falls back to the parent's PHYSICAL id, so after a compression
         # rotation the review's usage was attributed to a different conversation than its parent.
         review_agent._cached_conversation_root = agent._conversation_root_id()
@@ -1099,7 +1099,7 @@ def _review_tool_whitelist(
     # succeeds. Write tools (write_file/patch/terminal) stay denied — autonomous maintenance must go through
     # skill_manage's validation, and the deny message below names that substitute so one denial redirects
     # the model instead of a storm.
-    # Profile-configured opt-in tools (#44672, salvage #82146 by @BrinShadewater):
+    # Profile-configured opt-in tools (#44672, #82146):
     # ``auxiliary.background_review.extra_tools`` admits named parent tools to the review whitelist — e.g. a
     # human-gated proposal tool or a memory-provider write surface. Read from task_cfg (the
     # auxiliary.background_review block already loaded for this spawn) so no extra config I/O happens per

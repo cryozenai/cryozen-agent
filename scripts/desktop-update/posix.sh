@@ -404,7 +404,7 @@ deliver_outcome() { # the truth-determining half: swap bundles / gate the relaun
 }
 
 launch_app() { # attempted BEFORE the terminal event (launch acceptance is
-  # part of the outcome — gille's review). Returns nonzero when a launch
+  # part of the outcome). Returns nonzero when a launch
   # was due but did not verifiably happen; caller downgrades to manual.
   [ -n "$RELAUNCH_TARGET" ] || return 0
   if [ "$(uname)" = "Darwin" ]; then
@@ -442,7 +442,7 @@ write_result() {
 }
 
 finish() {
-  # Ordering (gille's reviews, both rounds):
+  # Ordering:
   #   1. deliver the outcome (swap/gate) so the truth exists;
   #   2. durable result + marker removal (the relaunched app consumes the
   #      result on boot and must not park on our marker — this must be on
@@ -501,8 +501,8 @@ trap finish EXIT
 # named 'encodings'"). On those installs EVERY normal CLI entrypoint is dead
 # (`venv/bin/cryozen` has a `python3` shebang), so no Python-side heal —
 # doctor OR in-update — can ever run. This shell is the last surface that
-# still executes, so the heal lives here (recovery design after @aeonsong's
-# #96231; heal-point observation by @ahrazzle / @tokenfires on #95759).
+# still executes, so the heal lives here (recovery design after #96231;
+# heal-point observation on #95759).
 #
 # Ping-pong coherence with the re-landed forward anchor
 # (cryozen_cli/macos_tcc_anchor.ensure_tcc_anchor, which re-anchors whenever

@@ -6,10 +6,8 @@ adding it to the guard, the corresponding test added here will fail too.
 
 The guard exists to protect the developer's live ``cryozen-gateway`` process
 from being SIGTERMed by tests. See PR #23397 for the original incident
-(5+ live gateway kills in 3 days). Per Teknium 2026-05-10:
-
-  > "You better do such a deep scan and scrub of the tests that this
-  >  never is possible ever again for all eternity."
+(5+ live gateway kills in 3 days). The standing requirement: a deep scan
+and scrub of the tests so this is never possible again.
 
 Every primitive that can deliver a signal to a foreign process or mutate
 the live systemd unit MUST be exercised below. Adding a new primitive to

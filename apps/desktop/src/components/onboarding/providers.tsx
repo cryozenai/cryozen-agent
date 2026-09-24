@@ -5,8 +5,7 @@ import { PROVIDER_DISPLAY_NAMES } from '@/lib/model-status-label'
 import type { OAuthProvider } from '@/types/cryozen'
 
 // Titles live in PROVIDER_DISPLAY_NAMES (shared with the model pill); this is
-// only the display order. Both Anthropic entries sit at the bottom: the API-key
-// path first, then the subscription OAuth path (only works with extra usage credits).
+// only the display order. Anthropic (API key only) sits at the bottom.
 const PROVIDER_ORDER: Record<string, number> = {
   'openai-codex': 0,
   'minimax-oauth': 1,

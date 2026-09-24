@@ -35,7 +35,7 @@ logger = logging.getLogger("cryozen_state")
 # ~250-line loadable FTS5 tokenizer with no dependencies) wraps unicode61: maximal CJK runs are re-emitted
 # as overlapping character bigrams (Lucene CJKAnalyzer semantics), everything else passes through unchanged.
 # FTS5 phrase semantics turn a query term's consecutive bigrams into exact substring matching down to 2
-# chars at index speed. Contributed by Soju06 (PR #65544).
+# chars at index speed. From PR #65544.
 FTS_CJK_TABLE_SQL = """
 CREATE VIEW IF NOT EXISTS messages_fts_cjk_src AS
     SELECT id, role, content, tool_name, tool_calls

@@ -130,7 +130,7 @@ class TestShellFileOpsCwdTracking:
         host ``terminal.cwd`` inside a container, #113894) the surfaced error
         must name the working directory / ``terminal.cwd`` problem, not just
         the raw ``cd:`` line that reads like a fault at the requested path."""
-        host_cwd = r"C:\Users\rashi\OneDrive\Documents\ai_workspace"
+        host_cwd = r"C:\Users\alice\OneDrive\Documents\ai_workspace"
         ops = ShellFileOperations(_WrapperEnv(host_cwd))
         result = ops.write_file(str(tmp_path / "probe.py"), "print('hi')\n")
 

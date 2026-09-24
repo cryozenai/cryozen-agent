@@ -729,20 +729,20 @@ def test_cryozen_owns_windows_service_requires_name_or_binary_under_a_cryozen_ro
     """Task Scheduler (``Schedule`` in svchost) above a task-launched gateway is never its supervisor;
     a service is Cryozen-owned only by a ``cryozen*`` name or a binary under the install (#97208)."""
     roots = (
-        r"C:\Users\kaize\AppData\Local\cryozen\cryozen-agent",
-        r"C:\Users\kaize\AppData\Local\cryozen\cryozen-agent\venv\Scripts",
-        r"C:\Users\kaize\AppData\Local\cryozen\gateway-service",
+        r"C:\Users\alice\AppData\Local\cryozen\cryozen-agent",
+        r"C:\Users\alice\AppData\Local\cryozen\cryozen-agent\venv\Scripts",
+        r"C:\Users\alice\AppData\Local\cryozen\gateway-service",
     )
     owns = gateway_windows.cryozen_owns_windows_service
 
     assert not owns("Schedule", r"C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule", roots)
     assert not owns("BITS", r"C:\Windows\System32\svchost.exe -k netsvcs -p -s BITS", roots)
-    assert not owns("Other", r"C:\Users\kaize\AppData\Local\cryozen\cryozen-agent-fork\run.exe", roots)
+    assert not owns("Other", r"C:\Users\alice\AppData\Local\cryozen\cryozen-agent-fork\run.exe", roots)
 
     assert owns("CryozenGateway", r"C:\nssm\nssm.exe", roots)
     assert owns("Cryozen_Gateway_derek", "", roots)
-    assert owns("gw", r'"C:\Users\KAIZE\AppData\Local\cryozen\cryozen-agent\venv\Scripts\cryozen.exe" gateway run', roots)
-    assert owns("gw", r"C:\Users\kaize\AppData\Local\cryozen\gateway-service\Cryozen_Gateway.cmd", roots)
+    assert owns("gw", r'"C:\Users\ALICE\AppData\Local\cryozen\cryozen-agent\venv\Scripts\cryozen.exe" gateway run', roots)
+    assert owns("gw", r"C:\Users\alice\AppData\Local\cryozen\gateway-service\Cryozen_Gateway.cmd", roots)
 
 
 def test_wizard_install_service_asks_once_and_never_starts_after_windows_install(monkeypatch):

@@ -12,7 +12,7 @@ of the FTS shadow tables and into the canonical tables.
 (The companion repair-attempt-ledger fingerprint fix — keying the budget on
 something stable across ongoing writes so the cap can actually be reached — is
 tracked separately in the fingerprint/repair-loop salvage PR #88425, which
-preserves @jirathip-k's #88224 diagnosis and credit. This file covers only the
+preserves the #88224 diagnosis. This file covers only the
 live-writer guard.)
 """
 

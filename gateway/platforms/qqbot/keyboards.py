@@ -2,7 +2,7 @@
 ``INTERACTION_CREATE`` event carrying the button's ``data``; the bot must ACK promptly via
 ``PUT /interactions/{id}`` or the user sees an error indicator. ``button_data`` formats:
 ``approve:<session_key>:<decision>`` (allow-once|allow-always|deny) and ``update_prompt:<answer>`` (y|n).
-Ported from WideLee's qqbot-agent-sdk v1.2.2 (authorship via Co-authored-by)."""
+Ported from tencent-connect/qqbot-agent-sdk v1.2.2 (MIT; see NOTICE)."""
 
 from __future__ import annotations
 

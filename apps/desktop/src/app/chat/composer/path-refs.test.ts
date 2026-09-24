@@ -50,7 +50,7 @@ describe('pathifyRefs', () => {
   })
 
   it('leaves a handle alone', () => {
-    expect(pathifyRefs('cc @teknium1 on this')).toBe('cc @teknium1 on this')
+    expect(pathifyRefs('cc @alice123 on this')).toBe('cc @alice123 on this')
   })
 
   it('leaves simple refs alone', () => {
@@ -58,7 +58,7 @@ describe('pathifyRefs', () => {
   })
 
   it('leaves an email alone', () => {
-    expect(pathifyRefs('mail me at brooklyn@example.dev/x')).toBe('mail me at brooklyn@example.dev/x')
+    expect(pathifyRefs('mail me at testuser@example.dev/x')).toBe('mail me at testuser@example.dev/x')
   })
 
   it('is a no-op without an @', () => {
@@ -89,7 +89,7 @@ describe('chipTypedPathOnSpace', () => {
   })
 
   it('leaves a handle alone', () => {
-    const { editor, event } = spaceOn('cc @teknium1')
+    const { editor, event } = spaceOn('cc @alice123')
 
     expect(chipTypedPathOnSpace(event)).toBe(false)
     expect(editor.querySelector('[data-ref-text]')).toBeNull()

@@ -9,7 +9,7 @@ parity. Two consumers paid for it in opposite directions:
 * bypass — ``cat "f\\"n.txt"; rm -rf --no-preserve-root /`` put the ``; rm`` start "inside" a
   phantom quote, so no command start was marked and the floor let it through.
 
-Direction from #85922 (@Soju06): read quote state from the raw command (only quoted newlines masked).
+Direction from #85922: read quote state from the raw command (only quoted newlines masked).
 """
 import pytest
 

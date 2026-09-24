@@ -2,7 +2,7 @@
 
 Exercises the full chain — manager, provider subclass, disk watch, 401
 dedup — with real file I/O and real imports (no transport mocks, no
-subprocesses). These are the tests that would catch Cthulhu's original
+subprocesses). These are the tests that would catch the original
 BetterStack bug: an external process rewrites the tokens file on disk,
 and the running Cryozen session picks up the new tokens on the next auth
 flow without requiring a restart.
@@ -28,7 +28,7 @@ def _set_interactive_stdin(monkeypatch, *, is_tty: bool = True) -> None:
 
 @pytest.mark.asyncio
 async def test_external_refresh_picked_up_without_restart(tmp_path, monkeypatch):
-    """Simulate Cthulhu's cron workflow end-to-end.
+    """Simulate the reported cron workflow end-to-end.
 
     1. A running Cryozen session has OAuth tokens loaded in memory.
     2. An external process (cron) writes fresh tokens to disk.

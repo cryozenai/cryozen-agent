@@ -1249,7 +1249,7 @@ class TestLifecycleGuardModule:
             return binary_blob
 
         result = contains_gateway_lifecycle_command_or_referenced_script(
-            "/home/zedi/venv/bin/python --version",
+            "/home/user/venv/bin/python --version",
             read_remote_script=_remote_read,
         )
         assert result is False

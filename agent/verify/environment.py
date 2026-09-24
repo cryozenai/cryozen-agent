@@ -1,6 +1,6 @@
 """Environment manifest for project verification.
 
-Ported from superagent-ai/grok-cli ``src/verify/environment.ts``. The manifest
+Ported from superagent-ai/grok-cli ``src/verify/environment.ts`` (MIT; see NOTICE). The manifest
 at ``<project>/.cryozen-agent/environment.json`` is the user-editable source of truth:
 when present and valid it wins over fresh static detection.
 """

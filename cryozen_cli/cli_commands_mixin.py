@@ -654,7 +654,7 @@ class CLICommandsMixin:
             checkpoints = mgr.list_checkpoints(cwd)
             if not checkpoints:
                 # List checkpoints — fall back to the cross-project view when the current directory has none
-                # (#10505, reapply of PR #10633 by @nightq). The Aug 2026 QA sweep hit this live: writes
+                # (#10505, reapply of PR #10633). The Aug 2026 QA sweep hit this live: writes
                 # landed checkpoints under the session cwd (/tmp/qa-repo) while bare /rollback searched only
                 # TERMINAL_CWD's project and reported "No checkpoints found" despite fresh checkpoints
                 # existing.

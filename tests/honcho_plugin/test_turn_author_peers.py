@@ -23,7 +23,7 @@ from plugins.memory.honcho.session import HonchoSessionManager
 
 
 def _config(**overrides) -> HonchoClientConfig:
-    base = dict(api_key="test-key", peer_name="eri", ai_peer="cryozen")
+    base = dict(api_key="test-key", peer_name="ann", ai_peer="cryozen")
     base.update(overrides)
     return HonchoClientConfig(**base)
 
@@ -65,12 +65,12 @@ class TestResolveAuthorPeerId:
 
 
     def test_bot_author_named_like_the_owner_never_lands_on_the_owner_peer(self):
-        """``bot:eri`` with ``peerName: eri`` is another agent, not the operator."""
+        """``bot:ann`` with ``peerName: ann`` is another agent, not the operator."""
         for pinned in (False, True):
-            mgr = _manager(_config(peer_name="eri", pin_peer_name=pinned), runtime_id="7654321")
-            peer = mgr.resolve_author_peer_id("telegram:dm1", "bot:eri", is_bot=True)
+            mgr = _manager(_config(peer_name="ann", pin_peer_name=pinned), runtime_id="7654321")
+            peer = mgr.resolve_author_peer_id("telegram:dm1", "bot:ann", is_bot=True)
             assert peer != mgr._declared_owner_peer_id()
-            assert peer.startswith("eri-")
+            assert peer.startswith("ann-")
 
     def test_bot_author_never_lands_on_the_sessions_human_runtime_peer(self):
         """The human's peer on this session is not always ``peerName``: a bare or prefixed runtime id is one too."""

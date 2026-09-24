@@ -1021,7 +1021,7 @@ def test_probe_skips_wrapper_with_escaping_python_shebang(
     Ownership alone would accept it (the body references this checkout),
     but its `#!/usr/bin/env python3` shebang dies in the DE context.
     The shebang-safety gate skips it; the module fallback wins. Idea
-    credited to autumn8's #92122 rung-2 check.
+    from the #92122 rung-2 check.
     """
     import sys as _s
 

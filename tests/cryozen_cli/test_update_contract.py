@@ -1,6 +1,6 @@
 """Image-managed refusal contract tests (#91277 Phase 3).
 
-Marker semantics (image_provenance.py, salvaged from #92545 @andrexibiza):
+Marker semantics (image_provenance.py, salvaged from #92545):
 absent → None; present-and-valid → provenance; present-but-broken →
 fail-closed invalid. Admission gate (update_contract.py): marker first,
 docker/nix/apt heuristics second; refusals record a `refused` receipt.

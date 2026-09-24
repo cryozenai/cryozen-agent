@@ -1,6 +1,6 @@
 """Tests for the lightweight Slack/Discord channel session-continuity hint.
 
-Salvaged from PR #36220 (metamon-p), ported onto the current SessionStore.
+Salvaged from PR #36220, ported onto the current SessionStore.
 
 Covers:
 - SessionStore records the previous session_id on auto-reset (and only then).

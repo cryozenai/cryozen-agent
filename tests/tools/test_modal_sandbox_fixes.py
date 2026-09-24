@@ -76,7 +76,7 @@ class TestCwdHandling:
     def test_home_path_replaced_for_modal(self, monkeypatch):
         """TERMINAL_CWD=/home/user/... should be replaced with /root for modal."""
         monkeypatch.setenv("TERMINAL_ENV", "modal")
-        monkeypatch.setenv("TERMINAL_CWD", "/home/dakota/github/cryozen-agent")
+        monkeypatch.setenv("TERMINAL_CWD", "/home/ubuntu/github/cryozen-agent")
         config = _tt_mod._get_env_config()
         assert config["cwd"] == "/root", (
             f"Expected /root, got {config['cwd']}. "
@@ -344,7 +344,7 @@ class TestHostPrefixList:
 # approval. Isolated Docker keeps the container fast-path; once a host path
 # is bind-mounted into the container, a command like `rm -rf /workspace` can
 # reach real host files, so it goes through the normal approval flow.
-# (PR #6436, @Kolektori)
+# (PR #6436)
 # =========================================================================
 
 class TestDockerHostBindApproval:

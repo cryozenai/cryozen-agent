@@ -490,7 +490,7 @@ def test_add_comment(client):
     t = client.post("/api/plugins/kanban/tasks", json={"title": "x"}).json()["task"]
     r = client.post(
         f"/api/plugins/kanban/tasks/{t['id']}/comments",
-        json={"body": "how's progress?", "author": "teknium"},
+        json={"body": "how's progress?", "author": "devuser"},
     )
     assert r.status_code == 200
 
@@ -498,7 +498,7 @@ def test_add_comment(client):
     comments = r.json()["comments"]
     assert len(comments) == 1
     assert comments[0]["body"] == "how's progress?"
-    assert comments[0]["author"] == "teknium"
+    assert comments[0]["author"] == "devuser"
 
 
 # ---------------------------------------------------------------------------
@@ -887,7 +887,7 @@ def test_dashboard_dependency_selects_use_value_change_handler():
     """Regression for the dependency selects in the task drawer: the
     add-parent / add-child dropdowns must wire through the shared
     selectChangeHandler helper so their value actually lands on the
-    underlying React state. Salvaged from #20019 @LeonSGP43.
+    underlying React state. Salvaged from #20019.
     """
     repo_root = Path(__file__).resolve().parents[2]
     bundle = (

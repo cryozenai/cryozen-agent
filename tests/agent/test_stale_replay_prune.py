@@ -1,6 +1,6 @@
 """Tests for stale codex_reasoning_items pruning during compaction (#71058).
 
-Salvaged from PR #71077 (@webtecnica) with two correctness fixes:
+Salvaged from PR #71077 with two correctness fixes:
 the prune boundary is the last USER message (a Codex turn spans multiple
 assistant messages whose reasoning items must replay together), and the
 newest native compaction checkpoint (type="compaction") is exempt because

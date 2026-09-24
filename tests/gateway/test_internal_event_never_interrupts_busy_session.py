@@ -1,6 +1,6 @@
 """Regression test: internal synthetic events must never interrupt a busy session.
 
-Reported by @Heeervas (June 2026): an ``async_delegation`` completion from a
+Reported bug: an ``async_delegation`` completion from a
 ``delegate_task(background=true)`` subagent re-enters the originating gateway
 session as an internal ``MessageEvent``. When that session was busy running a
 turn, the completion was treated exactly like a user TEXT message and hit the

@@ -171,7 +171,7 @@ class TestRealisticStreaming:
     def test_reasoning_then_real_response_first_word_preserved(self) -> None:
         """Regression: the first word of the final response must NOT be eaten.
 
-        Stefan's screenshot bug — 'Let me check' was being rendered as
+        Screenshot bug — 'Let me check' was being rendered as
         ' me check'.  The scrubber must not consume any character of
         post-close content.
         """

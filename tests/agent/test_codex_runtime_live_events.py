@@ -6,7 +6,7 @@ tool cards visible before resume: it fires both the tool_progress bubbles
 AND the authoritative stable-ID tool_start/tool_complete callbacks the TUI
 tool cards depend on.
 
-Grafted from PR #65412 (@HaiderSultanArc) onto the merged bridge.
+Grafted from PR #65412 onto the merged bridge.
 """
 
 from types import SimpleNamespace

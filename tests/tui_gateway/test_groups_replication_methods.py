@@ -53,7 +53,7 @@ def _authority_page(tmp_path, gateway_id="install:" + "a" * 32, n=3):
             room_id="room-1",
             event_id=f"e{index}",
             kind="message.user",
-            actor={"kind": "user", "id": "tek"},
+            actor={"kind": "user", "id": "dan"},
             payload={"text": f"msg {index}"},
             authority_gateway_id=gateway_id,
             authority_epoch=1,
@@ -164,7 +164,7 @@ def test_demote_fences_local_room_against_newer_epoch(home):
         {
             "room_id": "room-1",
             "event_id": "stale-send",
-            "actor": {"kind": "user", "id": "tek"},
+            "actor": {"kind": "user", "id": "dan"},
             "payload": {"text": "should fence"},
         },
     )

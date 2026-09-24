@@ -25,7 +25,7 @@ const inAppRef = (path: string, extra: Partial<DroppedFile> = {}): DroppedFile =
 
 describe('partitionDroppedFiles', () => {
   it('routes File-bearing OS drops to osDrops and path-only in-app drags to inAppRefs', () => {
-    const finderPdf = osDrop('/Users/mahmoud/Downloads/DEVIS_signed.pdf')
+    const finderPdf = osDrop('/Users/devuser/Downloads/DEVIS_signed.pdf')
     const projectFile = inAppRef('src/index.ts')
 
     const { inAppRefs, osDrops } = partitionDroppedFiles([finderPdf, projectFile])

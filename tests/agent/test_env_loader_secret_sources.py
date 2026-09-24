@@ -177,7 +177,7 @@ def test_cold_profile_bitwarden_uses_profile_bootstrap_without_global_env(
 def test_single_profile_scoped_load_keeps_override_behavior(tmp_path, monkeypatch):
     """Without multiplex, a scoped load keeps its historical override behaviour.
 
-    Ported from #77970 (@DonShelly): the guard must key on the multiplex flag,
+    Ported from #77970: the guard must key on the multiplex flag,
     not on the home override alone -- single-profile ``-p`` runs still load.
     """
     from agent import secret_scope

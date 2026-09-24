@@ -21,14 +21,14 @@ def honcho_json(tmp_path, monkeypatch):
 
 
 def test_signature_uses_neutral_keys(honcho_json):
-    honcho_json(workspace="team", peerName="eri", aiPeer="cryozen", pinUserPeer=True, runtimePeerPrefix="tg_",
+    honcho_json(workspace="team", peerName="ann", aiPeer="cryozen", pinUserPeer=True, runtimePeerPrefix="tg_",
                 userPeerAliases={"222": "bob", "111": "alice"}, sessionPeerPrefix=True, a2aSessions=False)
 
     sig = HonchoMemoryProvider().identity_signature()
 
     assert sig == {
         "workspace": "team",
-        "user_identity": "eri",
+        "user_identity": "ann",
         "agent_identity": "cryozen",
         "pin_user_identity": True,
         "runtime_identity_prefix": "tg_",
@@ -41,14 +41,14 @@ def test_signature_uses_neutral_keys(honcho_json):
 
 def test_signature_tracks_edits_to_the_file(honcho_json):
     provider = HonchoMemoryProvider()
-    honcho_json(peerName="eri", pinUserPeer=True)
+    honcho_json(peerName="ann", pinUserPeer=True)
     assert provider.identity_signature()["pin_user_identity"] is True
 
-    honcho_json(peerName="eri", pinUserPeer=False)
+    honcho_json(peerName="ann", pinUserPeer=False)
     assert provider.identity_signature()["pin_user_identity"] is False
 
 
 def test_signature_never_touches_the_network(honcho_json, network_attempts):
-    honcho_json(peerName="eri")
+    honcho_json(peerName="ann")
     HonchoMemoryProvider().identity_signature()
     assert network_attempts == []

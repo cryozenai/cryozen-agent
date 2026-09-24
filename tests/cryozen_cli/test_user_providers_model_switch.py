@@ -514,7 +514,7 @@ def test_section3_probes_no_key_endpoint_with_singular_default_model(monkeypatch
     (no explicit ``models:`` list) must still probe /v1/models — the singular
     field is just the active selection, not the user narrowing the endpoint.
 
-    Regression for #40554 / PR #68984 (@vigilancetech-com): section 3 derived
+    Regression for #40554 / PR #68984: section 3 derived
     ``has_explicit_models`` from the merged models list, so the lone
     ``default_model`` entry suppressed live discovery and the /model picker
     showed a one-line menu for local no-auth endpoints.

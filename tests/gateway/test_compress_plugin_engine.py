@@ -1,6 +1,6 @@
 """Regression test: /compress works with context engine plugins.
 
-Reported by @selfhostedsoul (Discord, Apr 2026) with the LCM plugin installed:
+Reported with the LCM plugin installed:
 
     Compression failed: 'LCMEngine' object has no attribute '_align_boundary_forward'
 
@@ -113,7 +113,7 @@ async def test_compress_works_with_plugin_context_engine():
     matches what a real plugin (LCM, etc.) exposes. If the gateway
     reaches into ``_align_boundary_forward`` or ``_find_tail_cut_by_tokens``
     on this engine, AttributeError propagates and the test fails with the
-    exact user-visible error selfhostedsoul reported.
+    exact user-visible error that was reported.
     """
     history = _make_history()
     compressed = [history[0], history[-1]]

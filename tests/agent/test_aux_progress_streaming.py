@@ -587,7 +587,7 @@ class TestFenceProgress:
 
 
 # ---------------------------------------------------------------------------
-# Stream-only providers (credit @kudi88, PR #60686)
+# Stream-only providers (PR #60686)
 # ---------------------------------------------------------------------------
 
 class TestProviderRequiresStream:

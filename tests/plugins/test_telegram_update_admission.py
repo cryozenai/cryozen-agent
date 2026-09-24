@@ -1,6 +1,6 @@
 """Telegram replay admission through real PTB dispatch (Refs #68502).
 
-The four-handler replay cases build on @smfworks' #68906 tests. Transport
+The four-handler replay cases build on the #68906 tests. Transport
 and model work are stand-ins; registration, gating, batching and PTB are real.
 """
 

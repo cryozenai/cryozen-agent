@@ -910,7 +910,7 @@ class TestSetupFieldFiltering:
 
 
 # ---------------------------------------------------------------------------
-# Context fencing regression tests (salvaged from PR #5339 by lance0)
+# Context fencing regression tests (salvaged from PR #5339)
 # ---------------------------------------------------------------------------
 
 

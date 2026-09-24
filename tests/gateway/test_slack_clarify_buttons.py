@@ -176,7 +176,7 @@ class TestSlackSendClarify:
 
         await adapter._handle_clarify_action(AsyncMock(), {
             "message": {"ts": "1.2", "blocks": kwargs["blocks"]},
-            "channel": {"id": "C1"}, "user": {"name": "norbert", "id": "U_N"},
+            "channel": {"id": "C1"}, "user": {"name": "alice", "id": "U_N"},
         }, {"action_id": "cryozen_clarify_choice_0", "value": "cid-retire|0"})
         assert mock_client.chat_update.await_count == 1
         assert not cm._entries["cid-retire"].event.is_set()
@@ -198,7 +198,7 @@ class TestSlackSendClarify:
             clarify_id="cid-other", session_key="sk-other")
         await adapter._handle_clarify_action(AsyncMock(), {
             "message": {"ts": "1.2", "blocks": []},
-            "channel": {"id": "C1"}, "user": {"name": "norbert", "id": "U_N"},
+            "channel": {"id": "C1"}, "user": {"name": "alice", "id": "U_N"},
         }, {"action_id": "cryozen_clarify_other", "value": "cid-other|other"})
         assert "Awaiting typed answer" in mock_client.chat_update.call_args.kwargs["text"]
 
@@ -269,7 +269,7 @@ class TestSlackClarifyOtherFlow:
                 {"type": "actions", "elements": []},
             ]},
             "channel": {"id": "C1"},
-            "user": {"name": "norbert", "id": "U_N"},
+            "user": {"name": "alice", "id": "U_N"},
         }
         action = {"action_id": "cryozen_clarify_other", "value": "cidO|other"}
 

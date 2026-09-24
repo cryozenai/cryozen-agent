@@ -113,7 +113,7 @@ class TestWriteFileToolGuard:
     def test_write_file_rejects_docm(self, tmp_path: Path):
         """Regression: .docm is extractable by read_file (anydoc) but was
         missing from OPAQUE_DOCUMENT_EXTENSIONS in the original PR #82818.
-        Flagged by @egilewski — proven live: text write corrupted the zip."""
+        Flagged in review — proven live: text write corrupted the zip."""
         docm = tmp_path / "macro.docm"
         _make_minimal_docx(docm)  # same OOXML zip structure
         original = docm.read_bytes()

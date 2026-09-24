@@ -8,7 +8,7 @@ row — on an account whose balance easily covered a summary.
 Two coordinated fixes:
 
 1. ``_build_call_kwargs`` preserves an explicit ``max_tokens`` for OpenRouter
-   routes (salvage of PR #41055 by @liuhao1024, issue #41035).
+   routes (salvage of PR #41055, issue #41035).
 2. ``_create_with_progress`` retries ONCE with the provider-stated affordable
    budget when a 402 names one (pattern proven in closed PR #49785 for the
    main loop; this is the auxiliary-path equivalent).
@@ -157,7 +157,7 @@ class TestCreateWithProgressAffordableRetry:
 
 
 class TestOpenRouterMaxTokensPreserved:
-    """Salvage of PR #41055 (@liuhao1024): OpenRouter keeps an explicit cap."""
+    """Salvage of PR #41055: OpenRouter keeps an explicit cap."""
 
     def test_openrouter_provider_includes_max_tokens(self):
         kwargs = _build_call_kwargs(

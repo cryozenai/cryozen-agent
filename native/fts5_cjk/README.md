@@ -21,4 +21,4 @@ to backfill it; new messages are indexed live either way. Set
 `sessions.cjk_fts: false` in `~/.cryozen-agent/config.yaml` to disable. Override
 the .so location with `CRYOZEN_FTS5_CJK_SO`.
 
-Contributed by Soju06 (PR #65544).
+Introduced in PR #65544.

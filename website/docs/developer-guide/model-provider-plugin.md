@@ -367,7 +367,7 @@ Every `api_mode` gate (`determine_api_mode`, runtime resolution, agent construct
 |---|---|---|
 | `api_key` | Single env var carries a static API key | Most providers |
 | `oauth_device_code` | Device-code OAuth flow | Out-of-tree plugins via `auth_handler` |
-| `oauth_external` | User signs in elsewhere, tokens land in `auth.json` | Anthropic OAuth, MiniMax OAuth, Qwen Portal |
+| `oauth_external` | User signs in elsewhere, tokens land in `auth.json` | MiniMax OAuth, Qwen Portal |
 | `copilot` | GitHub Copilot token refresh cycle | `copilot` plugin only |
 | `aws_sdk` | AWS SDK credential chain (IAM role, profile, env) | `bedrock` plugin only |
 | `external_process` | Auth handled by a subprocess the agent spawns (see [External-process providers](#external-process-acp-providers)) | `copilot-acp` plugin, out-of-tree ACP plugins |

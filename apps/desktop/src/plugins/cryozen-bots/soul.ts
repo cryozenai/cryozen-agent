@@ -15,7 +15,7 @@ import type { RosterRow } from './types'
 
 /** The agent-to-agent messaging protocol, reusable so a CUSTOM SOUL keeps
  *  the handoff protocol too — a custom SOUL used to silently drop it,
- *  breaking @mentions for customized bots (@wesleysimplicio, #16). */
+ *  breaking @mentions for customized bots (#16). */
 function messagingProtocolSection(name: string, roster: RosterRow[] | null | undefined): string {
   const teammates = (roster || []).filter(b => b.name !== name)
   const handle = botHandle(name)

@@ -54,12 +54,8 @@ cryozen auth add openrouter --api-key sk-or-v1-your-second-key
 # ...or let a browser login mint one (OpenRouter OAuth PKCE; stored as a plain API key)
 cryozen auth add openrouter --type oauth
 
-# Add a second Anthropic key
+# Add a second Anthropic key (Anthropic is API-key only)
 cryozen auth add anthropic --type api-key --api-key sk-ant-api03-your-second-key
-
-# Add an Anthropic OAuth credential (requires Claude Max plan + extra usage credits)
-cryozen auth add anthropic --type oauth
-# Opens browser for OAuth login
 ```
 
 Check your pools:
@@ -74,10 +70,9 @@ openrouter (2 credentials):
   #1  OPENROUTER_API_KEY   api_key id=ab12cd34 priority=0 env:OPENROUTER_API_KEY ←
   #2  backup-key           api_key id=ef56gh78 priority=1 manual
 
-anthropic (3 credentials):
-  #1  cryozen_pkce          oauth   id=ab12cd34 priority=0 cryozen_pkce ←
-  #2  claude_code          oauth   id=cd34ef56 priority=1 claude_code
-  #3  ANTHROPIC_API_KEY    api_key id=ef56gh78 priority=2 env:ANTHROPIC_API_KEY
+anthropic (2 credentials):
+  #1  api-key-2            api_key id=cd34ef56 priority=0 manual ←
+  #2  ANTHROPIC_API_KEY    api_key id=ab12cd34 priority=1 env:ANTHROPIC_API_KEY
 ```
 
 The `←` marks the currently selected credential. `id=` is the entry id accepted by
@@ -103,10 +98,10 @@ What would you like to do?
   5. Exit
 ```
 
-For providers that support both API keys and OAuth (Anthropic, Codex), the add flow asks which type:
+For providers that support both API keys and OAuth (for example Codex), the add flow asks which type:
 
 ```
-anthropic supports both API keys and OAuth login.
+openai-codex supports both API keys and OAuth login.
   1. API key (paste a key from the provider dashboard)
   2. OAuth login (authenticate via browser)
 Type [1/2]:
@@ -212,14 +207,14 @@ does not trigger this; an explicit `/model` switch cancels a pending switch-back
 
 **Anthropic 429s are per model.** Anthropic enforces its rate limits per model, so a generic 429 for
 one Claude model cools that credential down for *that model only* — the same key keeps serving every
-other Claude model, and `ANTHROPIC_API_KEY` / borrowed Claude Code tokens honour the same per-model
+other Claude model, and `ANTHROPIC_API_KEY` honours the same per-model
 cooldown. Billing (`402`, usage-limit) and auth (`401`) failures still bench the whole credential.
 
 **A dead OAuth login is reported, not benched.** When a refresh token is rejected for good
 (`invalid_grant`, `invalid_token`, `refresh_token_reused` — the token was revoked, or another program
 holding the same login rotated it first), the pool logs one WARNING naming the entry and the repair
 command (`cryozen auth add <provider>`), and the credential leaves rotation — marked `dead`, or dropped
-when it only mirrored a token file the pool has just cleared — until you sign in again. This applies to Anthropic, Codex, and xAI
+when it only mirrored a token file the pool has just cleared — until you sign in again. This applies to Codex and xAI
 OAuth logins alike. A dead credential never re-enters rotation on a timer, so a lost login
 shows up once in the log instead of failing quietly every hour.
 
@@ -276,8 +271,6 @@ Cryozen automatically discovers credentials from multiple sources and seeds the 
 | Environment variables | `OPENROUTER_API_KEY`, `ANTHROPIC_API_KEY` | Yes |
 | Numbered env siblings | `OPENROUTER_API_KEY_2`, `OPENROUTER_API_KEY_3`, … | Yes (see below) |
 | OAuth tokens (auth.json) | Codex device code | Yes |
-| Claude Code credentials | `~/.claude/.credentials.json` | Yes (Anthropic) |
-| Cryozen PKCE OAuth | `~/.cryozen-agent/auth.json` | Yes (Anthropic) |
 | Custom endpoint config | `model.api_key` in config.yaml | Yes (custom endpoints) |
 | Manual entries | Added via `cryozen auth add` | Persisted in auth.json |
 

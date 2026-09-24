@@ -18,7 +18,7 @@ Two pieces, both scoped to the SSH-isolated case (a session token was handed ove
   a half-open tunnel; the isolated backend keeps a slow ping with a long timeout so a GIL-holding
   turn cannot trip it.
 
-Design and the client-count/turn-probe/fail-closed shape are from #101678 by @StanleyStetson; this
+Design and the client-count/turn-probe/fail-closed shape are from #101678; this
 is the slim redo on the decomposed web server.
 """
 

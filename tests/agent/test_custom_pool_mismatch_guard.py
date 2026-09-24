@@ -1,5 +1,5 @@
 """Regression tests for the credential-pool provider-mismatch guard with
-custom providers (Bernard's Fireworks report, June 2026).
+custom providers (a Fireworks report).
 
 Custom endpoints can carry a generic ``"custom"`` label or retain their
 configured name/provider key while the pool is keyed

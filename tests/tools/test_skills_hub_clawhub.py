@@ -128,14 +128,14 @@ class TestClawHubSource(unittest.TestCase):
                     "tags": {"latest": "1.0.0"},
                 },
                 "latestVersion": {"version": "1.0.0"},
-                "owner": {"handle": "thesethrose", "displayName": "Seth Rose"},
+                "owner": {"handle": "example-owner", "displayName": "Example Owner"},
             },
         )
 
         meta = self.src.inspect("apple-docs")
 
         self.assertIsNotNone(meta)
-        self.assertEqual(meta.extra.get("owner"), "thesethrose")
+        self.assertEqual(meta.extra.get("owner"), "example-owner")
 
     @patch("tools.skills_hub.httpx.get")
     def test_inspect_tolerates_missing_owner(self, mock_get):

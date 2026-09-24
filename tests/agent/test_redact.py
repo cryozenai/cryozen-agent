@@ -572,7 +572,7 @@ OPENROUTER_API_KEY=sk-or-v1-reallyLongSecretKeyValue12345678
 FIRECRAWL_API_KEY=fc-shortkey123456789012
 TELEGRAM_BOT_TOKEN=bot987654321:ABCDEfghij-KLMNopqrst_UVWXyz12345
 SHELL=/bin/bash
-USER=teknium"""
+USER=devuser"""
         result = redact_sensitive_text(env_dump)
         # Secrets should be masked
         assert "abc123def456" not in result
@@ -581,7 +581,7 @@ USER=teknium"""
         # Non-secrets should survive
         assert "HOME=/home/user" in result
         assert "SHELL=/bin/bash" in result
-        assert "USER=teknium" in result
+        assert "USER=devuser" in result
 
 
 class TestSecretCapturePayloadRedaction:
@@ -754,12 +754,12 @@ class TestBareTokenUserinfoRedaction:
         """Exact bug scenario: password in a git remote URL."""
         text = (
             "git remote set-url origin "
-            "https://MYPASSWORDWASDISLAYEDHERE@github.com/unclehowell/FCUK.git"
+            "https://MYPASSWORDWASDISLAYEDHERE@github.com/devuser/project.git"
         )
         result = redact_sensitive_text(text)
         assert "MYPASSWORDWASDISLAYEDHERE" not in result
         assert "@github.com" in result
-        assert "unclehowell/FCUK.git" in result
+        assert "devuser/project.git" in result
 
     def test_ssh_bare_token_redacted(self):
         text = "ssh://longtoken1234567@gitlab.com/project.git"

@@ -1,6 +1,6 @@
 """Regression: prevent transcript fork when two paths compress the same session_id.
 
-Damien's incident (Discord, 2026-05-28): a long Cryozen session in a Discord
+Reported incident (Discord, 2026-05-28): a long Cryozen session in a Discord
 gateway hit the compression threshold at the end of a turn.  The parent agent
 finished delivering the response and ``conversation_loop.py`` fired
 ``_spawn_background_review(...)`` — which builds a forked ``AIAgent`` that
@@ -14,7 +14,7 @@ ended the parent and created its own CHILD session in ``state.db``, both
 parented to the same old id.  The gateway's ``SessionEntry`` only caught one
 rotation; the other child became an orphan that silently accumulated writes.
 
-Repro shape on Damien's machine:
+Repro shape on the reporter's machine:
 
   parent 20260527_234659_e65f0e  ended_at=set  end_reason='compression'
   child  20260528_113619_fc80e1  parent=20260527_234659_e65f0e  (in SessionEntry)
@@ -718,7 +718,7 @@ def test_concurrent_compression_does_not_fork_session(tmp_path: Path) -> None:
     t_a.join(timeout=10)
     t_b.join(timeout=10)
 
-    # The invariant Damien's incident is about: the parent must NEVER end up
+    # The invariant the incident is about: the parent must NEVER end up
     # with two (or more) children — that is the transcript fork. The lock
     # guarantees only one path rotates.
     #
@@ -734,7 +734,7 @@ def test_concurrent_compression_does_not_fork_session(tmp_path: Path) -> None:
     n_children = _count_children(db, parent_sid)
     assert n_children <= 1, (
         f"Compression lock failed: parent session has {n_children} children in "
-        "state.db (transcript fork). This is Damien's incident shape — see the "
+        "state.db (transcript fork). This is the reported incident shape — see the "
         "test docstring. Two or more children means the lock did not serialize "
         "the concurrent rotations."
     )

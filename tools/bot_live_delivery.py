@@ -1,6 +1,6 @@
 """Durable, at-most-once handoff to an existing Bot Chat owner.
 
-Adapted from FalconOrtiz's live-owner mailbox (#101564). A single private
+Adapted from the live-owner mailbox in #101564. A single private
 record advances queued -> claimed -> terminal under a process-shared lock.
 Claims never expire: a crashed consumer leaves an inspectable unknown outcome,
 not permission to execute the same input again. Receipts are permanent.

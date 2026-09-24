@@ -484,7 +484,7 @@ async def test_session_chat_stream_reports_interrupted_turn_as_not_completed(ada
 
 # ---------------------------------------------------------------------------
 # Session-persisted model threading + provider-auth failure surfacing
-# (salvaged from PR #57947 by @FvanW and PR #59941 by @kaishi00)
+# (salvaged from PR #57947 and PR #59941)
 # ---------------------------------------------------------------------------
 
 
@@ -492,7 +492,7 @@ async def test_session_chat_stream_reports_interrupted_turn_as_not_completed(ada
 async def test_session_chat_resolves_stored_model_route_alias(session_db, monkeypatch):
     """A session-persisted model that matches a model_routes alias must go
     through the route path (so route provider/credentials apply) and NOT be
-    passed as a raw session_model (idea from PR #59941 by @kaishi00)."""
+    passed as a raw session_model (idea from PR #59941)."""
     adapter = APIServerAdapter(
         PlatformConfig(
             enabled=True,

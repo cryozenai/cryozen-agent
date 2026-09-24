@@ -1243,7 +1243,7 @@ class TestClassifyApiError:
         the descriptive text is read, so the large-session heuristic does not route a
         model entitlement/retirement rejection into compression (#81558, #106475).
         ``str(error)`` is the SDK's ``Error code: 400 - {...}`` form, exactly as on the wire.
-        Salvaged from #100783 (@i-Hun)."""
+        Salvaged from #100783."""
         detail = "The 'gpt-5.5-codex' model is not supported when using Codex with a ChatGPT account."
         large = dict(provider="openai-codex", model="gpt-5.5-codex",
                      approx_tokens=109_962, context_length=272_000, num_messages=223)

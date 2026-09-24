@@ -88,7 +88,7 @@ async def test_disk_watch_invalidates_on_mtime_change(tmp_path, monkeypatch):
 
     This is the behaviour Claude Code ships as
     invalidateOAuthCacheIfDiskChanged (CC-1096 / GH#24317) and is the core
-    fix for Cthulhu's external-cron refresh workflow.
+    fix for the external-cron refresh workflow.
     """
     monkeypatch.setenv("CRYOZEN_HOME", str(tmp_path))
     from tools.mcp_oauth_manager import MCPOAuthManager, reset_manager_for_tests

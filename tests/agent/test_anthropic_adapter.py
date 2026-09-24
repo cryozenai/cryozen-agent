@@ -1045,7 +1045,7 @@ class TestBlankTextBlockFiltering:
 
 class TestAllBlankFallbackAndNonStringText:
     """Regression tests for the two bugs found in independent review of
-    #68633 (GPT-5.6-sol-xhigh in Codex, egilewski):
+    #68633 (GPT-5.6-sol-xhigh in Codex):
 
     1. `effective = blocks or content` fell back to the RAW, unfiltered
        `content` when every block was filtered out as blank -- restoring
@@ -1115,7 +1115,7 @@ class TestAllBlankFallbackAndNonStringText:
 
 
 class TestReplayAllBlankFallback:
-    """Regression for the final open review point on #68633 (egilewski):
+    """Regression for the final open review point on #68633:
 
     ``_relocated_replay_cache_control`` was applied only inside ``if
     replayed:``. For ``anthropic_content_blocks`` containing only a blank

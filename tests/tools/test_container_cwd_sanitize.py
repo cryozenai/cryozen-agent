@@ -28,7 +28,7 @@ class TestIsUnusableContainerCwd:
 
 
     def test_posix_home_host_path_rejected(self):
-        assert tt._is_unusable_container_cwd("/home/ben/projects") is True
+        assert tt._is_unusable_container_cwd("/home/bob/projects") is True
 
 
     def test_container_backends_set(self):

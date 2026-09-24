@@ -152,7 +152,7 @@ class TestRealEarlyFlushAndOverrideLifecycle:
             db.close()
 
     def test_pre_flushed_api_only_turn_without_injections_preserves_sidecar(self, tmp_path):
-        """[ehz0ah bug 1]: Pre-flushed clean input where the API turn has an API-only
+        """[Bug 1]: Pre-flushed clean input where the API turn has an API-only
         variant (e.g. voice prefix) and NO memory/plugin injection is composed.
         compose_user_api_content returns None, but the differing API-only bytes must
         be preserved as api_content and backfilled onto the row."""

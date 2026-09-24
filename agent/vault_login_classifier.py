@@ -1,7 +1,7 @@
 """Login / checkout form control classifier for vault autofill.
 
 Python port (~170 LOC) of Merit-Systems/OpenInstinct's
-``lib/manager/server/kernel-login-autofill.ts`` (MIT). Classifies visible
+``lib/manager/server/kernel-login-autofill.ts`` (MIT; see NOTICE). Classifies visible
 input controls on a page into login-autofill tokens. The vault fill path
 uses the classification to select the single best current-password control
 (the identifier is agent-visible metadata and is typed by the agent

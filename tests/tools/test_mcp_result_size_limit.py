@@ -7,7 +7,7 @@ payloads (over 2M chars by default) with a 40% head / 60% tail split;
 ordinary large results pass through untouched so the 50K MCP spillover
 threshold (tools/budget_config.py) can preserve them in full on disk.
 
-Test shape adapted from PR #56511 (Tranquil-Flow); cap semantics differ —
+Test shape adapted from PR #56511; cap semantics differ —
 see _MCP_HARD_RESULT_CAP_CHARS in tools/mcp_tool.py.
 """
 

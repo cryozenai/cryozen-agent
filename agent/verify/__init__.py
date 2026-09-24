@@ -3,6 +3,7 @@
 Scoped port of superagent-ai/grok-cli's verify subsystem (``src/verify/recipes.ts``,
 ``src/verify/environment.ts``): static run-recipe detection, a persisted
 environment manifest, and a smoke-test runner used by ``cryozen verify``.
+The ported portions are MIT-licensed; see NOTICE.
 """
 
 from agent.verify.environment import load_manifest, load_or_detect, manifest_path, save_manifest

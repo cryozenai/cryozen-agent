@@ -11,7 +11,7 @@ the launch process's env-only policy (``TERMINAL_ENV=ssh`` from systemd / a laun
 rebuild it from) via the snapshot frozen at activation, while a later ambient write from a
 secondary context still never becomes the launch turn's authority.
 
-Review findings on #108440 (andrexibiza); #107442 (ehz0ah).
+Review findings on #108440; #107442.
 """
 
 import os

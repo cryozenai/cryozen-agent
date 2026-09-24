@@ -4,7 +4,7 @@ A codex thread is the model-side continuity store, so a thread that codex hands 
 ``thread/resume`` already knows the conversation. A thread started from scratch does not: a session
 that ran on another provider before ``/model`` switched to openai-codex, a session whose stored thread
 codex could not resume, or a thread retired mid-session (prompt composition change, wedged client)
-would otherwise start blind (#26035, #74712; direction from #26081 by @LeonSGP43).
+would otherwise start blind (#26035, #74712; direction from #26081).
 
 The seed rides on ``thread/start.developerInstructions`` after the prompt composition: codex inserts
 that as the first developer message of every request in the thread, so the cap below bounds a

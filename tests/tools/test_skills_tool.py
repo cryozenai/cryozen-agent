@@ -889,7 +889,7 @@ class TestSkillViewCollisionDetection:
     against. Reproduces with `skills.external_dirs` registered in
     config.yaml and a same-name skill nested under a category locally.
 
-    Adapted from a regression suite originally proposed by @polkn in PR
+    Adapted from a regression suite originally proposed in PR
     #6136 (which used local-first precedence). The collision-refusal
     behavior preserves the same protection without silently picking a
     side, and gives the user an actionable hint (use the categorized

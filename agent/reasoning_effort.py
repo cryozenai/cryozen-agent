@@ -16,7 +16,7 @@ import re
 from typing import Optional, Sequence
 
 #: Matches ``k3`` as a delimited token (``k3``, ``k3-256k``, ``kimi-k3-cot``), never K2-era names (``kimi-k2.6``).
-# From #76427 by @ruizanthony.
+# From #76427.
 _KIMI_K3_SLUG_RE = re.compile(r"(?:^|[^a-z0-9])k3(?:[^a-z0-9]|$)")
 
 # Canonical low→high ordering for nearest-level clamping. Includes "none" so an explicit
@@ -111,7 +111,7 @@ def kimi_supported_efforts(model: Optional[str]) -> tuple[str, ...]:
 
     K3 is served as the bare slug ``k3``, plan variants like ``k3-256k``, and the ``kimi-k3*`` aliases; its
     documented set is low/high/max. Everything earlier speaks low/medium/high. Boundary-matched so K2-era
-    names (``kimi-k2.6``) never match (detection regex from #76427 by @ruizanthony).
+    names (``kimi-k2.6``) never match (detection regex from #76427).
     """
     m = (model or "").strip().lower().split("/")[-1]
     return KIMI_K3_EFFORTS if _KIMI_K3_SLUG_RE.search(m) else KIMI_K2_EFFORTS

@@ -4,8 +4,8 @@ Covers both reasoning effort level management and reasoning display toggle,
 plus the reasoning extraction and display pipeline from run_agent through CLI.
 
 Combines functionality from:
-- PR #789 (Aum08Desai): reasoning effort level management
-- PR #790 (0xbyt4): reasoning display toggle and rendering
+- PR #789: reasoning effort level management
+- PR #790: reasoning display toggle and rendering
 """
 
 import unittest

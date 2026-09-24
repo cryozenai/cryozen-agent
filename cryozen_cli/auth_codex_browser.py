@@ -11,7 +11,7 @@ Credentials come back in the same dict shape as ``_codex_device_code_login`` wit
 ``source="loopback_pkce"`` so the pool/singleton save paths treat both flows alike. Tokens,
 authorization codes and the PKCE verifier are never logged or printed.
 
-Derived from #97058 by @astraltrekkin, re-homed after the ``auth_codex.py`` split.
+Derived from #97058, re-homed after the ``auth_codex.py`` split.
 """
 
 from __future__ import annotations

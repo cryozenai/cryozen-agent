@@ -1302,7 +1302,7 @@ class TestSignalContentlessEnvelope:
             "envelope": {
                 "sourceNumber": "+155****9999",
                 "sourceUuid": "05668cf3-8ffa-467e-9b24-f5eefa5cf475",
-                "sourceName": "Elliott McManis",
+                "sourceName": "Alice Example",
                 "timestamp": 1777600696077,
                 "dataMessage": {
                     # No "message" field — profile key update metadata only
@@ -1338,7 +1338,7 @@ class TestSignalContentlessEnvelope:
                 "envelope": {
                     "sourceNumber": "+155****9999",
                     "sourceUuid": "05668cf3-8ffa-467e-9b24-f5eefa5cf475",
-                    "sourceName": "Elliott McManis",
+                    "sourceName": "Alice Example",
                     "timestamp": 1777600696077,
                     "dataMessage": {
                         "message": "",  # No text

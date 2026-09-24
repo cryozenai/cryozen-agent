@@ -344,7 +344,7 @@ def test_repair_merge_preserves_api_content_sidecar_when_content_unchanged():
 
 
 def test_repair_merge_preserves_api_content_sidecar_when_content_unchanged_by_empty_string():
-    """Negative control (wz-heng, #78063 review): ``content_rewritten`` must
+    """Negative control (#78063 review): ``content_rewritten`` must
     mean "the value changed", not "entered the assignment branch".
 
     Later turn's content is ``""`` -- the both-str branch fires and

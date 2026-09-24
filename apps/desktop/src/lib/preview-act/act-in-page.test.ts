@@ -594,10 +594,10 @@ describe('type', () => {
     input.addEventListener('input', () => events.push('input'))
     input.addEventListener('change', () => events.push('change'))
 
-    const result = actInPage(document, holder, { kind: 'type', ref, text: 'Brooklyn' })
+    const result = actInPage(document, holder, { kind: 'type', ref, text: 'Testuser' })
 
     expect(result.success).toBe(true)
-    expect(input.value).toBe('Brooklyn')
+    expect(input.value).toBe('Testuser')
     expect(events).toEqual(['input', 'change'])
   })
 
@@ -620,10 +620,10 @@ describe('type', () => {
       }
     })
 
-    actInPage(document, holder, { kind: 'type', ref, text: 'Brooklyn' })
+    actInPage(document, holder, { kind: 'type', ref, text: 'Testuser' })
 
     expect(shadowWrites).toEqual([])
-    expect(nativeValue.get!.call(input)).toBe('Brooklyn')
+    expect(nativeValue.get!.call(input)).toBe('Testuser')
   })
 
   it('writes into a contenteditable host', () => {

@@ -39,9 +39,9 @@ class TestUserIdentityEnrichment:
 
     def test_handle_is_last_resort(self):
         ev = _event_from_wire(
-            _wire_event(user_name=None, user_handle="ben#1234")
+            _wire_event(user_name=None, user_handle="bob#1234")
         )
-        assert ev.source.user_name == "ben#1234"
+        assert ev.source.user_name == "bob#1234"
 
 
     def test_session_key_is_stable_across_name_shapes(self):
@@ -49,6 +49,6 @@ class TestUserIdentityEnrichment:
         session whether or not the connector sent the enrichment fields."""
         plain = _event_from_wire(_wire_event())
         enriched = _event_from_wire(
-            _wire_event(user_display_name="Ben Display", user_handle="ben#1234")
+            _wire_event(user_display_name="Bob Display", user_handle="bob#1234")
         )
         assert build_session_key(plain.source) == build_session_key(enriched.source)

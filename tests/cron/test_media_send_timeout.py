@@ -2,11 +2,11 @@
 
 Covers two salvaged fixes:
 
-- PR #87965 (@AiwendilInTheWoods): an argument-less exception (notably
+- PR #87965: an argument-less exception (notably
   TimeoutError from ``future.result(timeout=...)``) has an empty ``str()``,
   which used to render "failed to send media <path>: " with no reason at
   all — in both the log line and the delivery error recorded on the run.
-- PR #87967 (@AiwendilInTheWoods): the per-attachment send timeout was a
+- PR #87967: the per-attachment send timeout was a
   hardcoded 30s; large attachments (long TTS audio, big exports) failed on
   slow uplinks with no way to raise it. Now resolved via
   CRYOZEN_CRON_MEDIA_SEND_TIMEOUT → cron.media_send_timeout_seconds → 300s.

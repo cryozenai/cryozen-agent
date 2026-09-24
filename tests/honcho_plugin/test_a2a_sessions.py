@@ -158,7 +158,7 @@ class TestHumanTurnUnchanged:
 
 class TestManagerUserPeerOverride:
     def test_get_or_create_uses_the_override_as_user_peer(self):
-        mgr = HonchoSessionManager(honcho=MagicMock(), config=HonchoClientConfig(api_key="k", peer_name="eri", ai_peer="cryozen"),
+        mgr = HonchoSessionManager(honcho=MagicMock(), config=HonchoClientConfig(api_key="k", peer_name="ann", ai_peer="cryozen"),
                                    runtime_user_peer_name="7654321")
         mgr._get_or_create_peer = MagicMock(side_effect=lambda pid: MagicMock(name=f"peer:{pid}"))
         mgr._get_or_create_honcho_session = MagicMock(return_value=(MagicMock(), [], None))

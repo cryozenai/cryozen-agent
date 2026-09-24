@@ -9,7 +9,7 @@ From the worktree root (locked workspace dependencies installed):
 
 ```sh
 node evals/desktop_bug_campaign/navigation-vite.mjs
-PLAYWRIGHT_BROWSERS_PATH=/home/teknium/.cryozen-agent/cache/desktop-bugs-74848ed3/navigation-markdown/browsers node evals/desktop_bug_campaign/navigation-markdown-live.mjs after
+PLAYWRIGHT_BROWSERS_PATH=/path/to/playwright-browsers node evals/desktop_bug_campaign/navigation-markdown-live.mjs after
 ```
 
 Vite requires owned port 18160 (strictPort); verify the HTML references this

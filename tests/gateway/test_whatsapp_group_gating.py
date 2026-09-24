@@ -201,7 +201,7 @@ def test_config_bridges_whatsapp_dm_and_group_policy(monkeypatch, tmp_path):
 
 
 def test_status_broadcast_chats_are_always_dropped():
-    """Felipe's gateway.log showed the agent replying to status@broadcast
+    """A reported gateway.log showed the agent replying to status@broadcast
     (a contact's WhatsApp Story update). These pseudo-chats aren't real
     conversations and the adapter must drop them regardless of dm_policy.
     """
@@ -210,7 +210,7 @@ def test_status_broadcast_chats_are_always_dropped():
     # and Channel posts must not reach the agent.
     adapter = _make_adapter(dm_policy="open")
 
-    # Classic Story update — what Felipe was seeing in production.
+    # Classic Story update — what was seen in production.
     status_msg = _dm_message(
         body="[video received]",
         chatId="status@broadcast",

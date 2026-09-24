@@ -12,7 +12,7 @@ revert shows up in a failing test rather than silent behavior drift.
 
 Refs:
   - Issue #36196: M3 support request
-  - PR #36205 (closed unmerged): Csrayz's M3 + 1M context work
+  - PR #36205 (closed unmerged): M3 + 1M context work
   - PR #36212 (open): adds M3 to `_PROVIDER_MODELS["minimax"]` catalog
   - PR #6082: M2.7-highspeed → M2.7 for aux model (half-price fix)
   - Commit 773a0faca: same profile-layer fix pattern for `deepseek`

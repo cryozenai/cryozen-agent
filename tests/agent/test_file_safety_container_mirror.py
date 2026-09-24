@@ -1,6 +1,6 @@
 """Tests for the container-context sandbox-mirror guard (#32049 follow-up).
 
-Brian's shape-based guard (#32213) catches paths that carry the full
+The shape-based guard (#32213) catches paths that carry the full
 ``…/sandboxes/<backend>/<task>/home/.cryozen-agent/…`` prefix. This covers the
 complementary inner-container case: when file tools execute inside Docker,
 the bind-mount strips that prefix and the guard sees plain ``/root/.cryozen-agent/…``.

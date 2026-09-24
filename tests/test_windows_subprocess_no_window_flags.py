@@ -341,7 +341,7 @@ def test_lsp_client_spawn_hides_console_window(monkeypatch):
 
 
 
-# ── #67690 env probes, lazy installs, platform.win32_ver() (@m4r13y) ───────
+# ── #67690 env probes, lazy installs, platform.win32_ver() ─────────────────
 #
 # Windowless processes (pythonw gateway + kanban workers) flashed consoles
 # from three more spawn families: tools/env_probe._run's interpreter/pip

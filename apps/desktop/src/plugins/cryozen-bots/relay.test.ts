@@ -1,6 +1,6 @@
 /**
  * The cross-connection bot relay — the Desktop-as-router loops that let a bot
- * on one gateway reach a bot on another (Aug 2026 ruling: connections ARE the
+ * on one gateway reach a bot on another (design rule: connections ARE the
  * peer set).
  *
  * Three incidents are pinned here:

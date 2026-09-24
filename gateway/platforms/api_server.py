@@ -1185,8 +1185,8 @@ class APIServerAdapter(OpenAICompatRoutesMixin, BasePlatformAdapter):
         # Off by default: generic OpenAI clients routinely hardcode model names ("gpt-4o", ...), and
         # existing deployments rely on those falling back to the gateway default rather than switching the
         # executing model. Requests that send an explicit ``provider`` — and the Cryozen-native session-chat
-        # and /v1/runs endpoints — are always honored regardless of this flag. (Idea credit: PR #22825 by
-        # @mssteuer.)
+        # and /v1/runs endpoints — are always honored regardless of this flag. (Idea from
+        # PR #22825.)
         self._direct_model_requests: bool = _coerce_request_bool(
             extra.get("direct_model_requests"), default=False)
         self._app: Optional["web.Application"] = None

@@ -1,6 +1,6 @@
 """Regression tests for SSE transport in ``MCPServerTask._run_http``.
 
-Covers fixes distilled from @amiller's PR #5981 that couldn't be cherry-picked
+Covers fixes distilled from PR #5981 that couldn't be cherry-picked
 due to stale-branch divergence:
 
 1. ``sse_read_timeout`` is set to 300s (not the tool timeout). SSE servers

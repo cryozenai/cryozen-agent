@@ -46,7 +46,7 @@ class TestEmitsOnRealProblems:
     """The probe must produce a usable line for the real failure modes
     that drove this feature."""
 
-    def test_allen_scenario_python_version_mismatch(self, monkeypatch):
+    def test_reported_scenario_python_version_mismatch(self, monkeypatch):
         """python3 is 3.11 (no pip module), pip on PATH is 3.12, PEP 668 on,
         no uv — the exact scenario from the Sarasota real-estate task."""
         monkeypatch.setattr(env_probe, "_python_version_of",

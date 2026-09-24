@@ -659,7 +659,7 @@ class TestPauseResumeJob:
 
 
 class TestResolveJobRef:
-    """Name-based job lookup for CLI/tool callers (PR #2627, @buntingszn)."""
+    """Name-based job lookup for CLI/tool callers (PR #2627)."""
 
     def test_resolve_by_exact_id(self, tmp_cron_dir):
         from cron.jobs import resolve_job_ref

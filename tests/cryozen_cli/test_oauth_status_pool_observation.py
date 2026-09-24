@@ -6,7 +6,7 @@ refreshed an expiring single-use token, and a *transient* failure of that specul
 the entry with a persisted cooldown — the picker then rendered the provider as unconfigured
 ("needs setup" / "0 models") while the runtime resolver kept serving the same credential.
 
-Fixtures adapted from #114379 by @Finn763.
+Fixtures adapted from #114379.
 """
 
 import base64

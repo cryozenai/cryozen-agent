@@ -1,7 +1,7 @@
 """Tests for the Buzz WebSocket transport (NIP-42) and Nostr signing module.
 
-The signing module and WS transport were contributed in PR #73636 by
-@ScaleLeanChris and consolidated onto the merged poll-based adapter; these
+The signing module and WS transport were contributed in PR #73636
+and consolidated onto the merged poll-based adapter; these
 tests cover the crypto (against the official BIP-340 vector) and the WS
 lifecycle as wired into BuzzAdapter.
 """

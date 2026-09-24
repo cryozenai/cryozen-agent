@@ -1100,7 +1100,7 @@ def test_failed_docker_run_cleans_up_orphaned_container(monkeypatch):
     leaving a stale ``Created`` container. The exited-only orphan reaper
     (``reap_orphan_containers``, ``status=exited``) never catches a
     ``Created`` orphan, so without this cleanup it leaks permanently.
-    Regression for #7439. Salvage of #7440 (@Tranquil-Flow).
+    Regression for #7439. Salvage of #7440.
     """
     monkeypatch.setattr(docker_env, "find_docker", lambda: "/usr/bin/docker")
     monkeypatch.setattr(docker_env, "_get_active_profile_name", lambda: "default")
@@ -1137,8 +1137,8 @@ def test_failed_docker_run_cleans_up_orphaned_container(monkeypatch):
 
 def test_docker_run_timeout_cleans_up_orphaned_container(monkeypatch):
     """When ``docker run`` times out (e.g. slow image pull), the
-    partially-created container must be removed. Salvage of #7440
-    (@Tranquil-Flow); regression for #7439.
+    partially-created container must be removed. Salvage of #7440;
+    regression for #7439.
     """
     monkeypatch.setattr(docker_env, "find_docker", lambda: "/usr/bin/docker")
     monkeypatch.setattr(docker_env, "_get_active_profile_name", lambda: "default")
@@ -1175,7 +1175,7 @@ def test_find_reusable_handles_empty_label_string(monkeypatch):
     ``ID\\tState\\t\\n`` line (Docker CLI v29.5.3 emitted this shape for
     absent labels when the probe still carried a third column) must not make
     the parser drop the container — the ID is still parsed and the container
-    still reused. Regression test for the egilewski review on #48073."""
+    still reused. Regression test for the review on #48073."""
     monkeypatch.setattr(docker_env, "find_docker", lambda: "/usr/bin/docker")
     monkeypatch.setattr(docker_env, "_get_active_profile_name", lambda: "default")
 
@@ -1239,7 +1239,7 @@ def test_cleanup_with_persist_is_noop_for_container(monkeypatch):
 
     Resource reclamation in this mode happens via the orphan reaper on next
     Cryozen startup, not on graceful exit. Issue #20561 — the first iteration
-    of this PR did docker stop here, which Ben caught as contradicting the
+    of this PR did docker stop here, which review caught as contradicting the
     "ONE long-lived container" semantics."""
     monkeypatch.setattr(docker_env, "find_docker", lambda: "/usr/bin/docker")
     monkeypatch.setattr(docker_env, "_get_active_profile_name", lambda: "default")
@@ -1284,7 +1284,7 @@ def test_cleanup_vm_default_honors_persist_mode(monkeypatch):
     """``cleanup_vm(task_id)`` without ``force_remove=True`` must be a no-op
     for a persist-mode container.
 
-    Regression for the bug Ben caught after commit 4: ``AIAgent.close()``
+    Regression for the bug caught in review after commit 4: ``AIAgent.close()``
     (which is called from ``tui_gateway/server.py`` on session.close, from
     ``gateway/run.py`` on per-session teardown, and from per-turn cleanup)
     calls ``cleanup_vm(task_id)``. If that defaulted to ``force_remove=True``

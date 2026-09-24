@@ -7,7 +7,7 @@ error) the job never reaches ``mark_job_run`` and the stale claim blocked
 re-dispatch until the TTL expired (default 30 min) — a precisely-timed
 one-shot reminder arrived up to 30 minutes late with no error surfaced.
 
-The fix (salvaged from PR #87591 by @RelaxJonh) adds
+The fix (salvaged from PR #87591) adds
 ``cron.jobs.clear_run_claim`` and calls it on all three ``_submit_with_guard``
 early-exit paths, wrapped best-effort so a failing store can never crash the
 tick these paths exist to protect.

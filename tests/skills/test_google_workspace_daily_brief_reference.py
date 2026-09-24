@@ -28,11 +28,6 @@ def test_reference_carries_load_trigger():
     assert "morning brief" in content.lower(), "reference must state when to load it"
 
 
-def test_reference_credits_contributor():
-    content = REF_PATH.read_text(encoding="utf-8")
-    assert "benbarclay" in content
-
-
 def test_steps_have_completion_criteria():
     content = REF_PATH.read_text(encoding="utf-8")
     steps = re.findall(r"^### \d+\..*?(?=^### \d+\.|^## )", content, re.MULTILINE | re.DOTALL)

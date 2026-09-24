@@ -3,7 +3,7 @@
 A clean-stop response (``finish_reason == "stop"``) with no ordinary content but
 structured reasoning IS the answer: the reasoning is promoted to the visible reply and
 persisted as assistant content without entering the empty-response recovery ladder
-(every rung re-bills the full prompt). Idea credit: PR #48795 (@ligl0325).
+(every rung re-bills the full prompt). Idea from PR #48795.
 
 Invariants pinned here:
 - Clean-stop reasoning-only → returned and persisted after ONE API call.

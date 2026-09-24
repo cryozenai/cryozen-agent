@@ -11,7 +11,7 @@ class TestMatrixExecApprovalReactions:
 
     @pytest.mark.asyncio
     async def test_reaction_resolves_pending_approval(self, monkeypatch):
-        monkeypatch.setenv("MATRIX_ALLOWED_USERS", "@liizfq:liizfq.top")
+        monkeypatch.setenv("MATRIX_ALLOWED_USERS", "@alice:example.org")
         from plugins.platforms.matrix.adapter import MatrixAdapter, _MatrixApprovalPrompt
 
         adapter = MatrixAdapter(PlatformConfig(enabled=True, token="tok", extra={"homeserver": "https://matrix.example.org"}))
@@ -24,7 +24,7 @@ class TestMatrixExecApprovalReactions:
 
         content = {"m.relates_to": {"event_id": "$target", "key": "✅"}}
         event = types.SimpleNamespace(
-            sender="@liizfq:liizfq.top",
+            sender="@alice:example.org",
             event_id="$react1",
             room_id="!room:example.org",
             content=content,

@@ -404,7 +404,7 @@ TASK_COMPLETION_GUIDANCE = (
 # nothing. Short on purpose — shipped in the cached system prompt to every user, every session. Token cost
 # is paid once at install and amortised across all sessions via prefix caching. Keep it tight. Ported from
 # cline/cline#11514 ("encourage parallel tool calls"), adapted from Cline's TypeScript tool-surface guidance
-# to cryozen-agent's Python prompt-assembly architecture.
+# to cryozen-agent's Python prompt-assembly architecture (Apache-2.0, modified; see NOTICE).
 PARALLEL_TOOL_CALL_GUIDANCE = (
     "# Parallel tool calls\n"
     "When you need several pieces of information that don't depend on each other, request them together in a "
@@ -503,7 +503,7 @@ def execution_guidance_text() -> str:
     return OPENAI_MODEL_EXECUTION_GUIDANCE
 
 
-# Gemini/Gemma-specific operational guidance, adapted from OpenCode's gemini.txt.
+# Gemini/Gemma-specific operational guidance, adapted from anomalyco/opencode's gemini.txt (MIT; see NOTICE).
 # Injected alongside TOOL_USE_ENFORCEMENT_GUIDANCE when the model is Gemini or Gemma.
 GOOGLE_MODEL_OPERATIONAL_GUIDANCE = (
     "# Google model operational directives\n"

@@ -197,7 +197,7 @@ class TestSyncFallbacks:
 
 class TestInFlightDedupe:
     """Manual runs must not double-fire a job that is already mid-run
-    (salvaged from #53395 by @izumi0uu): the fire claim's 300s TTL is
+    (salvaged from #53395): the fire claim's 300s TTL is
     routinely outlived by real jobs, so the claim alone can't prevent it."""
 
     def test_run_claimed_job_skips_when_already_running(self):

@@ -1,7 +1,7 @@
 """Tests for `cryozen curator status` output.
 
 Covers:
-- y0shualee's "least recently active" semantic (view/patch/use all count as activity).
+- The "least recently active" semantic (view/patch/use all count as activity).
 - The most-used / least-used rankings by activity_count so users can see which
   skills actually get exercised.
 """

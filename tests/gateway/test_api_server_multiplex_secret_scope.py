@@ -8,7 +8,7 @@ their first credential read (e.g. OPENROUTER_BASE_URL). ``_profile_scope``
 now enters the DEFAULT profile's runtime scope when multiplex is active and
 no profile was requested.
 
-Adapted from PR #61283 by @giggling-ginger (originally targeting a
+Adapted from PR #61283 (originally targeting a
 pre-``_profile_scope`` helper); no live gateway or network.
 """
 

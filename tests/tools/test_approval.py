@@ -1521,8 +1521,8 @@ class TestEtcPatternsUnaffectedByRefactor:
 #
 # A Slack user walked away mid-conversation; the agent requested approval
 # to run `rm -rf .git`; the prompt timed out; the agent ran the command
-# anyway. Reported by @tofalck on 2026-05-13, corroborated by
-# @angry-programmer on Telegram. Silence is not consent.
+# anyway. Reported on 2026-05-13 and corroborated on Telegram.
+# Silence is not consent.
 #
 # These tests pin:
 #   1. Gateway timeout → approved=False, with a message strong enough that

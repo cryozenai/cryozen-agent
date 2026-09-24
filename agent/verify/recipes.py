@@ -1,6 +1,6 @@
 """Static run-recipe detection for project verification.
 
-Ported nearly 1:1 from superagent-ai/grok-cli ``src/verify/recipes.ts`` (same
+Ported nearly 1:1 from superagent-ai/grok-cli ``src/verify/recipes.ts`` (MIT; see NOTICE) (same
 detection order and command choices). Layer ownership: ``detect_project_facts``
 in :mod:`agent.coding_context` owns the cheap, byte-stable prompt-time facts —
 never push runtime detection into it. This module owns the deep runtime recipe

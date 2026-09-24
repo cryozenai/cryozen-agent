@@ -302,7 +302,7 @@ The agent kicks off the meeting join, streams the transcription back into its co
 
 ### cryozen-achievements
 
-Adds a **Steam-style achievements tab to the dashboard** — 60+ collectible, tiered badges generated from your real Cryozen session history. Tool-chain feats, debugging patterns, vibe-coding streaks, skill/memory usage, model/provider variety, lifestyle quirks (weekend and night sessions). Originally authored by [@PCinkusz](https://github.com/PCinkusz) as an external plugin; brought in-tree so it stays in lockstep with Cryozen feature changes.
+Adds a **Steam-style achievements tab to the dashboard** — 60+ collectible, tiered badges generated from your real Cryozen session history. Tool-chain feats, debugging patterns, vibe-coding streaks, skill/memory usage, model/provider variety, lifestyle quirks (weekend and night sessions). Originally an external plugin; brought in-tree so it stays in lockstep with Cryozen feature changes.
 
 **How it works:**
 

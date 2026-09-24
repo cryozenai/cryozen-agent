@@ -768,7 +768,8 @@ def _collect_pre_llm_call_context(
         )
         try:
             # Spill oversized per-hook context to disk so a runaway plugin can't inflate every subsequent
-            # turn's prompt. Ported from openai/codex PR #21069 ("Spill large hook outputs from context").
+            # turn's prompt. Ported from openai/codex PR #21069 ("Spill large hook outputs from context";
+            # Apache-2.0, modified; see NOTICE).
             from tools.hook_output_spill import (
                 get_spill_config as _spill_cfg, spill_if_oversized as _spill_if_oversized
             )

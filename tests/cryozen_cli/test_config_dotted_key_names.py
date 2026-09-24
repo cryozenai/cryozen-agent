@@ -142,7 +142,7 @@ class TestUnescapedDottedModelKeys:
     def test_set_refuses_phantom_when_dotted_sibling_exists(
         self, _isolated_cryozen_home, capsys
     ):
-        """Soju06's suggestion on #84064: creating a NEW nested mapping that
+        """Suggestion on #84064: creating a NEW nested mapping that
         shadows an existing dotted literal key fails loudly instead of
         silently writing a phantom."""
         _write_config(_isolated_cryozen_home, PROVIDER_CONFIG)

@@ -4,7 +4,7 @@ Applies on top of the root `AGENTS.md`. Authoring guide + canonical compat contr
 `website/docs/developer-guide/plugins/index.md`. Per-kind guides: `memory-provider-plugin.md`,
 `model-provider-plugin.md`, `context-engine-plugin.md`, `image-gen-provider-plugin.md`, ...
 
-## Plugins never touch core (Teknium, May 2026)
+## Plugins never touch core
 
 Plugins live in their own directory and work within the ABCs / hooks / `ctx` surface we provide.
 A plugin MUST NOT modify `run_agent.py`, `cli.py`, `gateway/run.py`, `cryozen_cli/main.py`, etc.

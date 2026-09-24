@@ -291,7 +291,7 @@ def _apply_display_count_guard(report: Report) -> Report:
     / asleep panels — TCC fine, health_report ok, yet every capture is 0x0. Turns a silent failure actionable; applied
     at the report seam so the real and the fallback path both get it.
 
-    Composed from PR #52949 (sujeet111) and PR #67259 (webtecnica).
+    Composed from PR #52949 and PR #67259.
     """
     checks = report.get("checks")
     for check in (c for c in (checks if isinstance(checks, list) else ()) if isinstance(c, dict) and c.get("name") == "screen_capture_capability"):

@@ -1368,7 +1368,7 @@ class TestMediaFallbackDoesNotLeakHostPath:
     — a host filesystem path with no actionable information.
     """
 
-    SENSITIVE_PATH = "/home/jayne/.cryozen-agent/cache/media/sensitive_host_path_abc123.bin"
+    SENSITIVE_PATH = "/home/alice/.cryozen-agent/cache/media/sensitive_host_path_abc123.bin"
 
 
     @pytest.mark.asyncio

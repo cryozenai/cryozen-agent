@@ -41,9 +41,9 @@ def test_extract_markdown_entries_promotes_heading_context():
     mod = load_module()
     text = """# MEMORY.md - Long-Term Memory
 
-## Tyler Williams
+## Alex Example
 
-- Founder of VANTA Research
+- Founder of Example Research
 - Timezone: America/Los_Angeles
 
 ### Active Projects
@@ -51,9 +51,9 @@ def test_extract_markdown_entries_promotes_heading_context():
 - Cryozen Agent
 """
     entries = mod.extract_markdown_entries(text)
-    assert "Tyler Williams: Founder of VANTA Research" in entries
-    assert "Tyler Williams: Timezone: America/Los_Angeles" in entries
-    assert "Tyler Williams > Active Projects: Cryozen Agent" in entries
+    assert "Alex Example: Founder of Example Research" in entries
+    assert "Alex Example: Timezone: America/Los_Angeles" in entries
+    assert "Alex Example > Active Projects: Cryozen Agent" in entries
 
 
 

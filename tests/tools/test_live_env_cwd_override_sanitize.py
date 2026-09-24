@@ -32,7 +32,7 @@ def _clean_state(monkeypatch):
     monkeypatch.setattr(tt, "_container_aliases", {})
 
 
-WIN_WS = r"C:\Users\rashi\ai_workspace"
+WIN_WS = r"C:\Users\alice\ai_workspace"
 
 
 @pytest.mark.parametrize(

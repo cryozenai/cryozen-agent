@@ -1,6 +1,6 @@
 """Session-scoped roster and bounded live transcript snapshots for shared clients.
 
-Async projection adapted from JoaoMarcos44's PR #70899; controls reuse the
+Async projection adapted from PR #70899; controls reuse the
 existing subagent.steer RPC rather than introducing a second steering runtime.
 """
 

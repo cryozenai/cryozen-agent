@@ -1,6 +1,6 @@
 """A killed ``cryozen serve`` must not lose in-memory session transcripts.
 
-Regression for #94724 (item 2, @ruangraung): a serve terminated mid-update
+Regression for #94724 (item 2): a serve terminated mid-update
 lost every un-flushed in-memory session — the next RPC failed with
 "session-scoped RPC rejected: not in memory (detached/reaped runtime)" and no
 store held the transcript. #95576 made serves survive *future* updates; this

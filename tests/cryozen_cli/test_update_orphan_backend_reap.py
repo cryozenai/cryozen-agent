@@ -124,7 +124,7 @@ def test_mixed_holders_keep_refusal():
 
 
 def test_orphan_root_plus_managed_runtime_descendant_qualifies():
-    # helix4u's review case (#82179): the scanner returns BOTH the orphaned
+    # Review case (#82179): the scanner returns BOTH the orphaned
     # serve root and its .cryozen-runtime interpreter child. The child's live
     # parent IS the orphan root, so the set is safe — only the root is
     # returned (taskkill /T reaps the descendant with it).

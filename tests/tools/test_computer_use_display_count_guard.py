@@ -1,7 +1,7 @@
 """macOS ScreenCaptureKit display_count=0 diagnosability.
 
-Composed from PR #52949 (sujeet111, doctor guard) and PR #67259
-(webtecnica, actionable-hint direction): a headless Mac or asleep panel
+Composed from PR #52949 (doctor guard) and PR #67259
+(actionable-hint direction): a headless Mac or asleep panel
 leaves SCK with zero shareable displays while TCC grants pass, so
 health_report says ok and every capture returns 0x0 silently. The guard
 turns that into a failed check + degraded overall + recovery hint.

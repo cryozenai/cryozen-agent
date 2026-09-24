@@ -1,7 +1,7 @@
 """Regressions for the #76354 review of the compression timeout architecture.
 
 Every test here asserts the BLOCKED/hung state itself where the review demands
-it — the worker is released only AFTER the assertion (helix4u called out two
+it — the worker is released only AFTER the assertion (the review called out two
 prior tests that released before asserting; do not regress that).
 
 Covers:

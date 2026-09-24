@@ -586,7 +586,7 @@ class TestNonBuiltinProviderAvailability:
     the custom name, the per-capability selection honor it (issue #32698), and
     the tool registry entries remain active.
 
-    Original tests contributed by @m0n5t3r (PR #28652 / issue #28651).
+    Original tests from PR #28652 / issue #28651.
     """
 
     # All env vars that could make a built-in provider available.

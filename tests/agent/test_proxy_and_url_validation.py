@@ -1,6 +1,6 @@
 """Tests for malformed proxy env var and base URL validation.
 
-Salvaged from PR #6403 by MestreY0d4-Uninter — validates that the agent
+Salvaged from PR #6403 — validates that the agent
 surfaces clear errors instead of cryptic httpx ``Invalid port`` exceptions
 when proxy env vars or custom endpoint URLs are malformed.
 """

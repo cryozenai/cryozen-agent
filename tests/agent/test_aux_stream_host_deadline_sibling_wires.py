@@ -1,7 +1,7 @@
 """#99692 sibling wires — the host compression deadline must stop EVERY aux
 stream consumer, not only the chat.completions accumulator.
 
-``aux_stream_deadline`` (salvaged from PR #99779 by @JoaoMarcos44) publishes
+``aux_stream_deadline`` (salvaged from PR #99779) publishes
 the ``CompressionCommitFence`` ceiling to the streamed chat.completions path.
 Two other auxiliary wires consume their streams internally and were left with
 their own, always-larger budgets:

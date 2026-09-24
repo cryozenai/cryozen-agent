@@ -4,7 +4,7 @@ Tests for --yes / --force flag separation in `cryozen skills install`.
 --yes / -y  → skip_confirm (bypass interactive prompt, needed in TUI mode)
 --force     → force (install despite blocked scan verdict)
 
-Based on PR #1595 by 333Alden333 (salvaged).
+Based on PR #1595 (salvaged).
 """
 
 import sys

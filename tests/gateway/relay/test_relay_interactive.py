@@ -212,7 +212,7 @@ def test_discord_component_interaction_decodes_prompt_token():
         body = (
             b'{"type": 3, "id": "i1", "channel_id": "ch1", "guild_id": "g1",'
             b' "message": {"id": "pm55"},'
-            b' "member": {"user": {"id": "u1", "username": "ben"}},'
+            b' "member": {"user": {"id": "u1", "username": "bob"}},'
             b' "data": {"custom_id": "hp1:a1b2c3d4:deny"}}'
         )
 

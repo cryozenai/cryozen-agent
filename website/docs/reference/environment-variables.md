@@ -76,9 +76,8 @@ Cryozen reads environment variables from the process environment and, for user-m
 | `GEMINI_API_KEY` | Alias for `GOOGLE_API_KEY` |
 | `GEMINI_BASE_URL` | Override Google AI Studio base URL |
 | `VERTEX_CREDENTIALS_PATH` | Path to a Google Cloud service account JSON for Vertex AI (Gemini). Vertex uses OAuth2, not a static API key. Falls back to `GOOGLE_APPLICATION_CREDENTIALS`, then to ADC (`gcloud auth application-default login`). Set project/region under `vertex:` in `config.yaml` |
-| `ANTHROPIC_API_KEY` | Anthropic Console API key ([console.anthropic.com](https://console.anthropic.com/)) |
+| `ANTHROPIC_API_KEY` | Anthropic API key ([platform.claude.com/settings/keys](https://platform.claude.com/settings/keys)). The only Anthropic credential variable Cryozen reads; Claude subscription OAuth / setup tokens (`sk-ant-oat...`) are refused |
 | `ANTHROPIC_BASE_URL` | Override the Anthropic API base URL |
-| `ANTHROPIC_TOKEN` | Manual or legacy Anthropic OAuth/setup-token override |
 | `DASHSCOPE_API_KEY` | Qwen Cloud (Alibaba DashScope) API key for Qwen models ([modelstudio.console.alibabacloud.com](https://modelstudio.console.alibabacloud.com/)) |
 | `DASHSCOPE_BASE_URL` | Custom DashScope base URL (default: `https://dashscope-intl.aliyuncs.com/compatible-mode/v1`; use `https://dashscope.aliyuncs.com/compatible-mode/v1` for mainland-China region) |
 | `DASHSCOPE_CN_BASE_URL` | Override the `alibaba-cn` mainland-China DashScope base URL |
@@ -117,7 +116,6 @@ Cryozen reads environment variables from the process environment and, for user-m
 | `OPENCODE_ZEN_BASE_URL` | Override OpenCode Zen base URL |
 | `OPENCODE_GO_API_KEY` | OpenCode Go API key — $10/month subscription for open models ([opencode.ai](https://opencode.ai/auth)) |
 | `OPENCODE_GO_BASE_URL` | Override OpenCode Go base URL |
-| `CLAUDE_CODE_OAUTH_TOKEN` | Explicit Claude Code token override if you export one manually |
 | `CRYOZEN_MODEL` | Override model name at process level (used by cron scheduler; prefer `config.yaml` for normal use) |
 | `VOICE_TOOLS_OPENAI_KEY` | Preferred OpenAI key for OpenAI speech-to-text and text-to-speech providers |
 | `CRYOZEN_LOCAL_STT_COMMAND` | Optional local speech-to-text command template. Supports `{input_path}`, `{output_dir}`, `{language}`, and `{model}` placeholders |
@@ -133,7 +131,8 @@ Cryozen reads environment variables from the process environment and, for user-m
 
 ## Provider Auth (OAuth)
 
-For native Anthropic auth, Cryozen prefers Claude Code's own credential files when they exist because those credentials can refresh automatically. **OAuth against Anthropic requires a Claude Max plan with purchased extra usage credits** — Cryozen routes as Claude Code, which only draws from the Max plan's extra/overage credits, not the base Max allowance, and does not work on Claude Pro. Without Max + extra credits, use an API key instead. Environment variables such as `ANTHROPIC_TOKEN` remain useful as manual overrides, but they are no longer the preferred path for Claude Max login.
+Anthropic has no OAuth path in Cryozen: native Anthropic auth is API-key only, through `ANTHROPIC_API_KEY` or `cryozen auth add anthropic --type api-key`.
+Claude subscription OAuth / setup tokens (`sk-ant-oat...`) are refused.
 
 | Variable | Description |
 |----------|-------------|

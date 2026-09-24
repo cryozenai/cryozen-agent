@@ -688,11 +688,11 @@ class TestExternalRotationRecovery:
     def test_gateway_log_attached_after_external_rotation_then_re_setup(
         self, cryozen_home,
     ):
-        """End-to-end Allen-reproduction: gateway.log gets externally rotated,
+        """End-to-end reproduction: gateway.log gets externally rotated,
         ``setup_logging(mode='gateway')`` is re-called, the handler keeps
         working.
 
-        Reproduces Allen's symptom (gateway.log frozen mid-write, all gateway
+        Reproduces the reported symptom (gateway.log frozen mid-write, all gateway
         records leaking to agent.log) when something external rotates the
         file between setup_logging() calls.
         """
@@ -717,7 +717,7 @@ class TestExternalRotationRecovery:
         cryozen_logging.flush_log_queue()
 
         # The new record must reach the live gateway.log, not the rotated
-        # backup.  Allen's logs had everything past the rotation point
+        # backup.  The reported logs had everything past the rotation point
         # going into agent.log only, never gateway.log.
         assert gw_path.exists(), "gateway.log was never recreated"
         assert "AFTER rotation" in gw_path.read_text()

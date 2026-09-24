@@ -68,7 +68,7 @@ OpenAI-compatible base URL continues to use the compatible client instead.
 | OpenAI Codex | `openai-codex` | `cryozen model` → **ChatGPT or Codex Subscription** (ChatGPT OAuth) |
 | GitHub Copilot | `copilot` | `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, or `GITHUB_TOKEN` |
 | GitHub Copilot ACP | `copilot-acp` | External process (editor integration) |
-| Anthropic | `anthropic` | `ANTHROPIC_API_KEY` or Claude Code credentials |
+| Anthropic | `anthropic` | `ANTHROPIC_API_KEY` (API key only) |
 | z.ai / GLM | `zai` | `GLM_API_KEY` |
 | Kimi / Moonshot | `kimi-coding` | `KIMI_API_KEY` |
 | MiniMax | `minimax` | `MINIMAX_API_KEY` |
@@ -147,7 +147,7 @@ Prompt caches are keyed to the model (and on most providers, the account) servin
 :::info Per-Turn, Not Per-Session
 Fallback is **turn-scoped**: each new user message starts with the primary model restored. If the primary fails mid-turn, fallback activates for that turn only. On the next message, Cryozen tries the primary again. Within a single turn, fallback activates at most once — if the fallback also fails, normal error handling takes over (retries, then error message). This prevents cascading failover loops within a turn while giving the primary model a fresh chance every turn.
 
-The per-turn retry is **reset-aware**: when the primary's credentials report a rate-limit reset time that hasn't elapsed yet (subscription windows like Claude Pro/Max's 5-hour blocks or Codex weekly limits report these as hours or days), Cryozen skips the doomed retry and stays on the fallback until the reset passes — avoiding two pointless provider switches (and two prompt-cache invalidations) per turn. Expiry makes the primary eligible for a later retry; it does not schedule a retry or guarantee recovery. Transient 429s without a reset time use an exponential cooldown.
+The per-turn retry is **reset-aware**: when the primary's credentials report a rate-limit reset time that hasn't elapsed yet (subscription windows like Codex's 5-hour and weekly limits report these as hours or days), Cryozen skips the doomed retry and stays on the fallback until the reset passes — avoiding two pointless provider switches (and two prompt-cache invalidations) per turn. Expiry makes the primary eligible for a later retry; it does not schedule a retry or guarantee recovery. Transient 429s without a reset time use an exponential cooldown.
 
 When a switch arms that cooldown, the fallback notice includes its approximate remaining duration, for example: `Primary retry eligible in ~60 s; recovery is not guaranteed.` Non-rate-limit switches and switches from an already-active cross-provider fallback do not announce a new primary cooldown.
 :::
@@ -316,7 +316,7 @@ These options apply to `auxiliary:`, `compression:`, and `fallback_providers:` e
 | `"openrouter"` | Force OpenRouter | `OPENROUTER_API_KEY` |
 | `"codex"` | Force Codex OAuth | `cryozen model` → ChatGPT or Codex Subscription |
 | `"main"` | Use whatever provider the main agent uses (auxiliary tasks only) | Active main provider configured |
-| `"anthropic"` | Force Anthropic native | `ANTHROPIC_API_KEY` or Claude Code credentials |
+| `"anthropic"` | Force Anthropic native | `ANTHROPIC_API_KEY` (API key only) |
 
 ### Direct Endpoint Override
 

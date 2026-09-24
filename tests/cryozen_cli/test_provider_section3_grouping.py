@@ -1,7 +1,7 @@
 """Regression tests for section-3 (``providers:``) same-endpoint grouping in
 ``list_authenticated_providers`` and for ``format_model_for_display``.
 
-Salvaged with PR #36998 (@antydizajn): section 3 folds ``providers:`` entries
+Salvaged with PR #36998: section 3 folds ``providers:`` entries
 that share (api_url, credential, api_mode, extra_headers) into one picker row,
 mirroring section 4's grouping for ``custom_providers:``. These are invariant
 tests — grouping identity, header-routed separation, list-of-dict model

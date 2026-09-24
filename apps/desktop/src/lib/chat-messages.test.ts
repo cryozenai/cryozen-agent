@@ -207,13 +207,13 @@ describe('toChatMessages', () => {
     const [message] = toChatMessages([
       {
         role: 'assistant',
-        content: "MEDIA:/Users/brooklyn/.cryozen-agent/cache/audio/tts_20260501_222725.mp3\n\nhow's that sound?",
+        content: "MEDIA:/Users/testuser/.cryozen-agent/cache/audio/tts_20260501_222725.mp3\n\nhow's that sound?",
         timestamp: 1
       }
     ])
 
     expect(chatMessageText(message)).toBe(
-      "[Audio: tts_20260501_222725.mp3](#media:%2FUsers%2Fbrooklyn%2F.cryozen-agent%2Fcache%2Faudio%2Ftts_20260501_222725.mp3)\n\nhow's that sound?"
+      "[Audio: tts_20260501_222725.mp3](#media:%2FUsers%2Ftestuser%2F.cryozen-agent%2Fcache%2Faudio%2Ftts_20260501_222725.mp3)\n\nhow's that sound?"
     )
   })
 

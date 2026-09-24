@@ -64,7 +64,7 @@ class TestRestartPhaseFailureIsIncomplete:
         assert _restart_phase_failure_is_incomplete(None, []) is True
 
     def test_stale_when_preexisting_gateway_stopped_without_replacement(self):
-        # The gap egilewski flagged: a gateway was running, we stopped it, and
+        # The gap review flagged: a gateway was running, we stopped it, and
         # the post-failure probe is empty because the replacement never came
         # back. `[]` here means "gone", not "safe".
         assert _restart_phase_failure_is_incomplete([], [4321]) is True

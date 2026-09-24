@@ -724,7 +724,7 @@ def test_setup_tcc_identity_creates_cert_imports_trusts_and_configures(tmp_path,
 
 def test_setup_tcc_identity_retries_pkcs12_with_legacy_on_mac_verification_failure(tmp_path, monkeypatch, capsys):
     """OpenSSL 3: first import fails with the MAC-verification signature, the
-    -legacy re-export imports cleanly (the exact failure @ctaylor86 hit live)."""
+    -legacy re-export imports cleanly (the exact failure hit live)."""
     monkeypatch.setattr(cli_main.sys, "platform", "darwin")
     monkeypatch.setattr(
         cli_main.shutil,

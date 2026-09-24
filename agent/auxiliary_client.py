@@ -6201,7 +6201,7 @@ def _build_call_kwargs(
     if merged_extra:
         kwargs["extra_body"] = merged_extra
     # Anthropic Messages adapters take reasoning via a private kwarg that plain OpenAI SDK clients
-    # would reject; Portal Claude is dual-wire, so include it only when the catalog id selects
+    # would reject, so include it only when the provider or endpoint speaks
     # /v1/messages. A profile declaring api_mode=anthropic_messages (commandcode-anthropic) is on
     # that wire regardless of URL shape — once it overrides build_api_kwargs_extras the generic
     # ``extra_body.reasoning`` fallback the adapter used to read is gone, so this is the adapter's
@@ -6478,7 +6478,7 @@ def _create_with_progress_once(
     chunk-capable client, the request is sent with ``stream=True`` and aggregated, ticking the hook only for
     substantive chunks. The configured ``timeout`` acts per stream read (idle) rather than as a total
     budget, and outer liveness watchdogs see tokens moving. ``force_stream=True`` (stream-only providers
-    such as Tencent Copilot — credit @kudi88, PR #60686) takes the same streamed path even without a hook.
+    such as Tencent Copilot, PR #60686) takes the same streamed path even without a hook.
     Providers that reject the streamed request fall back to the plain non-streaming call — except under
     ``force_stream``, where a stream-only provider rejects the plain call by definition, so the original
     error is surfaced to the normal recovery chains instead.

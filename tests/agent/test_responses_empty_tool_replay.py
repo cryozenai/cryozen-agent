@@ -22,9 +22,7 @@ def test_reasoning_without_tool_keeps_nonempty_following_item():
 
 
 def test_failing_turn_fixture_emits_no_invented_carrier():
-    """Real failing-turn shape from #103483 (fixture by @cristianbdev, see
-    https://gist.github.com/cristianbdev/6036f7aa3838935adfaeb9b6800f7450 —
-    3 reasoning+tool assistant rows, 5 tool calls/outputs, content redacted).
+    """Real failing-turn shape from #103483 (3 reasoning+tool assistant rows, 5 tool calls/outputs, content redacted).
 
     The adapter must invent no blank carrier, must keep every reasoning item
     directly followed by a function_call, and must preserve all call/output

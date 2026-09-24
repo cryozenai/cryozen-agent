@@ -9,7 +9,7 @@ crashed the reader thread / gateway thread.
 call in tui_gateway/server.py. These tests assert that the kwargs survive so
 the crash class cannot silently regress.
 
-# Test pattern adapted from @devorun's PR #52700 (salvage convention).
+# Test pattern adapted from PR #52700 (salvage convention).
 """
 
 from __future__ import annotations

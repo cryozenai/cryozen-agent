@@ -284,7 +284,7 @@ export function BotsPane() {
   }, [gatewayUp, refetch])
   const allMeta = useValue($botMeta)
 
-  // Resilience (@wesleysimplicio, #13): a failed refresh must not erase a
+  // Resilience (#13): a failed refresh must not erase a
   // roster the user already had — mixed local+cloud gateways and remotes
   // waking from sleep fail transiently. Render the last good snapshot with
   // a notice; the full error card is reserved for "never had a roster".

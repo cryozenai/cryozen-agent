@@ -122,7 +122,7 @@ def test_strip_env_file_keeps_comments_and_unknown_keys_verbatim(tmp_path):
     assert env.read_text(encoding="utf-8") == "# header\nexport OPENAI_API_KEY=abc\n\nMY_CUSTOM_THING=1\n"
 
 
-# --- post-merge review of #109502 (gaoanze888): clone safety + ownership-based inventory ---------
+# --- post-merge review of #109502: clone safety + ownership-based inventory ----------------------
 
 
 def test_clone_all_never_writes_through_a_symlinked_source_env(home, tmp_path):

@@ -2,7 +2,7 @@
 
 Legacy compression rotation mints a new physical ``session_id`` mid-conversation, moving it
 into a fresh cache bucket. ``resolve_prompt_cache_scope()`` maps the physical id to the ROOT
-of its compression lineage — NOT ``get_conversation_root`` (the Portal-attribution walk),
+of its compression lineage — NOT ``get_conversation_root`` (the usage-attribution walk),
 which would collapse /branch children and delegate trees into one id. ``/new`` starts a
 fresh scope; fork children (branch, delegate, tool-tagged) are isolated. Hosts minting one id
 per RESPONSE declare the conversation via ``gateway_session_key``, which wins over the lineage
@@ -114,7 +114,7 @@ def declared_conversation_scope(agent: Any) -> Optional[str]:
             # One read for both halves of the row identity (fork verdict + source).
             # One read for both halves of the row's identity: the fork verdict and the source the peer
             # queries match on live on the same ``sessions`` row, and asking for them separately read it
-            # twice per resolution (@teknium1 on #98811). A SessionDB without the combined view keeps the
+            # twice per resolution (#98811). A SessionDB without the combined view keeps the
             # original call, so nothing that predates it — including the doubles that certify the
             # fail-closed contract below — changes behaviour.
             identity = getattr(db, "declared_scope_identity", None)

@@ -84,7 +84,7 @@ describe('startWorkspaceSession', () => {
       {
         id: 'p_voice',
         label: 'Voice Assistant',
-        path: '/Users/oschmidt/Checkouts/voice-assistant',
+        path: '/Users/testuser/Checkouts/voice-assistant',
         repos: [],
         sessionCount: 0
       }

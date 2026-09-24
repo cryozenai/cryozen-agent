@@ -104,8 +104,8 @@ function Write-HandoffLog([string]$Message) {
 # then log-only). It never consumes child output; it polls /progress for the
 # current hand-off stage or a terminal event and reacts. The loopback listener
 # is not a web server in any meaningful sense; it exists because file:// pages
-# cannot receive events from a detached process. Salvaged from the web-shell
-# spike (Co-authored-by: teknium1), reshaped to the quiet update-surface
+# cannot receive events from a detached process. Derived from the web-shell
+# spike, reshaped to the quiet update-surface
 # contract (#75895/#83634): loader, one title, one line, no dashboard.
 $script:UiState = [hashtable]::Synchronized(@{
     status     = "running"      # running | done | manual | error

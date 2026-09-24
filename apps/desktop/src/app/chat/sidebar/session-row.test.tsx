@@ -56,7 +56,7 @@ vi.mock('@/i18n', () => ({
 vi.mock('@/app/chat/profile-tag', () => ({ ProfileTag: () => null }))
 vi.mock('@/app/chat/session-drag', () => ({ startSessionDrag: vi.fn() }))
 // PlatformAvatar is intentionally NOT mocked (do not reintroduce this — see
-// #67500, Gille's third pass): it's a forwardRef component that spreads its
+// #67500): it's a forwardRef component that spreads its
 // props onto the rendered span, and mocking it with a stand-in that spreads
 // props itself only proves the MOCK forwards them, not that the real
 // component does. This file exercises the actual production component so a
@@ -418,7 +418,7 @@ describe('Inbox-style session card', () => {
   it('gives truncated card lines room for glyph ink instead of clipping them', () => {
     renderRow(
       makeSession({
-        cwd: '/Users/tomek/pursuit-support-agent',
+        cwd: '/Users/alice/pursuit-support-agent',
         message_count: 133,
         model: 'gpt-4.1',
         title: 'Ruff lint and pytest verification'

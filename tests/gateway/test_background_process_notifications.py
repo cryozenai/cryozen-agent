@@ -4,7 +4,7 @@ The gateway process watcher pushes status updates to users' chats when
 background terminal commands run.  ``display.background_process_notifications``
 controls verbosity: off | result | error | all (default).
 
-Contributed by @PeterFile (PR #593), reimplemented on current main.
+Originally from PR #593, reimplemented on current main.
 """
 
 import asyncio

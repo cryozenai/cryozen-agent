@@ -60,8 +60,8 @@ def _running_interpreter() -> str:
     site-packages. Keep the lexical form when any ancestor holds a ``pyvenv.cfg``.
 
     See #80547, #90292.
-    Idea credit: the lexical-preservation rule was independently proposed in #92516/#94115/#94544 and by
-    nosliwhtes' review of this PR; the pyvenv.cfg-detection refinement here keeps both properties.
+    The lexical-preservation rule was independently proposed in #92516/#94115/#94544 and in
+    review of this PR; the pyvenv.cfg-detection refinement here keeps both properties.
     """
     lexical = os.path.abspath(sys.executable)
     path = Path(lexical)
@@ -81,7 +81,7 @@ def _can_import_cryozen_cli(interpreter: Path) -> bool:
     (missing binary, spawn failure, timeout) is assumed capable and deliberately NOT cached, so one
     transient hiccup doesn't freeze the assumption for the session.
 
-    Probe design per @nosliwhtes' isolated-mode capability check (#92122 lineage, commit 4150501f641).
+    Probe design per the isolated-mode capability check (#92122 lineage, commit 4150501f641).
     """
     key = str(interpreter)
     if key in _probe_cache:
@@ -116,7 +116,7 @@ def resolve_exec_command(project_root: Optional[Path] = None) -> str:
         # The candidate interpreter cannot actually import cryozen_cli.main (checked in isolated mode from a
         # neutral cwd — so the probe can't be fooled by a checkout cwd or an inherited PYTHONPATH). Fall
         # back to the module form under the RUNNING interpreter, which by definition has the CLI importable.
-        # Probe design follows the isolated-mode capability check proposed by @nosliwhtes (#92122 review
+        # Probe design follows the isolated-mode capability check proposed in the #92122 review
         # lineage, commit 4150501f641) — cached here per-process so a desktop launch pays the subprocess
         # cost at most once.
         interpreter = _running_interpreter_fallback()
@@ -383,7 +383,7 @@ def _shebang_escapes_running_env(shebang: str) -> bool:
 
     Tokenizes the shebang (interpreter path plus any flags) and compares PATH COMPONENTS, never substrings:
     ``<venv>/bin-extra/python`` is not inside ``<venv>/bin`` even though it starts with it
-    (sibling-directory confusion; independently surfaced in nosliwhtes' #92122 hardening ``b96427d0`` —
+    (sibling-directory confusion; independently surfaced in the #92122 hardening ``b96427d0`` —
     reimplemented here with two extensions).
     The comparison uses the LEXICAL interpreter directory (abspath, not resolve()): on uv venvs the resolved
     parent is the base interpreter's dir, which makes a valid ``.venv/bin/python`` shebang look foreign
