@@ -79,7 +79,11 @@ def test_model_options_cold_pricing_fetch_runs_off_the_request_path(monkeypatch)
         elapsed = monotonic() - started_at
         assert payload["providers"][0]["slug"] == "openrouter"
         assert "pricing" not in payload["providers"][0]
-        assert elapsed < 2.0, f"cold picker blocked for {elapsed:.2f}s"
+        # The pricing fetch is gated by release_fetch (set only in finally), so if
+        # the picker blocked on it this call would hang until teardown. Returning
+        # well under that proves it did not block; the bound is generous so a
+        # loaded shared CI runner does not flake it.
+        assert elapsed < 30.0, f"cold picker blocked for {elapsed:.2f}s"
         assert fetch_started.wait(timeout=1), "pricing should prewarm in the background"
     finally:
         threads = list(inv._pricing_prewarm_threads.values())

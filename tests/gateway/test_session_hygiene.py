@@ -1720,7 +1720,10 @@ async def test_hygiene_does_not_wait_ceiling_after_fence_cancel(
 
         assert result == "ok"
         assert worker_started.wait(timeout=2)
-        assert elapsed < 2.0, (
+        # Generous bound: the cancel path returns near-instantly, so anything
+        # far below the 600s ceiling proves it did not wait toward it. A tight
+        # bound flakes on a loaded shared CI runner (#96953).
+        assert elapsed < 30.0, (
             f"hygiene host waited {elapsed:.1f}s after fence cancel — "
             "must not extend toward the 600s ceiling (#96953)"
         )

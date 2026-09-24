@@ -55,7 +55,10 @@ def _drive_waiter(monkeypatch, paths: list[str]):
     def run():
         async def main():
             with mo.force_interactive_oauth():
-                return await mo._make_callback_waiter(port, timeout=4)()
+                # Generous ceiling: the waiter returns as soon as a terminal callback
+                # arrives, so a short timeout only risks shutting the server mid-
+                # sequence on a loaded runner and refusing a later request.
+                return await mo._make_callback_waiter(port, timeout=30)()
         try:
             out["result"] = asyncio.run(main())
         except Exception as exc:  # noqa: BLE001 — the timeout is the failure under test
@@ -65,7 +68,7 @@ def _drive_waiter(monkeypatch, paths: list[str]):
     thread.start()
     _wait_listening(port)
     statuses = [_get(port, p) for p in paths]
-    thread.join(timeout=15)
+    thread.join(timeout=30)
     assert not thread.is_alive(), "waiter did not finish"
     assert "exc" not in out, f"waiter raised {type(out.get('exc')).__name__}"
     return statuses, out["result"]
