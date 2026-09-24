@@ -3056,7 +3056,10 @@ describe('usePromptActions file attachment sync', () => {
     })
     expect(calls[1]).toEqual({
       method: 'prompt.submit',
-      params: { session_id: RUNTIME_SESSION_ID, text: '@file:.cryozen-agent/desktop-attachments/report.txt\n\nsummarize' }
+      params: {
+        session_id: RUNTIME_SESSION_ID,
+        text: '@file:.cryozen-agent/desktop-attachments/report.txt\n\nsummarize'
+      }
     })
   })
 

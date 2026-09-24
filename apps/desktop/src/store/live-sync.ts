@@ -57,7 +57,6 @@ export function notifyPairingChanged(): void {
   $pairingChangeTick.set($pairingChangeTick.get() + 1)
 }
 
-
 /** Reset on gateway wipe/reconnect — a new backend re-advertises capability on
  *  its own gateway.ready, and stale ticks must not fire refreshes into stores
  *  the wipe just cleared. */

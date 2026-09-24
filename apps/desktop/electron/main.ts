@@ -5260,7 +5260,8 @@ async function createActiveBackend(backendArgs) {
 async function resolveCryozenBackend(backendArgs) {
   // 1. Explicit override -- CRYOZEN_DESKTOP_CRYOZEN_ROOT points at a developer
   //    checkout. Honour it as-is (no bootstrap; the user is driving).
-  const overrideRoot = process.env.CRYOZEN_DESKTOP_CRYOZEN_ROOT && path.resolve(process.env.CRYOZEN_DESKTOP_CRYOZEN_ROOT)
+  const overrideRoot =
+    process.env.CRYOZEN_DESKTOP_CRYOZEN_ROOT && path.resolve(process.env.CRYOZEN_DESKTOP_CRYOZEN_ROOT)
 
   if (overrideRoot && isCryozenSourceRoot(overrideRoot)) {
     const backend = await createPythonBackend(overrideRoot, `Cryozen source at ${overrideRoot}`, backendArgs)
@@ -5566,7 +5567,9 @@ async function runEnsureRuntime(backend: any, assertStillOwned: () => void): Pro
   // (install.ps1 owns those concerns now and the bootstrap-complete marker
   // attests they ran successfully).
   if (!isCryozenSourceRoot(ACTIVE_CRYOZEN_ROOT)) {
-    throw new Error(missingInstallPartMessage(`Cryozen source files are missing or incomplete at ${ACTIVE_CRYOZEN_ROOT}`))
+    throw new Error(
+      missingInstallPartMessage(`Cryozen source files are missing or incomplete at ${ACTIVE_CRYOZEN_ROOT}`)
+    )
   }
 
   // On Windows, preflight Git Bash. Cryozen' terminal tool calls bash.exe

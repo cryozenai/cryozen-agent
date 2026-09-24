@@ -102,7 +102,10 @@ test('resolveRemovableAppPath uses APPIMAGE on Linux when set', () => {
 })
 
 test('resolveRemovableAppPath finds the unpacked dir on Linux', () => {
-  assert.equal(resolveRemovableAppPath('/opt/cryozen/linux-unpacked/cryozen', 'linux', {}), '/opt/cryozen/linux-unpacked')
+  assert.equal(
+    resolveRemovableAppPath('/opt/cryozen/linux-unpacked/cryozen', 'linux', {}),
+    '/opt/cryozen/linux-unpacked'
+  )
   // A system-package install (/usr/bin) → null, left to apt/dnf.
   assert.equal(resolveRemovableAppPath('/usr/bin/cryozen', 'linux', {}), null)
 })

@@ -63,7 +63,11 @@ export function startGatewaysAfterUpdateAbort(cryozenCliPath: string, deps: Stop
   return runGatewayLifecycleCommand(cryozenCliPath, ['gateway', 'start', '--all'], deps)
 }
 
-function runGatewayLifecycleCommand(cryozenCliPath: string, args: string[], deps: StopGatewayBeforeUpdateDeps): boolean {
+function runGatewayLifecycleCommand(
+  cryozenCliPath: string,
+  args: string[],
+  deps: StopGatewayBeforeUpdateDeps
+): boolean {
   const isWindows = deps.isWindows ?? process.platform === 'win32'
 
   if (!isWindows) {

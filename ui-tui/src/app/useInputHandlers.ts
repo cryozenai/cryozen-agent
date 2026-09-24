@@ -423,8 +423,7 @@ export function useInputHandlers(ctx: InputHandlerContext): InputHandlerResult {
       // answering felt like the prompt had locked the entire UI.  Explicitly
       // skip the prompt-overlay early-return for scroll keys so they fall
       // through to the wheel / PageUp / Shift+arrow handlers below.
-      const promptOverlay =
-        overlay.approval || overlay.clarify || overlay.confirm || overlay.connection
+      const promptOverlay = overlay.approval || overlay.clarify || overlay.confirm || overlay.connection
 
       const fallThroughForScroll = promptOverlay && shouldFallThroughForScroll(key)
 

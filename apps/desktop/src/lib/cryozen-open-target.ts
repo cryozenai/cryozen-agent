@@ -155,7 +155,11 @@ export function resolveCryozenOpenPath(target: CryozenOpenTarget | null | undefi
  * Build a navigate path from a parsed deep-link payload
  * (`cryozen://<kind>/<name>?…` → kind/name/params).
  */
-export function pathFromCryozenDeepLink(kind: string, name: string, params: Record<string, string> = {}): string | null {
+export function pathFromCryozenDeepLink(
+  kind: string,
+  name: string,
+  params: Record<string, string> = {}
+): string | null {
   if (!kind || !name) {
     return null
   }

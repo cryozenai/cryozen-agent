@@ -447,7 +447,10 @@ test('probeRemotePlatform rejects unsupported remote platforms', async () => {
 test('ownership paths are isolated by ownership ID and spawn nonce', () => {
   assert.equal(ownershipDirectory(OWNERSHIP_ID), `~/.cryozen-agent/desktop-ssh/${OWNERSHIP_ID}`)
   assert.equal(lockfilePath(OWNERSHIP_ID), `~/.cryozen-agent/desktop-ssh/${OWNERSHIP_ID}/backend.lock.json`)
-  assert.equal(spawnLogPath(OWNERSHIP_ID, SPAWN_NONCE), `~/.cryozen-agent/desktop-ssh/${OWNERSHIP_ID}/${SPAWN_NONCE}.log`)
+  assert.equal(
+    spawnLogPath(OWNERSHIP_ID, SPAWN_NONCE),
+    `~/.cryozen-agent/desktop-ssh/${OWNERSHIP_ID}/${SPAWN_NONCE}.log`
+  )
 })
 
 test('readLockfile returns null ONLY for a missing/empty lockfile', async () => {
@@ -613,7 +616,15 @@ test('pidIsOurDashboard accepts the venv entrypoint an installer wrapper execs i
   ])
 
   assert.equal(
-    await pidIsOurDashboard(ssh, 5, SPAWN_NONCE, '~/.local/bin/cryozen', '/Users/cd9c/.cryozen-agent', OWNERSHIP_ID, 'ops'),
+    await pidIsOurDashboard(
+      ssh,
+      5,
+      SPAWN_NONCE,
+      '~/.local/bin/cryozen',
+      '/Users/cd9c/.cryozen-agent',
+      OWNERSHIP_ID,
+      'ops'
+    ),
     true
   )
   assert.match(ownershipProbe, /cryozen-agent.*venv.*bin.*cryozen/)
@@ -1597,7 +1608,8 @@ test('spawnRemoteDashboard removes a token file when upload reporting fails', as
   ])
 
   await assert.rejects(
-    () => spawnRemoteDashboard(ssh, { cryozenPath: '/x/cryozen', profile: '', token: 'tok', ownershipId: OWNERSHIP_ID }),
+    () =>
+      spawnRemoteDashboard(ssh, { cryozenPath: '/x/cryozen', profile: '', token: 'tok', ownershipId: OWNERSHIP_ID }),
     /channel closed/
   )
   assert.ok(ssh.calls.some(command => /rm -f .*\.token/.test(command)))

@@ -94,7 +94,11 @@ describe('scanDiskPlugins (#66899)', () => {
       if (dir === '/local/.cryozen-agent/desktop-plugins/my-feature') {
         return {
           entries: [
-            { isDirectory: false, name: 'README.md', path: '/local/.cryozen-agent/desktop-plugins/my-feature/README.md' }
+            {
+              isDirectory: false,
+              name: 'README.md',
+              path: '/local/.cryozen-agent/desktop-plugins/my-feature/README.md'
+            }
           ]
         }
       }
@@ -118,7 +122,9 @@ describe('scanDiskPlugins (#66899)', () => {
       if (dir === '/local/.cryozen-agent/desktop-plugins/odd') {
         // A folder literally named plugin.js — must resolve to "no entry".
         return {
-          entries: [{ isDirectory: true, name: 'plugin.js', path: '/local/.cryozen-agent/desktop-plugins/odd/plugin.js' }]
+          entries: [
+            { isDirectory: true, name: 'plugin.js', path: '/local/.cryozen-agent/desktop-plugins/odd/plugin.js' }
+          ]
         }
       }
 

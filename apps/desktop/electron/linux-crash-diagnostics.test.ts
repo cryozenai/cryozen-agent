@@ -57,14 +57,18 @@ test('a logs dir that cannot be created degrades to no logging, never a dead she
 test('a crash reporter that refuses to start is not fatal either', () => {
   const switches: string[] = []
 
-  enableLinuxCrashDiagnostics(linuxCrashDiagnostics('/home/u/.cryozen-agent/logs', 'linux'), '/home/u/.cryozen-agent/logs', {
-    ensureLogsDir: () => {},
-    reclaimChromiumLog: () => {},
-    appendSwitch: name => switches.push(name),
-    startCrashReporter: () => {
-      throw new Error('crashpad handler missing')
+  enableLinuxCrashDiagnostics(
+    linuxCrashDiagnostics('/home/u/.cryozen-agent/logs', 'linux'),
+    '/home/u/.cryozen-agent/logs',
+    {
+      ensureLogsDir: () => {},
+      reclaimChromiumLog: () => {},
+      appendSwitch: name => switches.push(name),
+      startCrashReporter: () => {
+        throw new Error('crashpad handler missing')
+      }
     }
-  })
+  )
 
   assert.ok(switches.includes('log-file'))
 })
@@ -72,12 +76,16 @@ test('a crash reporter that refuses to start is not fatal either', () => {
 test('the Chromium log is bounded before Chromium appends to it', () => {
   const reclaimed: string[] = []
 
-  enableLinuxCrashDiagnostics(linuxCrashDiagnostics('/home/u/.cryozen-agent/logs', 'linux'), '/home/u/.cryozen-agent/logs', {
-    ensureLogsDir: () => {},
-    reclaimChromiumLog: file => reclaimed.push(file),
-    appendSwitch: () => {},
-    startCrashReporter: () => {}
-  })
+  enableLinuxCrashDiagnostics(
+    linuxCrashDiagnostics('/home/u/.cryozen-agent/logs', 'linux'),
+    '/home/u/.cryozen-agent/logs',
+    {
+      ensureLogsDir: () => {},
+      reclaimChromiumLog: file => reclaimed.push(file),
+      appendSwitch: () => {},
+      startCrashReporter: () => {}
+    }
+  )
 
   // Electron opens an explicit --log-file with APPEND_TO_OLD_LOG_FILE, so the
   // file it is about to append to is exactly the one that must be reclaimed.

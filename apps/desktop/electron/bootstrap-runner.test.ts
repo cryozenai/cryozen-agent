@@ -92,7 +92,16 @@ test('fresh bootstrap args include the packaged commit pin', () => {
       activeRoot: '/tmp/cryozen-agent',
       cryozenHome: '/tmp/cryozen'
     }),
-    ['--dir', '/tmp/cryozen-agent', '--cryozen-home', '/tmp/cryozen', '--branch', 'main', '--commit', installStamp.commit]
+    [
+      '--dir',
+      '/tmp/cryozen-agent',
+      '--cryozen-home',
+      '/tmp/cryozen',
+      '--branch',
+      'main',
+      '--commit',
+      installStamp.commit
+    ]
   )
 })
 

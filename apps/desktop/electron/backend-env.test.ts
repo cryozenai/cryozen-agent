@@ -172,7 +172,10 @@ test('normalizeCryozenHomeRoot maps profile homes back to the global Cryozen roo
     normalizeCryozenHomeRoot('C:\\Users\\test\\AppData\\Local\\cryozen\\profiles\\oracle', { pathModule: path.win32 }),
     'C:\\Users\\test\\AppData\\Local\\cryozen'
   )
-  assert.equal(normalizeCryozenHomeRoot('/Users/test/.cryozen-agent', { pathModule: path.posix }), '/Users/test/.cryozen-agent')
+  assert.equal(
+    normalizeCryozenHomeRoot('/Users/test/.cryozen-agent', { pathModule: path.posix }),
+    '/Users/test/.cryozen-agent'
+  )
 })
 
 test('Windows PATH casing and delimiter are preserved without POSIX sane entries', () => {

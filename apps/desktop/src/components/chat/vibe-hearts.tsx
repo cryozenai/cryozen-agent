@@ -40,7 +40,10 @@ const PET_HEART_CONFIG: Partial<ParticleFieldConfig> = {
 // `currentColor`.
 const HEART_GLYPH = (
   <svg fill="none" shapeRendering="crispEdges" viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 0h4v2h-4zM8 0h4v2h-4zM0 2h14v2h-14zM0 4h14v2h-14zM2 6h10v2h-10zM4 8h6v2h-6zM6 10h2v2h-2z" fill="currentColor" />
+    <path
+      d="M2 0h4v2h-4zM8 0h4v2h-4zM0 2h14v2h-14zM0 4h14v2h-14zM2 6h10v2h-10zM4 8h6v2h-6zM6 10h2v2h-2z"
+      fill="currentColor"
+    />
   </svg>
 )
 

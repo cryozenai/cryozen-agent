@@ -386,7 +386,9 @@ test('decideMigration suppresses write when best is default (single-profile fall
   // not profiles/default/state.db.
   const deps = baseDeps()
 
-  const d = decideMigration(null, [], ['default', 'coder'], deps, p => (p.endsWith('/.cryozen-agent/state.db') ? 99 : 50))
+  const d = decideMigration(null, [], ['default', 'coder'], deps, p =>
+    p.endsWith('/.cryozen-agent/state.db') ? 99 : 50
+  )
 
   assert.equal(d, null)
 })
@@ -528,7 +530,10 @@ test('migrateActiveProfileIfMissing prefers a single running gateway over heuris
 // ---------------------------------------------------------------------------
 
 test('profileStateDbPath puts default at cryozenHome, named under profilesRoot', () => {
-  assert.equal(profileStateDbPath('default', '/home/u/.cryozen-agent', '/home/u/.cryozen-agent/profiles'), '/home/u/.cryozen-agent/state.db')
+  assert.equal(
+    profileStateDbPath('default', '/home/u/.cryozen-agent', '/home/u/.cryozen-agent/profiles'),
+    '/home/u/.cryozen-agent/state.db'
+  )
   assert.equal(
     profileStateDbPath('conduit', '/home/u/.cryozen-agent', '/home/u/.cryozen-agent/profiles'),
     '/home/u/.cryozen-agent/profiles/conduit/state.db'

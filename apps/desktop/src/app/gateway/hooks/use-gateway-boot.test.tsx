@@ -679,7 +679,11 @@ describe('primary failure foreground isolation', () => {
 
       const desktop = Object.assign(fakeDesktop(), {
         getRecentLogs: vi.fn(async () => ({ lines: [] })),
-        getConnectionConfig: vi.fn(async () => ({ mode: 'remote', remoteAuthMode: 'oauth', remoteUrl: oauthRemote.baseUrl })),
+        getConnectionConfig: vi.fn(async () => ({
+          mode: 'remote',
+          remoteAuthMode: 'oauth',
+          remoteUrl: oauthRemote.baseUrl
+        })),
         getConnectionFor: vi.fn(async () => ({
           ...coderConn,
           connectionId: 'local',

@@ -1163,7 +1163,11 @@ test('homeRelativeAttachmentCandidates returns nothing for an absolute path', ()
 
 test('homeRelativeAttachmentCandidates returns nothing for a file: URL', () => {
   assert.deepEqual(
-    homeRelativeAttachmentCandidates('file:///already/resolved/foo.xlsx', '/Users/alice', '/Users/alice/.cryozen-agent'),
+    homeRelativeAttachmentCandidates(
+      'file:///already/resolved/foo.xlsx',
+      '/Users/alice',
+      '/Users/alice/.cryozen-agent'
+    ),
     []
   )
 })

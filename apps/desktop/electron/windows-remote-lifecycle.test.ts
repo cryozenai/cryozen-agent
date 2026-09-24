@@ -96,7 +96,9 @@ test('every emitted PowerShell script keeps try blocks attached to their catch/f
     'C:\\Users\\alice\\.cryozen-agent'
   )
   scripts.push(
-    decode(atomicWindowsSpawnCommand({ cryozenHome: 'C:\\Users\\alice\\.cryozen-agent', python: 'C:\\py\\python.exe' })),
+    decode(
+      atomicWindowsSpawnCommand({ cryozenHome: 'C:\\Users\\alice\\.cryozen-agent', python: 'C:\\py\\python.exe' })
+    ),
     decode(buildWindowsInteractiveCommand('C:\\work'))
   )
 

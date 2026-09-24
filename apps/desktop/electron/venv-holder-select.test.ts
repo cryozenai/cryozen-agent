@@ -30,7 +30,10 @@ test('Windows path prefix match is ordinal case-insensitive', () => {
 
 test('excludes external venv holders that are not the hindsight daemon', () => {
   // a user terminal running the cryozen CLI from the venv — must NOT be killed
-  assert.equal(isCryozenOwnedVenvDaemon('C:\\Cryozen\\venv\\Scripts\\cryozen.exe', 'cryozen chat -q "hi"', SCRIPTS), false)
+  assert.equal(
+    isCryozenOwnedVenvDaemon('C:\\Cryozen\\venv\\Scripts\\cryozen.exe', 'cryozen chat -q "hi"', SCRIPTS),
+    false
+  )
   // an unrelated python script using the venv interpreter
   assert.equal(
     isCryozenOwnedVenvDaemon('C:\\Cryozen\\venv\\Scripts\\python.exe', 'python C:\\tools\\import.py', SCRIPTS),
