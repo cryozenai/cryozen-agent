@@ -127,9 +127,9 @@ done
 # The runner's own documented environment knobs must survive the hermetic
 # `env -i` below, or they are silent no-ops for anyone invoking this script:
 #
-#   * CRYOZEN_TEST_WORKERS / PATHS / FILE_TIMEOUT / FILE_RETRIES / SLICE are
-#     read by run_tests_parallel.py at argparse-default time — inside the
-#     stripped environment.
+#   * CRYOZEN_TEST_WORKERS / PATHS / FILE_TIMEOUT / FILE_RETRIES / SLICE /
+#     SHARD_INDEX / SHARD_TOTAL are read by run_tests_parallel.py at
+#     argparse-default time — inside the stripped environment.
 #   * CRYOZEN_TEST_IMAGE is read by tests/docker/conftest.py to skip its
 #     session-scoped `docker build`. CI's docker.yml sets it to the image
 #     the build step just loaded; stripping it made every per-file pytest
@@ -144,7 +144,7 @@ done
 TEST_ENV=()
 for _test_var in CRYOZEN_TEST_IMAGE CRYOZEN_TEST_WORKERS CRYOZEN_TEST_PATHS \
   CRYOZEN_TEST_FILE_TIMEOUT CRYOZEN_TEST_FILE_RETRIES CRYOZEN_TEST_SLICE \
-  CRYOZEN_GATEWAY_LOCK_DIR; do
+  CRYOZEN_TEST_SHARD_INDEX CRYOZEN_TEST_SHARD_TOTAL CRYOZEN_GATEWAY_LOCK_DIR; do
   if [ -n "${!_test_var:-}" ]; then
     TEST_ENV+=("$_test_var=${!_test_var}")
   fi

@@ -233,7 +233,7 @@ def test_grandchild_leak_is_killed_by_runner(tmp_path: Path) -> None:
 # The runner routes any token starting with ``-`` that isn't one of its own
 # options (``-j``/``--jobs``, ``--paths``, ``--slice``, ``--file-timeout``,
 # ``--generate-slices``, ``--files``, ``--include-integration``,
-# ``--files-from``) straight
+# ``--files-from``, ``--shard-index``, ``--shard-total``) straight
 # through to each per-file pytest invocation — no ``--`` separator required.
 # Before this, a bare ``-q`` errored out with "unrecognized arguments",
 # forcing a retry on every run. These tests are behavior contracts, not

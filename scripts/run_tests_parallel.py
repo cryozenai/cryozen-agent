@@ -38,6 +38,9 @@ Environment:
     CRYOZEN_TEST_PATHS    Override discovery roots (colon-sep; on Windows
                          ';' also works and drive letters are handled;
                          default: 'tests')
+    CRYOZEN_TEST_SHARD_INDEX / CRYOZEN_TEST_SHARD_TOTAL
+                         Run only shard INDEX (0-based) of TOTAL (default 1,
+                         i.e. no sharding); see select_shard()
 
 Exit code: 0 if every file's pytest exited 0; 1 otherwise.
 """
@@ -862,6 +865,18 @@ def _compute_lpt_slices(
     return bucket_files
 
 
+def select_shard(files: List[Path], index: int, total: int) -> List[Path]:
+    """Return shard *index* (0-based) of *total* round-robin shards of *files*.
+
+    Round-robin rather than contiguous chunks so neighbouring slow files
+    (one test directory tends to share a cost profile) spread across
+    shards. The split depends only on the file order, never on a duration
+    cache, so parallel CI jobs that each compute it independently always
+    agree: every file runs in exactly one shard.
+    """
+    return files[index::total]
+
+
 def _slice_files(
     files: List[Path],
     slice_index: int,
@@ -1026,6 +1041,24 @@ def main() -> int:
         ),
     )
     parser.add_argument(
+        "--shard-index",
+        type=int,
+        default=os.environ.get("CRYOZEN_TEST_SHARD_INDEX", "0"),
+        help=(
+            "Run only this shard (0-based) of --shard-total round-robin "
+            "shards of the discovered files. Env: CRYOZEN_TEST_SHARD_INDEX."
+        ),
+    )
+    parser.add_argument(
+        "--shard-total",
+        type=int,
+        default=os.environ.get("CRYOZEN_TEST_SHARD_TOTAL", "1"),
+        help=(
+            "Number of shards the file list is split into (default: 1, no "
+            "sharding). Env: CRYOZEN_TEST_SHARD_TOTAL."
+        ),
+    )
+    parser.add_argument(
         "--generate-slices",
         metavar="N",
         type=int,
@@ -1089,7 +1122,7 @@ def main() -> int:
     OUR_FLAGS = {
         "-h", "--help", "-j", "--jobs", "--paths", "--include-integration",
         "--file-timeout", "--file-retries", "--slice", "--generate-slices", "--files",
-        "--files-from",
+        "--files-from", "--shard-index", "--shard-total",
     }
     # pytest short flags that consume the NEXT token as their value.
     PYTEST_VALUE_FLAGS = {"-k", "-m", "-p", "-o", "-c", "-r", "-W"}
@@ -1204,6 +1237,14 @@ def main() -> int:
             print(f"error: --slice must be I/N (e.g. 1/4), got: {slice_raw!r}", file=sys.stderr)
             sys.exit(2)
 
+    if not (args.shard_total >= 1 and 0 <= args.shard_index < args.shard_total):
+        print(
+            f"error: shard index must satisfy 0 <= index < total, got "
+            f"index={args.shard_index} total={args.shard_total}",
+            file=sys.stderr,
+        )
+        sys.exit(2)
+
     repo_root = Path(__file__).resolve().parent.parent
 
     # --files / --files-from: explicit file list (argv or file-backed) from
@@ -1237,6 +1278,15 @@ def main() -> int:
     if not files:
         print("No test files to run", file=sys.stderr)
         return 1
+
+    if args.shard_total > 1:
+        all_count = len(files)
+        files = select_shard(files, args.shard_index, args.shard_total)
+        print(
+            f"Shard {args.shard_index}/{args.shard_total}: {len(files)} of "
+            f"{all_count} files",
+            flush=True,
+        )
 
     # --generate-slices: compute LPT distribution and emit JSON, then exit.
     if args.generate_slices is not None:
