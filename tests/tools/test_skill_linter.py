@@ -175,11 +175,18 @@ def test_lint_skill_reads_from_disk(tmp_path):
     assert findings == []
 
 
-@pytest.mark.parametrize("author", ["Cryozen Agent", "cryozen", "Jane Doe (jane-doe), Cryozen"])
-def test_author_other_than_cryozen_warned(author):
+@pytest.mark.parametrize("author", ["Cryozen Agent", "cryozen", "CRYOZEN  agent", "agent"])
+def test_cryozen_like_author_variant_warned(author):
     content = CLEAN.replace("author: Cryozen\n", f"author: {author}\n")
     findings = lint_content(content)
     assert "author-value" in _rules(findings)
+
+
+@pytest.mark.parametrize("author", ["Cryozen", "Alice", "Jane Doe (jane-doe)"])
+def test_canonical_or_user_chosen_author_not_warned(author):
+    content = CLEAN.replace("author: Cryozen\n", f"author: {author}\n")
+    findings = lint_content(content)
+    assert "author-value" not in _rules(findings)
 
 
 def test_findings_carry_rule_and_severity():
