@@ -253,7 +253,7 @@ def run_dump(args):
         f"python:           {sys.version.split()[0]}",
         f"openai_sdk:       {_openai_version()}",
         f"profile:          {profile}",
-        f"cryozen_home:      {display_cryozen_home()}",
+        f"cryozen_home:     {display_cryozen_home()}",
         f"model:            {model}",
         f"provider:         {provider}",
         f"terminal:         {_effective_terminal_backend(config)}",
