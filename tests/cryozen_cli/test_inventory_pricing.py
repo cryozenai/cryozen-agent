@@ -43,7 +43,7 @@ def test_model_options_cold_pricing_fetch_runs_off_the_request_path(monkeypatch)
         if cached_only:
             return {}
         fetch_started.set()
-        release_fetch.wait(timeout=5)
+        release_fetch.wait(timeout=120)
         return {}
 
     row = {
@@ -79,10 +79,9 @@ def test_model_options_cold_pricing_fetch_runs_off_the_request_path(monkeypatch)
         elapsed = monotonic() - started_at
         assert payload["providers"][0]["slug"] == "openrouter"
         assert "pricing" not in payload["providers"][0]
-        # The pricing fetch is gated by release_fetch (set only in finally), so if
-        # the picker blocked on it this call would hang until teardown. Returning
-        # well under that proves it did not block; the bound is generous so a
-        # loaded shared CI runner does not flake it.
+        # The fetch only returns once release_fetch is set (in finally) or after
+        # 120s, so a picker that fetched on the request path would block far past
+        # this bound; the bound itself is loose enough for a loaded CI runner.
         assert elapsed < 30.0, f"cold picker blocked for {elapsed:.2f}s"
         assert fetch_started.wait(timeout=1), "pricing should prewarm in the background"
     finally:

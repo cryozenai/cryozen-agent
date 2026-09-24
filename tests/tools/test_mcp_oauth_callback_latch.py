@@ -51,13 +51,29 @@ def _drive_waiter(monkeypatch, paths: list[str]):
     monkeypatch.setattr(mo.sys, "stdin", io.StringIO())  # paste reader sees EOF; the HTTP listener is under test
     port = _free_port()
     out: dict = {}
+    # The waiter polls every 500 ms and shuts the listener down once a result is latched; hold that
+    # shutdown until every path is sent so a loaded runner cannot refuse a later request mid-sequence.
+    sequence_sent = threading.Event()
+    real_start = mo._start_callback_server
+
+    def gated_start(bind_port, handler_cls):
+        server = real_start(bind_port, handler_cls)
+        real_shutdown = server.shutdown
+
+        def shutdown():
+            sequence_sent.wait(timeout=30)
+            real_shutdown()
+
+        server.shutdown = shutdown
+        return server
+
+    monkeypatch.setattr(mo, "_start_callback_server", gated_start)
 
     def run():
         async def main():
             with mo.force_interactive_oauth():
-                # Generous ceiling: the waiter returns as soon as a terminal callback
-                # arrives, so a short timeout only risks shutting the server mid-
-                # sequence on a loaded runner and refusing a later request.
+                # Hang ceiling only: a latch regression runs the waiter to this timeout, and the join
+                # below outlasts it so the waiter's own error is what the test reports.
                 return await mo._make_callback_waiter(port, timeout=30)()
         try:
             out["result"] = asyncio.run(main())
@@ -67,8 +83,11 @@ def _drive_waiter(monkeypatch, paths: list[str]):
     thread = threading.Thread(target=run)
     thread.start()
     _wait_listening(port)
-    statuses = [_get(port, p) for p in paths]
-    thread.join(timeout=30)
+    try:
+        statuses = [_get(port, p) for p in paths]
+    finally:
+        sequence_sent.set()
+    thread.join(timeout=45)
     assert not thread.is_alive(), "waiter did not finish"
     assert "exc" not in out, f"waiter raised {type(out.get('exc')).__name__}"
     return statuses, out["result"]

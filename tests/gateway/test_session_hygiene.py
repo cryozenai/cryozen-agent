@@ -1369,7 +1369,9 @@ def _make_progress_runner(monkeypatch, tmp_path, agent_cls, cfg_text):
 # Cooldown persistence across gateway restarts (#74136)
 # ---------------------------------------------------------------------------
 
-def _make_cooldown_runner(monkeypatch, tmp_path, agent_cls, session_db, session_id):
+def _make_cooldown_runner(
+    monkeypatch, tmp_path, agent_cls, session_db, session_id, *, turn_hold_seconds=None
+):
     """Scaffolding for the restart-persistence tests: a fresh GatewayRunner
     wired to a REAL AsyncSessionDB facade (not a MagicMock) so the hygiene
     cooldown check/write paths exercise the actual SQLite-backed methods."""
@@ -1384,12 +1386,14 @@ def _make_cooldown_runner(monkeypatch, tmp_path, agent_cls, session_db, session_
     monkeypatch.setitem(sys.modules, "run_agent", fake_run_agent)
 
     cfg_path = tmp_path / "config.yaml"
-    cfg_path.write_text(
+    cfg_text = (
         "compression:\n"
         "  enabled: true\n"
-        "  hygiene_failure_cooldown_seconds: 300\n",
-        encoding="utf-8",
+        "  hygiene_failure_cooldown_seconds: 300\n"
     )
+    if turn_hold_seconds is not None:
+        cfg_text += f"  hygiene_max_turn_hold_seconds: {turn_hold_seconds}\n"
+    cfg_path.write_text(cfg_text, encoding="utf-8")
 
     gateway_run = importlib.import_module("gateway.run")
     GatewayRunner = gateway_run.GatewayRunner
@@ -1697,22 +1701,25 @@ async def test_hygiene_does_not_wait_ceiling_after_fence_cancel(
             if commit_fence is not None:
                 commit_fence.try_cancel_before_commit()
             worker_started.set()
-            # Keep the worker alive (and keep reporting "progress") so a
-            # host that still extends to the 600s ceiling would stall here.
-            deadline = time.monotonic() + 2.0
+            # Keep the worker alive (and keep reporting "progress") until the
+            # test releases it, so a host that still extends the wait stalls
+            # here until the turn-hold budget; the deadline is a hang guard.
+            deadline = time.monotonic() + 120.0
             while time.monotonic() < deadline:
                 if commit_fence is not None:
                     commit_fence.touch_progress()
-                if release_worker.is_set():
+                if release_worker.wait(timeout=0.02):
                     break
-                time.sleep(0.02)
             return (messages, None)
 
     db = SessionDB(db_path=tmp_path / "state.db")
     try:
         db.create_session(session_id, "telegram")
+        # Turn hold well above the bound: a host that kept extending after the
+        # cancel would be held here until it, not released by the worker.
         runner, adapter, event = _make_cooldown_runner(
-            monkeypatch, tmp_path, HungAfterFenceCancelAgent, db, session_id
+            monkeypatch, tmp_path, HungAfterFenceCancelAgent, db, session_id,
+            turn_hold_seconds=60,
         )
         started = time.monotonic()
         result = await runner._handle_message(event)
@@ -1720,9 +1727,9 @@ async def test_hygiene_does_not_wait_ceiling_after_fence_cancel(
 
         assert result == "ok"
         assert worker_started.wait(timeout=2)
-        # Generous bound: the cancel path returns near-instantly, so anything
-        # far below the 600s ceiling proves it did not wait toward it. A tight
-        # bound flakes on a loaded shared CI runner (#96953).
+        # The cancel path returns near-instantly; the bound sits below the 60s
+        # turn hold so extending the wait fails, yet is loose enough for a
+        # loaded shared CI runner.
         assert elapsed < 30.0, (
             f"hygiene host waited {elapsed:.1f}s after fence cancel — "
             "must not extend toward the 600s ceiling (#96953)"
@@ -1734,8 +1741,9 @@ async def test_hygiene_does_not_wait_ceiling_after_fence_cancel(
             "took too long" in s["content"] for s in adapter.sent
         ), "fence-cancel is not a summary-model timeout; no timeout toast"
         release_worker.set()
-        await asyncio.wait_for(asyncio.to_thread(cleanup_done.wait), timeout=2)
+        await asyncio.wait_for(asyncio.to_thread(cleanup_done.wait), timeout=30)
     finally:
+        release_worker.set()
         db.close()
 
 
@@ -1810,7 +1818,7 @@ async def test_hygiene_unwind_records_cooldown(monkeypatch, tmp_path):
 
         def _compress_context(self, messages, *_args, **_kwargs):
             worker_started.set()
-            release_worker.wait(timeout=5)
+            release_worker.wait(timeout=60)
             return (messages, None)
 
     db = SessionDB(db_path=tmp_path / "state.db")
@@ -1820,7 +1828,7 @@ async def test_hygiene_unwind_records_cooldown(monkeypatch, tmp_path):
             monkeypatch, tmp_path, SlowCompressAgent, db, session_id
         )
         task = asyncio.create_task(runner._handle_message(event))
-        assert await asyncio.to_thread(worker_started.wait, 2)
+        assert await asyncio.to_thread(worker_started.wait, 30)
         task.cancel()
         with pytest.raises(asyncio.CancelledError):
             await task
@@ -1830,8 +1838,9 @@ async def test_hygiene_unwind_records_cooldown(monkeypatch, tmp_path):
             f"{state!r}"
         )
         release_worker.set()
-        await asyncio.wait_for(asyncio.to_thread(cleanup_done.wait), timeout=2)
+        await asyncio.wait_for(asyncio.to_thread(cleanup_done.wait), timeout=30)
     finally:
+        release_worker.set()
         db.close()
 
 
