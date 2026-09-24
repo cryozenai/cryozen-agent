@@ -1,0 +1,224 @@
+"""Harness: dashboard opt-in via CRYOZEN_DASHBOARD.
+
+Today (tini): dashboard starts once when CRYOZEN_DASHBOARD=1; if it crashes
+it stays dead. After Phase 2 (s6): dashboard starts once; if it crashes
+it is restarted under supervision. The restart-after-crash test lives in
+Phase 2 Task 2.5; this file only locks the opt-in surface (which must
+not change between tini and s6).
+
+Every ``docker exec`` here runs as the unprivileged ``cryozen`` user
+(via :func:`docker_exec`/:func:`docker_exec_sh` in conftest), matching
+the realistic runtime context. See the conftest module docstring.
+"""
+from __future__ import annotations
+
+import json
+import time
+
+from tests.docker.conftest import docker_exec, docker_exec_sh, start_container, poll_container
+
+
+def test_dashboard_not_running_by_default(
+    built_image: str, container_name: str,
+) -> None:
+    """Without CRYOZEN_DASHBOARD, no dashboard process should be running."""
+    start_container(built_image, container_name, cmd="sleep 60")
+    r = docker_exec(container_name, "pgrep", "-f", "cryozen dashboard")
+    # pgrep exits non-zero when no match found
+    assert r.returncode != 0, (
+        "Dashboard should not be running without CRYOZEN_DASHBOARD"
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+# ---------------------------------------------------------------------------
+# Auth-gate behaviour — regression guard for the dashboard-insecure
+# auto-injection bug. Pre-fix, the s6 run script appended `--insecure`
+# whenever `CRYOZEN_DASHBOARD_HOST` was non-loopback, silently disabling
+# the auth gate on every container-deployed dashboard. The matching
+# static-text guard lives in tests/test_docker_home_override_scripts.py;
+# this is the behavioural end-to-end check.
+# ---------------------------------------------------------------------------
+
+
+def _http_probe(
+    container: str,
+    path: str,
+    *,
+    deadline_s: float = 60.0,
+) -> tuple[int, str]:
+    """Poll ``http://127.0.0.1:9119<path>`` from inside the container.
+
+    Returns ``(status_code, body)`` as soon as the dashboard answers any
+    HTTP response — 200, 401, 503, anything. The image doesn't ship
+    ``curl`` but the venv's stdlib ``urllib`` is good enough; we use a
+    proper ``try``/``except`` to intercept ``HTTPError`` because
+    ``urlopen`` raises on 4xx/5xx, and we treat those as legitimate
+    responses (the auth gate's 401 IS the success signal for the
+    gate-engaged test).
+
+    Connection errors (uvicorn still starting, fail-closed exited) keep
+    the poll loop running until ``deadline_s`` elapses.
+
+    The probe Python program is fed over stdin (``python -``) rather
+    than ``python -c`` so we can use proper multi-line syntax with
+    ``try``/``except`` blocks without escaping hell.
+
+    Raises ``AssertionError`` on timeout.
+    """
+    py_program = f"""\
+import urllib.request, urllib.error
+req = urllib.request.Request("http://127.0.0.1:9119{path}")
+try:
+    r = urllib.request.urlopen(req, timeout=5)
+    print(r.status)
+    print(r.read().decode(), end="")
+except urllib.error.HTTPError as h:
+    print(h.code)
+    print(h.read().decode(), end="")
+"""
+    # Feed the program over stdin via a heredoc so docker_exec_sh's
+    # single bash string stays clean. The 'PY' delimiter is quoted to
+    # disable shell expansion inside the heredoc body.
+    probe = (
+        "/opt/cryozen/.venv/bin/python - <<'PY'\n"
+        f"{py_program}"
+        "PY"
+    )
+    end = time.monotonic() + deadline_s
+    last_err = ""
+    while time.monotonic() < end:
+        r = docker_exec_sh(container, probe, timeout=10)
+        if r.returncode == 0 and r.stdout.strip():
+            lines = r.stdout.split("\n", 1)
+            try:
+                status = int(lines[0].strip())
+                body = lines[1] if len(lines) > 1 else ""
+                return status, body
+            except (ValueError, IndexError) as exc:
+                last_err = f"parse: {exc!r} / stdout={r.stdout!r}"
+        else:
+            last_err = f"rc={r.returncode} stderr={r.stderr!r}"
+        time.sleep(0.5)
+    raise AssertionError(
+        f"Probe of {path} never returned HTTP within {deadline_s}s; "
+        f"last error: {last_err}"
+    )
+
+
+def test_dashboard_auth_gate_engages_on_non_loopback_bind(
+    built_image: str, container_name: str,
+) -> None:
+    """The s6 dashboard run script must NOT auto-add ``--insecure`` when the
+    dashboard binds to ``0.0.0.0``. The auth gate engages on its own when a
+    ``DashboardAuthProvider`` is registered (the bundled basic provider
+    activates whenever ``CRYOZEN_DASHBOARD_BASIC_AUTH_USERNAME`` and a
+    password are set).
+
+    Regression guard: before this fix, the run script flipped ``--insecure``
+    on for any non-loopback bind, which routed ``start_server`` straight back
+    into the legacy ``allow_public=True`` branch and disabled the gate every
+    time.
+
+    We verify two independent observable consequences of the gate being
+    on:
+
+    1. ``/api/auth/providers`` (publicly reachable through the gate so
+       the login page can bootstrap) returns 200 with ``basic`` in the
+       provider list, which proves the bundled provider registered.
+    2. ``/api/sessions`` (a gated route under both the legacy
+       ``_SESSION_TOKEN`` middleware and the auth gate) returns 401
+       to an unauthenticated caller, which proves the gate is actively
+       intercepting browser traffic. We deliberately probe a gated route
+       here rather than ``/api/status``: status sits in the shared
+       ``PUBLIC_API_PATHS`` allowlist (liveness probe target) and
+       responds 200 without a cookie under both gates, so it cannot
+       distinguish "gate on" from "gate off".
+    """
+    start_container(
+        built_image, container_name,
+        "CRYOZEN_DASHBOARD=1",
+        "CRYOZEN_DASHBOARD_HOST=0.0.0.0",
+        "CRYOZEN_DASHBOARD_BASIC_AUTH_USERNAME=admin",
+        "CRYOZEN_DASHBOARD_BASIC_AUTH_PASSWORD=correct-horse-battery-staple",
+        cmd="sleep 120",
+    )
+
+    # (1) Provider registry visible via the public bootstrap endpoint.
+    status_code, body = _http_probe(container_name, "/api/auth/providers")
+    assert status_code == 200, (
+        f"/api/auth/providers should return 200 when a provider is "
+        f"registered; got {status_code} body={body!r}"
+    )
+    payload = json.loads(body)
+    provider_names = [p.get("name") for p in payload.get("providers", [])]
+    assert "basic" in provider_names, (
+        "Bundled dashboard_auth/basic provider should register when "
+        f"CRYOZEN_DASHBOARD_BASIC_AUTH_USERNAME and a password are set. Got: {payload!r}"
+    )
+
+    # (2) A gated route (``/api/sessions``) returns 401 to an
+    #     unauthenticated caller — the auth gate is intercepting.
+    status_code, body = _http_probe(container_name, "/api/sessions")
+    assert status_code == 401, (
+        "Auth gate must intercept gated /api/* routes on 0.0.0.0 bind "
+        "when a provider is registered and CRYOZEN_DASHBOARD_INSECURE "
+        f"is unset. Got: status={status_code} body={body!r}"
+    )
+
+    # (3) ``/api/status`` remains 200 under the gate — it's in the shared
+    #     ``PUBLIC_API_PATHS`` allowlist so an external liveness probe can
+    #     reach it without a cookie. Regression guard: this allowlist
+    #     drifted once already and surfaced every healthy agent as down.
+    status_code, body = _http_probe(container_name, "/api/status")
+    assert status_code == 200, (
+        "/api/status must remain publicly reachable under the auth gate "
+        "— external liveness probes depend on it. "
+        f"Got: status={status_code} body={body!r}"
+    )
+    status = json.loads(body)
+    assert status.get("auth_required") is True, (
+        "/api/status must report auth_required=True when the auth gate "
+        f"is engaged so the SPA can distinguish modes. Got: {status!r}"
+    )
+
+
+def test_dashboard_insecure_env_var_no_longer_bypasses_gate(
+    built_image: str, container_name: str,
+) -> None:
+    """``CRYOZEN_DASHBOARD_INSECURE=1`` NO LONGER disables the auth gate
+    (June 2026 hardening). With insecure set on a 0.0.0.0 bind and NO auth
+    provider registered, start_server fails closed — the dashboard never
+    binds, so ``/api/status`` is unreachable. This proves the unauthenticated
+    public-dashboard escape hatch is gone: there is no env that serves the
+    dashboard on a public bind without an auth provider.
+    """
+    start_container(
+        built_image, container_name,
+        "CRYOZEN_DASHBOARD=1",
+        "CRYOZEN_DASHBOARD_HOST=0.0.0.0",
+        "CRYOZEN_DASHBOARD_INSECURE=1",
+        cmd="sleep 120",
+    )
+    # Fail-closed: the dashboard process must NOT successfully serve. Probe
+    # for a few seconds; /api/status should never become reachable because
+    # start_server raised SystemExit before binding.
+    ok, _ = poll_container(
+        container_name,
+        "curl -fsS -m 2 http://127.0.0.1:9119/api/status >/dev/null 2>&1",
+        deadline_s=12.0,
+    )
+    assert not ok, (
+        "Dashboard must NOT serve on a public bind with --insecure and no "
+        "auth provider — the gate fails closed. /api/status became reachable, "
+        "meaning the unauthenticated escape hatch is still open."
+    )

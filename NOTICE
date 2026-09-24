@@ -1,0 +1,40 @@
+Cryozen Agent
+Copyright (c) 2026 Cryozen
+
+This product is licensed under the MIT License (see LICENSE).
+
+Provenance
+----------
+Cryozen Agent incorporates software originally distributed under the MIT
+License. The copyright notice required by that license is retained in
+LICENSE. Cryozen Agent is an independent product of Cryozen and is not
+affiliated with, sponsored by, or endorsed by the authors of that software.
+
+Third-party material
+--------------------
+The following bundled material is used under its own license, which applies
+to that material in place of the root LICENSE:
+
+- agent/pet/generate/atlas.py: segmentation, fit and residue logic adapted
+  from OpenAI's hatch-pet skill. Apache License 2.0; the license text is in
+  LICENSES/Apache-2.0.txt.
+- apps/desktop/src/lib/preview-act/identity.ts: element re-binding ladder
+  adapted from anchortree. Apache License 2.0; the license text is in
+  LICENSES/Apache-2.0.txt.
+- JetBrains Mono font files bundled with the desktop app and web dashboard.
+  SIL Open Font License 1.1; the license text ships next to the font files.
+
+Python and JavaScript dependencies installed from package registries are not
+redistributed in this repository and remain under their own licenses.
+
+Trademarks
+----------
+"Cryozen" and "Cryozen Agent" are names of this product. Other product names,
+model names and brands mentioned in this repository belong to their
+respective owners and are used only to identify compatible services; their
+use does not imply affiliation or endorsement.
+
+No warranty
+-----------
+The software is provided "AS IS", without warranty of any kind, as stated in
+LICENSE and in the licenses of the third-party material above.
