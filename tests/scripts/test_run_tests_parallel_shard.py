@@ -9,6 +9,7 @@ each keeps the discovery order.
 from __future__ import annotations
 
 import importlib.util
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -63,3 +64,43 @@ def test_invalid_shard_is_a_usage_error(tmp_path: Path, index: int, total: int) 
     )
     assert proc.returncode == 2
     assert "shard index must satisfy" in proc.stderr
+
+
+def test_shard_selection_does_not_reach_the_test_process(tmp_path: Path) -> None:
+    """A CI shard's env must not re-shard a nested runner launched by a test.
+
+    Regression: with CRYOZEN_TEST_SHARD_* inherited, the runner's own tests
+    spawned a runner over a one-file probe dir and sharded that file away.
+    """
+    (tmp_path / "test_probe.py").write_text(
+        "import os\n\n"
+        "def test_selection_env_absent():\n"
+        "    assert 'CRYOZEN_TEST_SHARD_INDEX' not in os.environ\n"
+        "    assert 'CRYOZEN_TEST_SHARD_TOTAL' not in os.environ\n"
+    )
+    env = {
+        **os.environ,
+        "CRYOZEN_TEST_SHARD_INDEX": "0",
+        "CRYOZEN_TEST_SHARD_TOTAL": "1",
+    }
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(_RUNNER_PATH),
+            "--paths",
+            str(tmp_path),
+            "-j",
+            "1",
+            "--file-retries",
+            "0",
+        ],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        cwd=REPO_ROOT,
+        env=env,
+        timeout=60,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "1 tests passed" in proc.stdout

@@ -148,6 +148,14 @@ _DEFAULT_FILE_RETRIES = 1
 # CI jobs by estimated total time, so no one job gets all the slow files.
 _DURATIONS_FILE = "test_durations.json"
 
+# Env knobs that pick which subset of the discovered files this runner runs.
+# Stripped from each test subprocess (see _run_one_file_once).
+_FILE_SELECTOR_ENV_VARS = (
+    "CRYOZEN_TEST_SHARD_INDEX",
+    "CRYOZEN_TEST_SHARD_TOTAL",
+    "CRYOZEN_TEST_SLICE",
+)
+
 
 def _split_pathspec(value: str) -> List[str]:
     """Split a separator-joined path list (``--paths``/``--files``/
@@ -520,6 +528,10 @@ def _run_one_file_once(
     # One root for each subprocess removes the shared directory that the race
     # needs. The parent deletes the root after the attempt.
     env = os.environ.copy()
+    # This runner's own file selection must not reach the test process: tests
+    # that launch a nested runner would otherwise shard their probe files away.
+    for selector in _FILE_SELECTOR_ENV_VARS:
+        env.pop(selector, None)
     temproot = tempfile.mkdtemp(prefix="r-", dir=_runner_scratch_root())
     env["PYTEST_DEBUG_TEMPROOT"] = temproot
     # Every tempfile.* call inside the test process lands in the same per-run root, so the

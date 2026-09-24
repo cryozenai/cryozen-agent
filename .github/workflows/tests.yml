@@ -118,6 +118,11 @@ jobs:
           scripts/run_tests.sh
         env:
           # Workers default to cpu_count*2 (see run_tests_parallel.py).
+          # On a standard 4-vCPU runner that 2x oversubscription stretches the
+          # largest files (tests/agent/test_run_agent.py: ~75s on a quiet box)
+          # past the 300s default cap. 600s keeps a hung file bounded well
+          # inside the job's 30 minutes.
+          CRYOZEN_TEST_FILE_TIMEOUT: 600
           CRYOZEN_TEST_SHARD_INDEX: ${{ matrix.shard }}
           CRYOZEN_TEST_SHARD_TOTAL: 8
           # Ensure tests don't accidentally call real APIs

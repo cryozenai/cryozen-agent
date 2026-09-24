@@ -11,6 +11,10 @@
 
       configMergeScript = pkgs.callPackage ./configMergeScript.nix { };
 
+      sourceLocaleCount = lib.length (
+        lib.filter (lib.hasSuffix ".yaml") (lib.attrNames (builtins.readDir ../locales))
+      );
+
       # ── How the checks evaluate the modules ───────────────────────────
       # The checks evaluate both modules for real. The NixOS module goes
       # through lib.evalModules with the NixOS module list. The Home Manager
@@ -1092,9 +1096,10 @@ json.dump(sorted(leaf_paths(DEFAULT_CONFIG)), sys.stdout, indent=2)
           test -d ${cryozen-agent}/share/cryozen-agent/locales || (echo "FAIL: locales directory missing"; exit 1)
           echo "PASS: locales directory exists"
 
-          # -L: locales/ is a symlink to the source store path
+          # -L: locales/ is a symlink to the source store path. Every catalog
+          # in the source tree must ship.
           LOC_COUNT=$(find -L ${cryozen-agent}/share/cryozen-agent/locales -name "*.yaml" | wc -l)
-          test "$LOC_COUNT" -ge 16 || (echo "FAIL: expected >=16 catalogs, found $LOC_COUNT"; exit 1)
+          test "$LOC_COUNT" -eq ${toString sourceLocaleCount} || (echo "FAIL: expected ${toString sourceLocaleCount} catalogs, found $LOC_COUNT"; exit 1)
           echo "PASS: $LOC_COUNT locale catalogs found"
 
           test -f ${cryozen-agent}/share/cryozen-agent/locales/en.yaml || (echo "FAIL: en.yaml missing"; exit 1)
