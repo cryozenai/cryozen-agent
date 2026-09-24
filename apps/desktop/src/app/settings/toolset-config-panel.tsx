@@ -534,6 +534,7 @@ export function ToolsetConfigPanel({ toolset, onConfiguredChange, profile }: Too
   // Default-provider selection and a user click race just after config arrives:
   // a stale initialization effect must never replace an explicit choice.
   const providerChoiceClaimedRef = useRef(false)
+
   const refresh = useCallback(async () => {
     setLoading(true)
 
