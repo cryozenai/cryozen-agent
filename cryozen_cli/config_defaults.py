@@ -815,6 +815,9 @@ DEFAULT_CONFIG = {
         # Interface bare `cryozen`/`cryozen chat` launches: "cli" (prompt_toolkit REPL) | "tui" (Ink).
         # Flags win: `--cli` forces the REPL, `--tui` / CRYOZEN_TUI=1 forces the TUI.
         "interface": "cli",
+        # Native TUI uses the terminal's primary buffer and scrollback instead of the custom
+        # alternate-screen viewport. Flags win: `--native` / `--tui-native` and `--cli`.
+        "tui_native": False,
         # `cryozen --tui` auto-resumes the most recent human-facing session (like `cryozen -c`).
         # CRYOZEN_TUI_RESUME=<id> always wins.
         "tui_auto_resume_recent": False,

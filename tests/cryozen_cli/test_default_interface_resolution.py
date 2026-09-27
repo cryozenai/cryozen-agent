@@ -178,12 +178,24 @@ class TestParserFlags:
         args = self._parser().parse_args(["chat", "--tui"])
         assert args.tui is True
 
+    def test_native_flag_at_both_parser_levels(self):
+        parser = self._parser()
+        assert parser.parse_args(["--native"]).tui_native is True
+        assert parser.parse_args(["chat", "--tui-native"]).tui_native is True
+
     def test_cli_and_tui_are_relaunch_inherited(self):
         from cryozen_cli.relaunch import _INHERITED_FLAGS_TABLE
 
         inherited = {flag for flag, _takes_value in _INHERITED_FLAGS_TABLE}
         assert "--cli" in inherited
         assert "--tui" in inherited
+
+    def test_native_flag_is_relaunch_inherited(self):
+        from cryozen_cli.relaunch import _INHERITED_FLAGS_TABLE
+
+        inherited = {flag for flag, _takes_value in _INHERITED_FLAGS_TABLE}
+        assert "--native" in inherited
+        assert "--tui-native" in inherited
 
 
 # ---------------------------------------------------------------------------
@@ -193,3 +205,10 @@ def test_default_config_interface_is_cli():
     from cryozen_cli.config import DEFAULT_CONFIG
 
     assert DEFAULT_CONFIG["display"]["interface"] == "cli"
+
+
+def test_default_config_tui_native_is_off():
+    # Shipped default keeps the alternate-screen viewport; native mode is opt-in.
+    from cryozen_cli.config import DEFAULT_CONFIG
+
+    assert DEFAULT_CONFIG["display"]["tui_native"] is False
