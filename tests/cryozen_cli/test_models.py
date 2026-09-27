@@ -185,6 +185,23 @@ class TestClaudeSonnet5InCuratedLists:
         from cryozen_cli.models import _PROVIDER_MODELS
         assert "claude-sonnet-5" in _PROVIDER_MODELS["anthropic"]
 
+    def test_anthropic_native_list_offers_opus_5_5(self):
+        """The native Anthropic picker offers the current Opus flagship, ranked above the
+        older Opus 5, so a user picking Anthropic can select claude-opus-5-5 directly."""
+        from cryozen_cli.models import _PROVIDER_MODELS
+        anthropic = _PROVIDER_MODELS["anthropic"]
+        assert "claude-opus-5-5" in anthropic
+        assert anthropic.index("claude-opus-5-5") < anthropic.index("claude-opus-5")
+
+    def test_bedrock_fallback_offers_opus_5_5_without_changing_default(self):
+        """Bedrock static fallback lists Opus 5.5, but the provider default is unchanged
+        (the cheaper model stays the default, not the newly added Opus)."""
+        from cryozen_cli.models import _PROVIDER_MODELS, get_default_model_for_provider
+        bedrock = _PROVIDER_MODELS["bedrock"]
+        assert "us.anthropic.claude-opus-5-5" in bedrock
+        default = get_default_model_for_provider("bedrock")
+        assert "opus-5-5" not in default
+
 
 class TestFormatPricePerMtok:
     """_format_price_per_mtok: sub-cent prices must not collapse to 'free'/'$0.00'."""
