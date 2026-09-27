@@ -1116,6 +1116,18 @@ class TestBedrockContextLength:
             assert get_bedrock_context_length("anthropic.claude-opus-4-6") == 1_000_000
             mock_probe.assert_not_called()
 
+    def test_static_bedrock_claude_windows_match_direct_anthropic_windows(self):
+        from agent.bedrock_adapter import get_bedrock_context_length
+        from agent.model_metadata import DEFAULT_CONTEXT_LENGTHS, _longest_key_match
+        from cryozen_cli.models_catalog_static import _PROVIDER_MODELS
+
+        claude_ids = [m for m in _PROVIDER_MODELS["bedrock"] if "anthropic.claude" in m]
+        assert claude_ids
+        for model_id in claude_ids:
+            bare_id = model_id.split("anthropic.", 1)[1].lower()
+            _, direct_window = _longest_key_match(DEFAULT_CONTEXT_LENGTHS, bare_id)
+            assert get_bedrock_context_length(model_id, probe=False) == direct_window, model_id
+
 
 class TestInferenceProfileContextLength:
     """Application-inference-profile ARNs name no model, so the window must come from the model the
