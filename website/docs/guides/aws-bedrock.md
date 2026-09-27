@@ -120,7 +120,8 @@ Bedrock models use **inference profile IDs** for on-demand invocation. The `cryo
 | Model | ID | Notes |
 |-------|-----|-------|
 | Claude Sonnet 4.6 | `us.anthropic.claude-sonnet-4-6` | Recommended — best balance of speed and capability |
-| Claude Opus 4.6 | `us.anthropic.claude-opus-4-6-v1` | Most capable |
+| Claude Opus 5.5 | `us.anthropic.claude-opus-5-5` | Most capable |
+| Claude Opus 4.6 | `us.anthropic.claude-opus-4-6-v1` | Previous Opus |
 | Claude Haiku 4.5 | `us.anthropic.claude-haiku-4-5-20251001-v1:0` | Fastest Claude |
 | OpenAI GPT-5.6 Sol | `openai.gpt-5.6-sol` | OpenAI frontier model (via Bedrock Mantle) |
 | OpenAI GPT-5.6 Terra | `openai.gpt-5.6-terra` | Balanced (via Bedrock Mantle) |
