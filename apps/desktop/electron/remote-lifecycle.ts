@@ -1114,6 +1114,7 @@ function buildSpawnCommand(cryozenPath, profile, opts: any = {}) {
   const tokenArg = tokenFilePath ? ` --ssh-session-token-file ${expandRemotePath(tokenFilePath)}` : ''
   const ownerArg = opts.spawnNonce ? ` --ssh-owner-nonce ${validateSpawnNonce(opts.spawnNonce)}` : ''
   const subCmd = `serve --isolated --host 127.0.0.1 --port 0${tokenArg}${ownerArg}`
+
   const marker = expandRemotePath(
     `${remoteInstallRoot(opts.cryozenHome || '~/.cryozen-agent')}/.cryozen-update-in-progress`
   )
