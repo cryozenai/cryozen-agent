@@ -79,6 +79,11 @@ class TestResolveUseTui:
         assert m._resolve_use_tui(_args(cli=True)) is False
 
 
+    def test_native_flag_alone_requests_tui(self, monkeypatch):
+        _patch_config(monkeypatch, "cli")
+        _fake_tty(monkeypatch, True)
+        assert m._resolve_use_tui(_args(tui_native=True)) is True
+
     def test_load_config_failure_falls_back_to_cli(self, monkeypatch):
         import cryozen_cli.config as cfg
 
@@ -90,6 +95,41 @@ class TestResolveUseTui:
         assert m._resolve_use_tui(_args()) is False
 
     # ── the no-TTY gate: ambient prefs never hijack non-interactive runs ────
+
+
+# ---------------------------------------------------------------------------
+# _resolve_tui_native — flag beats display.tui_native
+# ---------------------------------------------------------------------------
+class TestResolveTuiNative:
+    @pytest.fixture
+    def home_with_tui_native(self, tmp_path, monkeypatch):
+        def _make(value):
+            (tmp_path / "config.yaml").write_text(f"display:\n  tui_native: {value}\n")
+            monkeypatch.setenv("CRYOZEN_HOME", str(tmp_path))
+
+        return _make
+
+    def test_flag_beats_config_off(self, home_with_tui_native):
+        from cryozen_cli.main_tui_launch import _resolve_tui_native
+
+        home_with_tui_native("false")
+        assert _resolve_tui_native(True) is True
+
+    def test_config_truthy_string_enables_native(self, home_with_tui_native):
+        from cryozen_cli.main_tui_launch import _resolve_tui_native
+
+        home_with_tui_native("'yes'")
+        assert _resolve_tui_native(None) is True
+
+    def test_config_load_failure_disables_native(self, monkeypatch):
+        import cryozen_cli.config as cfg
+        from cryozen_cli.main_tui_launch import _resolve_tui_native
+
+        def boom():
+            raise RuntimeError("config unreadable")
+
+        monkeypatch.setattr(cfg, "load_config", boom)
+        assert _resolve_tui_native(None) is False
 
 
 # ---------------------------------------------------------------------------
@@ -178,12 +218,24 @@ class TestParserFlags:
         args = self._parser().parse_args(["chat", "--tui"])
         assert args.tui is True
 
+    def test_native_flag_at_both_parser_levels(self):
+        parser = self._parser()
+        assert parser.parse_args(["--native"]).tui_native is True
+        assert parser.parse_args(["chat", "--tui-native"]).tui_native is True
+
     def test_cli_and_tui_are_relaunch_inherited(self):
         from cryozen_cli.relaunch import _INHERITED_FLAGS_TABLE
 
         inherited = {flag for flag, _takes_value in _INHERITED_FLAGS_TABLE}
         assert "--cli" in inherited
         assert "--tui" in inherited
+
+    def test_native_flag_is_relaunch_inherited(self):
+        from cryozen_cli.relaunch import _INHERITED_FLAGS_TABLE
+
+        inherited = {flag for flag, _takes_value in _INHERITED_FLAGS_TABLE}
+        assert "--native" in inherited
+        assert "--tui-native" in inherited
 
 
 # ---------------------------------------------------------------------------
@@ -193,3 +245,10 @@ def test_default_config_interface_is_cli():
     from cryozen_cli.config import DEFAULT_CONFIG
 
     assert DEFAULT_CONFIG["display"]["interface"] == "cli"
+
+
+def test_default_config_tui_native_is_off():
+    # Shipped default keeps the alternate-screen viewport; native mode is opt-in.
+    from cryozen_cli.config import DEFAULT_CONFIG
+
+    assert DEFAULT_CONFIG["display"]["tui_native"] is False

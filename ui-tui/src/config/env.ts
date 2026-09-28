@@ -44,8 +44,11 @@ export const STARTUP_IMAGE = (process.env.CRYOZEN_TUI_IMAGE ?? '').trim()
 //   behavior.
 const mouseTrackingOverride = parseToggle(process.env.CRYOZEN_TUI_MOUSE_TRACKING)
 const mouseTrackingDisabledLegacy = truthy(process.env.CRYOZEN_TUI_DISABLE_MOUSE)
+export const NATIVE_MODE = truthy(process.env.CRYOZEN_TUI_NATIVE)
 
-const resolvedBootMouseEnabled = mouseTrackingOverride ?? (TERMUX_TUI_MODE ? false : !mouseTrackingDisabledLegacy)
+const resolvedBootMouseEnabled = NATIVE_MODE
+  ? false
+  : (mouseTrackingOverride ?? (TERMUX_TUI_MODE ? false : !mouseTrackingDisabledLegacy))
 
 export const MOUSE_TRACKING: MouseTrackingMode = resolvedBootMouseEnabled ? 'all' : 'off'
 
@@ -64,7 +67,7 @@ const inlineOverride = parseToggle(process.env.CRYOZEN_TUI_INLINE)
 // On Termux we default this on: users often background/foreground the app,
 // and primary-buffer rendering makes long-thread review and copy/paste much
 // less fragile. Override explicitly with CRYOZEN_TUI_INLINE=0/1.
-export const INLINE_MODE = inlineOverride ?? TERMUX_TUI_MODE
+export const INLINE_MODE = NATIVE_MODE || (inlineOverride ?? TERMUX_TUI_MODE)
 
 // Live FPS counter overlay, fed by ink's onFrame (real render rate, not a
 // synthetic timer).

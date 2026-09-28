@@ -725,7 +725,8 @@ def _setup_tui_worktree() -> dict:
 
 
 def _launch_tui(
-    resume_session_id: Optional[str] = None, tui_dev: bool = False, model: Optional[str] = None,
+    resume_session_id: Optional[str] = None, tui_dev: bool = False, native_mode: Optional[bool] = None,
+    model: Optional[str] = None,
     provider: Optional[str] = None, toolsets: object = None, skills: object = None,
     verbose: Optional[bool] = None, quiet: bool = False, query: Optional[str] = None,
     image: Optional[str] = None, worktree: bool = False, checkpoints: bool = False,
@@ -755,6 +756,7 @@ def _launch_tui(
     os.close(active_session_fd)
     env["CRYOZEN_TUI_ACTIVE_SESSION_FILE"] = active_session_file
     env.setdefault("NODE_ENV", "development" if tui_dev else "production")
+    env["CRYOZEN_TUI_NATIVE"] = "1" if _resolve_tui_native(native_mode) else "0"
 
     wt_info = None
     if worktree:
@@ -851,6 +853,19 @@ def _sync_bundled_skills_quietly() -> None:
         sync_skills(quiet=True)
 
 
+def _resolve_tui_native(native_mode: Optional[bool]) -> bool:
+    """``--native``/``--tui-native`` wins; otherwise ``display.tui_native``; unreadable config → off."""
+    if native_mode is not None:
+        return native_mode
+    try:
+        from cryozen_cli.config import load_config
+        from utils import is_truthy_value
+        display = load_config().get("display", {})
+        return is_truthy_value(display.get("tui_native", False)) if isinstance(display, dict) else False
+    except Exception:
+        return False
+
+
 def _resolve_use_tui(args) -> bool:
     """Decide whether to launch the TUI: ``--cli`` → classic; ``--tui`` → TUI; no TTY → classic;
     ``CRYOZEN_TUI=1`` → TUI; ``display.interface`` config; default classic.
@@ -861,7 +876,7 @@ def _resolve_use_tui(args) -> bool:
     """
     if getattr(args, "cli", False):
         return False
-    if getattr(args, "tui", False):
+    if getattr(args, "tui", False) or getattr(args, "tui_native", False):
         return True
     try:
         if not (sys.stdin.isatty() and sys.stdout.isatty()):

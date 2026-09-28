@@ -51,6 +51,26 @@ display:
 
 With `display.interface: tui`, a bare `cryozen` (and `cryozen chat`) launches the TUI. Explicit flags always win — run `cryozen --cli` to drop back to the classic REPL for a single invocation, or `cryozen --tui` / `CRYOZEN_TUI=1` to force the TUI when the config default is `cli`.
 
+### Native terminal mode
+
+By default the TUI renders into its own alternate-screen viewport with a custom scrollbar.
+Native mode instead renders into the terminal's primary buffer, so the transcript lands in your terminal's normal scrollback and the terminal owns scrolling, selection, and copy/paste:
+
+```bash
+cryozen --native        # or: cryozen --tui-native
+```
+
+Or make it persistent in `~/.cryozen-agent/config.yaml`:
+
+```yaml
+display:
+  tui_native: true   # default: false
+```
+
+`--native` implies `--tui` and wins over `display.tui_native`; `--cli` still wins over both.
+Setting `display.tui_native` alone does not switch interfaces; it applies whenever the TUI launches.
+In native mode mouse tracking is always off, and the in-app scrollbar, sticky prompt, startup banner, and pet pane are not shown.
+
 The classic CLI remains the shipped default. Anything documented in [CLI Interface](cli.md) — slash commands, quick commands, skill preloading, personalities, multi-line input, interrupts — works in the TUI identically.
 
 ## Why the TUI
