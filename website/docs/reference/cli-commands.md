@@ -31,6 +31,7 @@ cryozen [global-options] <command> [subcommand/options]
 | `--ignore-user-config` | Ignore `~/.cryozen-agent/config.yaml` and fall back to built-in defaults. Credentials in `.env` are still loaded. |
 | `--ignore-rules` | Skip auto-injection of `AGENTS.md`, `SOUL.md`, `.cursorrules`, memory, and preloaded skills. |
 | `--tui` | Launch the [TUI](../user-guide/tui.md) instead of the classic CLI. Equivalent to `CRYOZEN_TUI=1`. Always wins over `display.interface`. |
+| `--native`, `--tui-native` | Launch the TUI (implies `--tui`) in [native terminal mode](../user-guide/tui.md#native-terminal-mode). Wins over `display.tui_native`. |
 | `--cli` | Force the classic prompt_toolkit REPL. Use this to override `display.interface: tui` for a single invocation. |
 | `--dev` | With `--tui`: run the TypeScript sources directly via `tsx` instead of the prebuilt bundle (for TUI contributors). |
 

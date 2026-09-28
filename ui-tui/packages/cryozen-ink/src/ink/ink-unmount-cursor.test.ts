@@ -32,6 +32,7 @@ const peek = (ink: Ink): InkPrivate => ink as unknown as InkPrivate
 // LF) to `from`. Everything else is treated as zero-width.
 function replayCursor(bytes: string, from: { x: number; y: number }) {
   const pos = { ...from }
+  // eslint-disable-next-line no-control-regex -- matches ANSI escape sequences
   const re = /\x1b\[(\d*)([ABCDG])|\r|\n|\x1b\[[0-9;?<>=]*[ -/]*[@-~]|\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)|./gs
 
   for (const m of bytes.matchAll(re)) {
@@ -42,26 +43,32 @@ function replayCursor(bytes: string, from: { x: number; y: number }) {
         pos.y -= n
 
         break
+
       case 'B':
         pos.y += n
 
         break
+
       case 'C':
         pos.x += n
 
         break
+
       case 'D':
         pos.x -= n
 
         break
+
       case 'G':
         pos.x = n - 1
 
         break
+
       case '\r':
         pos.x = 0
 
         break
+
       case '\n':
         pos.y += 1
 

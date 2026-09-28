@@ -671,7 +671,21 @@ export function useVirtualHistory(
     if (heightDirty) {
       bumpMeasuredHeightVersion(n => n + 1)
     }
-  }, [effEnd, effStart, items, liveTailActive, measuredHeightVersion, n, nativeMode, offsets, scrollRef, sticky, top, total, vp])
+  }, [
+    effEnd,
+    effStart,
+    items,
+    liveTailActive,
+    measuredHeightVersion,
+    n,
+    nativeMode,
+    offsets,
+    scrollRef,
+    sticky,
+    top,
+    total,
+    vp
+  ])
 
   return {
     bottomSpacer: Math.max(0, total - (offsets[effEnd] ?? total)),
