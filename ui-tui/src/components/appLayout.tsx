@@ -257,15 +257,7 @@ const TranscriptPane = memo(function TranscriptPane({
   return (
     <>
       {nativeMode ? (
-        <Box
-          flexDirection="column"
-          flexGrow={1}
-          onClick={(e: { cellIsBlank?: boolean }) => {
-            if (e.cellIsBlank) {
-              actions.clearSelection()
-            }
-          }}
-        >
+        <Box flexDirection="column" flexGrow={1}>
           {transcriptContent}
         </Box>
       ) : (

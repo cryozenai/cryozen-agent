@@ -13,7 +13,7 @@ import { formatBytes, type HeapDumpResult, performHeapDump } from './lib/memory.
 import { type MemorySnapshot, startMemoryMonitor } from './lib/memoryMonitor.js'
 import { openExternalUrl } from './lib/openExternalUrl.js'
 import { recordParentLifecycle } from './lib/parentLog.js'
-import { NATIVE_TUI_EXIT_RESET, resetTerminalModes } from './lib/terminalModes.js'
+import { resetTerminalModes } from './lib/terminalModes.js'
 
 if (!process.stdin.isTTY) {
   console.log('cryozen-tui: no TTY')
@@ -38,14 +38,6 @@ resetTerminalModes()
 // graceful-exit cleanups is safe.
 process.on('exit', () => {
   resetTerminalModes()
-
-  if (NATIVE_MODE) {
-    try {
-      process.stdout.write(NATIVE_TUI_EXIT_RESET)
-    } catch {
-      // stdout may already be closed during terminal teardown.
-    }
-  }
 })
 
 // Desktop terminals benefit from a clean startup slate because the TUI usually

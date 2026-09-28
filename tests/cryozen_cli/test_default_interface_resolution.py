@@ -79,6 +79,11 @@ class TestResolveUseTui:
         assert m._resolve_use_tui(_args(cli=True)) is False
 
 
+    def test_native_flag_alone_requests_tui(self, monkeypatch):
+        _patch_config(monkeypatch, "cli")
+        _fake_tty(monkeypatch, True)
+        assert m._resolve_use_tui(_args(tui_native=True)) is True
+
     def test_load_config_failure_falls_back_to_cli(self, monkeypatch):
         import cryozen_cli.config as cfg
 
@@ -90,6 +95,41 @@ class TestResolveUseTui:
         assert m._resolve_use_tui(_args()) is False
 
     # ── the no-TTY gate: ambient prefs never hijack non-interactive runs ────
+
+
+# ---------------------------------------------------------------------------
+# _resolve_tui_native — flag beats display.tui_native
+# ---------------------------------------------------------------------------
+class TestResolveTuiNative:
+    @pytest.fixture
+    def home_with_tui_native(self, tmp_path, monkeypatch):
+        def _make(value):
+            (tmp_path / "config.yaml").write_text(f"display:\n  tui_native: {value}\n")
+            monkeypatch.setenv("CRYOZEN_HOME", str(tmp_path))
+
+        return _make
+
+    def test_flag_beats_config_off(self, home_with_tui_native):
+        from cryozen_cli.main_tui_launch import _resolve_tui_native
+
+        home_with_tui_native("false")
+        assert _resolve_tui_native(True) is True
+
+    def test_config_truthy_string_enables_native(self, home_with_tui_native):
+        from cryozen_cli.main_tui_launch import _resolve_tui_native
+
+        home_with_tui_native("'yes'")
+        assert _resolve_tui_native(None) is True
+
+    def test_config_load_failure_disables_native(self, monkeypatch):
+        import cryozen_cli.config as cfg
+        from cryozen_cli.main_tui_launch import _resolve_tui_native
+
+        def boom():
+            raise RuntimeError("config unreadable")
+
+        monkeypatch.setattr(cfg, "load_config", boom)
+        assert _resolve_tui_native(None) is False
 
 
 # ---------------------------------------------------------------------------

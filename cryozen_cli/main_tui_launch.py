@@ -756,15 +756,7 @@ def _launch_tui(
     os.close(active_session_fd)
     env["CRYOZEN_TUI_ACTIVE_SESSION_FILE"] = active_session_file
     env.setdefault("NODE_ENV", "development" if tui_dev else "production")
-    if native_mode is None:
-        try:
-            from cryozen_cli.config import load_config
-            from utils import is_truthy_value
-            display = load_config().get("display", {})
-            native_mode = is_truthy_value(display.get("tui_native", False)) if isinstance(display, dict) else False
-        except Exception:
-            native_mode = False
-    env["CRYOZEN_TUI_NATIVE"] = "1" if native_mode else "0"
+    env["CRYOZEN_TUI_NATIVE"] = "1" if _resolve_tui_native(native_mode) else "0"
 
     wt_info = None
     if worktree:
@@ -859,6 +851,19 @@ def _sync_bundled_skills_quietly() -> None:
     with contextlib.suppress(Exception):
         from tools.skills_sync import sync_skills
         sync_skills(quiet=True)
+
+
+def _resolve_tui_native(native_mode: Optional[bool]) -> bool:
+    """``--native``/``--tui-native`` wins; otherwise ``display.tui_native``; unreadable config → off."""
+    if native_mode is not None:
+        return native_mode
+    try:
+        from cryozen_cli.config import load_config
+        from utils import is_truthy_value
+        display = load_config().get("display", {})
+        return is_truthy_value(display.get("tui_native", False)) if isinstance(display, dict) else False
+    except Exception:
+        return False
 
 
 def _resolve_use_tui(args) -> bool:

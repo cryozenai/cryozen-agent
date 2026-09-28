@@ -287,9 +287,9 @@ def _config_default_interface_early() -> str:
 def _wants_tui_early(argv: "list[str] | None" = None) -> bool:
     """Earliest TUI decision, usable before argparse/config imports.
 
-    Precedence: ``--cli`` wins, then ``--tui``/``CRYOZEN_TUI=1``, then a
-    real-TTY gate, then ``display.interface``. The TTY gate is load-bearing
-    for headless spawners (kanban workers, cron, pipes running ``chat -q``):
+    Precedence: ``--cli`` wins, then ``--tui``/``--native``/``--tui-native``/
+    ``CRYOZEN_TUI=1``, then a real-TTY gate, then ``display.interface``. The
+    TTY gate is load-bearing for headless spawners (kanban workers, cron, pipes running ``chat -q``):
     a ``display.interface: tui`` default used to boot the TUI here, whose
     no-TTY bail-out exits 0 without doing the task. An explicit ``--tui``
     still reaches that informative bail-out.

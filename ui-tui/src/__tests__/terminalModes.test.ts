@@ -2,22 +2,11 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import {
   isPaintableHex,
-  NATIVE_TUI_EXIT_RESET,
   resetTerminalModes,
   setTerminalBackground,
   setTerminalForeground,
   TERMINAL_MODE_RESET
 } from '../lib/terminalModes.js'
-
-describe('native TUI exit reset', () => {
-  it('clears the screen and homes the cursor so native scrollback is left clean', () => {
-    // Native mode renders into the primary buffer; on exit it must wipe the
-    // final frame (\x1b[2J) and park the cursor at the top-left (\x1b[H) so the
-    // shell prompt returns to a clean slate instead of below stale TUI rows.
-    expect(NATIVE_TUI_EXIT_RESET).toContain('\x1b[2J')
-    expect(NATIVE_TUI_EXIT_RESET).toContain('\x1b[H')
-  })
-})
 
 describe('terminal mode reset', () => {
   it('includes common sticky input modes', () => {
