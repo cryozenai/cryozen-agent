@@ -118,23 +118,23 @@ See the [CLI guide](website/docs/user-guide/cli.md) and the [messaging gateway g
 
 ## Documentation
 
-| Section                                                                                                  | What it covers                                             |
-| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| [Quickstart](website/docs/getting-started/quickstart.md)                   | Install, set up, and hold a first conversation             |
-| [CLI usage](website/docs/user-guide/cli.md)                                | Commands, keybindings, personalities, sessions             |
-| [Configuration](website/docs/user-guide/configuration.md)                  | Config file, providers, models, all options                |
-| [Messaging gateway](website/docs/user-guide/messaging/index.md)                  | Telegram, Discord, Slack, WhatsApp, Signal, Home Assistant |
-| [Security](website/docs/user-guide/security.md)                            | Command approval, DM pairing, container isolation          |
-| [Tools and toolsets](website/docs/user-guide/features/tools.md)            | Built-in tools, toolsets, terminal backends                |
-| [Skills](website/docs/user-guide/features/skills.md)                       | Procedural memory, the skills hub, writing skills          |
-| [Memory](website/docs/user-guide/features/memory.md)                       | Persistent memory, user profiles, best practices           |
-| [MCP](website/docs/user-guide/features/mcp.md)                             | Connect any MCP server                                     |
-| [Cron scheduling](website/docs/user-guide/features/cron.md)                | Scheduled tasks with platform delivery                     |
-| [Context files](website/docs/user-guide/features/context-files.md)         | Project context that shapes every conversation             |
-| [Architecture](website/docs/developer-guide/architecture.md)               | Project structure, agent loop, key classes                 |
-| [Contributing](website/docs/developer-guide/contributing.md)               | Development setup, pull requests, code style               |
-| [CLI reference](website/docs/reference/cli-commands.md)                    | Every command and flag                                     |
-| [Environment variables](website/docs/reference/environment-variables.md)   | Complete environment variable reference                    |
+| Section                                                                  | What it covers                                             |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| [Quickstart](website/docs/getting-started/quickstart.md)                 | Install, set up, and hold a first conversation             |
+| [CLI usage](website/docs/user-guide/cli.md)                              | Commands, keybindings, personalities, sessions             |
+| [Configuration](website/docs/user-guide/configuration.md)                | Config file, providers, models, all options                |
+| [Messaging gateway](website/docs/user-guide/messaging/index.md)          | Telegram, Discord, Slack, WhatsApp, Signal, Home Assistant |
+| [Security](website/docs/user-guide/security.md)                          | Command approval, DM pairing, container isolation          |
+| [Tools and toolsets](website/docs/user-guide/features/tools.md)          | Built-in tools, toolsets, terminal backends                |
+| [Skills](website/docs/user-guide/features/skills.md)                     | Procedural memory, the skills hub, writing skills          |
+| [Memory](website/docs/user-guide/features/memory.md)                     | Persistent memory, user profiles, best practices           |
+| [MCP](website/docs/user-guide/features/mcp.md)                           | Connect any MCP server                                     |
+| [Cron scheduling](website/docs/user-guide/features/cron.md)              | Scheduled tasks with platform delivery                     |
+| [Context files](website/docs/user-guide/features/context-files.md)       | Project context that shapes every conversation             |
+| [Architecture](website/docs/developer-guide/architecture.md)             | Project structure, agent loop, key classes                 |
+| [Contributing](website/docs/developer-guide/contributing.md)             | Development setup, pull requests, code style               |
+| [CLI reference](website/docs/reference/cli-commands.md)                  | Every command and flag                                     |
+| [Environment variables](website/docs/reference/environment-variables.md) | Complete environment variable reference                    |
 
 ---
 

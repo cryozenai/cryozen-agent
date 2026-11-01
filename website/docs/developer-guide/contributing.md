@@ -298,9 +298,9 @@ When you ask Cryozen to review a PR in a repository that has `.agents/checks/`, 
 - Check existing issues before creating duplicates
 - For security vulnerabilities, please report privately
 
-## Discussions
+## Where to talk
 
-- **Questions and design proposals**: [GitHub Discussions](https://github.com/cryozenai/cryozen-agent/discussions)
+- **Questions and design proposals**: [GitHub Issues](https://github.com/cryozenai/cryozen-agent/issues)
 - **Skills Hub**: publish specialized skills for other users
 
 ## License

@@ -101,11 +101,11 @@ native `api:` match, or version literals on unrelated payloads. Documented surfa
 - Compat tests load **frozen plugins through the real discovery path** and assert outcomes — never
   exact registry/catalog counts, source-reading tests, or "a global version literal changed".
 
-## Sep 2026 decomposition compat window (ends 2026-09-14)
+## Sep 2026 decomposition compat window (ended 2026-09-14)
 
 PR #102117 moved internals into `<stem>_<topic>` siblings. Old import paths resolve through
 `PLUGIN-COMPAT` `__getattr__` blocks (listed in `COMPAT_MANIFEST.md` / `compat_manifest.json`)
-until `cryozen_cli.plugin_compat.COMPAT_REMOVAL_DATE`, when the commit that added them is reverted.
+until the commit that added them is reverted; `cryozen_cli.plugin_compat.COMPAT_REMOVAL_DATE` has passed.
 `cryozen_cli/plugin_compat.py` is the single source: `scan_plugin` (AST scan), `compat_report`
 (hits across enabled external plugins, cached to `CRYOZEN_HOME/.plugin-compat-report.json`,
 refreshed by discovery), `removal_in_effect`, `warn_once`. Surfaces: CLI banner notice,

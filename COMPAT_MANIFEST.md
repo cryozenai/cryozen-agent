@@ -1,13 +1,14 @@
 # Plugin compatibility manifest (temporary)
 
 The September 2026 decomposition split the large modules of Cryozen Agent into focused
-files. **Internal import paths are not a stable API**, and after that PR the names below are no
+files. **Internal import paths are not a stable API**, and after it the names below are no
 longer defined where they used to be. To give external plugin authors time to update, every name
 is still importable from its OLD module through a `PLUGIN-COMPAT` block appended to that module.
 
 **This layer is temporary and its removal date, 2026-09-14, has passed.** Plugins that still import
 old paths are no longer loaded (see the table below), and the `PLUGIN-COMPAT` blocks stay in the tree
-until the revert lands. The layer was added as a single commit and is removed by reverting that commit. Update your plugin to import from the `new location` column now.
+until the revert lands. The layer was added as a single commit and is removed by reverting that
+commit. Update your plugin to import from the `new location` column now.
 Nothing inside this repository is allowed to use these pointers (`scripts/check_compat_pointers.py`
 fails CI if it does).
 

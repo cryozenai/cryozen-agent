@@ -39,7 +39,7 @@ See the full [Pluggable interfaces table](../../user-guide/features/plugins.md#p
 :::
 
 :::caution Third-party-product plugins ship standalone — not into the core tree
-Plugins that integrate **someone else's product or project** — observability/metrics backends, vendor SaaS connectors, analytics dashboards, paid-service tie-ins — are built and distributed as **standalone plugin repos**, not merged into `cryozenai/cryozen-agent`. Users install them into `~/.cryozen-agent/plugins/` or via a pip entry point; everything in this guide works the same way from a standalone repo. This is a coupling-and-maintenance decision (the core moves fast and we don't own your backend), not a quality bar — a plugin can be excellent and still belong in its own repo. Promote it in Cryozen GitHub Discussions. See [CONTRIBUTING.md](https://github.com/cryozenai/cryozen-agent/blob/main/CONTRIBUTING.md) for the policy.
+Plugins that integrate **someone else's product or project** — observability/metrics backends, vendor SaaS connectors, analytics dashboards, paid-service tie-ins — are built and distributed as **standalone plugin repos**, not merged into `cryozenai/cryozen-agent`. Users install them into `~/.cryozen-agent/plugins/` or via a pip entry point; everything in this guide works the same way from a standalone repo. This is a coupling-and-maintenance decision (the core moves fast and we don't own your backend), not a quality bar — a plugin can be excellent and still belong in its own repo. See [CONTRIBUTING.md](https://github.com/cryozenai/cryozen-agent/blob/main/CONTRIBUTING.md) for the policy.
 :::
 
 ## Portable Agent Plugins v1 packages
@@ -168,11 +168,12 @@ from an isolated `CRYOZEN_HOME`. Those tests load and invoke the plugin through
 `PluginManager`; they assert real registration and callback outcomes rather
 than internal symbol lists or source-code shape.
 
-### Sep 2026 module decomposition: old import paths end 2026-09-14
+### Sep 2026 module decomposition: old import paths ended 2026-09-14
 
 Cryozen's internals were split into `<stem>_<topic>` sibling modules in Sep 2026. **Internal
 import paths were never part of the plugin contract** above, but many plugins used them. Every moved name
-still resolves from its old module until **2026-09-14**, then the compatibility layer is removed.
+still resolves from its old module through a compatibility layer. Its removal date, **2026-09-14**, has
+passed, and the layer stays in the tree until it is reverted.
 
 - **Check your plugin:** `cryozen plugins compat /path/to/your/plugin` lists every `file:line` with the
   old path and the new one, and exits 1 while any remain. `COMPAT_MANIFEST.md` in the repo is the full map.

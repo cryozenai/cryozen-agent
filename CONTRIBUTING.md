@@ -114,9 +114,10 @@ A well-built third-party-product plugin can clear automated review and still be 
 
 ### Install from a clone
 
-Cryozen Agent is in preview, so no hosted installer is published. Develop from a clone as below.
+Cryozen Agent is in preview, so no hosted installer is published.
+Develop from a clone as below.
 
-Make sure you run the `cryozen` entrypoint from this venv; running the system
+Make sure you run the `cryozen` entrypoint from the venv created below; running the system
 `python3 -m cryozen_cli.main` can pick up unrelated system Python packages.
 
 Create the venv **outside** the cloned source tree. A venv that lives inside
