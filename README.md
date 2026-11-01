@@ -162,7 +162,7 @@ See the [contributing guide](website/docs/developer-guide/contributing.md) for d
 Set up as in [Run from source](#run-from-source), then run the tests:
 
 ```bash
-scripts/run_tests.sh
+CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh
 ```
 
 ---

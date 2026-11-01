@@ -127,18 +127,20 @@ cryozen doctor
 cryozen chat -q "Hello"
 ```
 
-If you used the manual clone fallback, run `./cryozen` from the checkout or
-symlink this clone's venv explicitly:
+If you used the manual clone fallback, call
+`~/.cryozen-agent/venvs/cryozen-dev/bin/cryozen` directly or symlink it:
 
 ```bash
 mkdir -p ~/.local/bin
-ln -sf "$VIRTUAL_ENV/bin/cryozen" ~/.local/bin/cryozen
+ln -sf ~/.cryozen-agent/venvs/cryozen-dev/bin/cryozen ~/.local/bin/cryozen
 ```
 
 ### Run Tests
 
 ```bash
-scripts/run_tests.sh
+# CRYOZEN_PYTHON points the runner at the manual clone's out-of-tree venv,
+# which it does not probe. It finds the standard install's venv by itself.
+CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh
 ```
 
 ## Code Style
@@ -226,7 +228,7 @@ refactor/description   # Code restructuring
 
 ### Before Submitting
 
-1. **Run tests**: `scripts/run_tests.sh` for CI-parity. Use direct `python -m pytest ...` only when the wrapper is unavailable or you are intentionally debugging outside the wrapper.
+1. **Run tests**: `CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh` for CI-parity (see [Run Tests](#run-tests)). Use direct `python -m pytest ...` only when the wrapper is unavailable or you are intentionally debugging outside the wrapper.
 2. **Test manually**: Run `cryozen` and exercise the code path you changed
 3. **Check cross-platform impact**: Consider macOS, Linux, WSL2, and native Windows. If you touch file I/O, process management, terminal handling, subprocesses, or signals, run `scripts/check-windows-footguns.py`.
 4. **Keep PRs focused**: One logical change per PR

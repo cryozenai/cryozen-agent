@@ -109,7 +109,7 @@ cryozen claw migrate --overwrite        # sobrescribir conflictos existentes
 Consulta la [guía de contribución](website/docs/developer-guide/contributing.md) para la configuración de desarrollo, el estilo de código y el proceso de pull requests.
 
 ```bash
-scripts/run_tests.sh
+CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh
 ```
 
 ---

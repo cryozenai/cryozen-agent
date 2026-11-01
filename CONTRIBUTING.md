@@ -160,20 +160,21 @@ cryozen doctor
 cryozen chat -q "Hello"
 ```
 
-To run it from a shell without that venv on PATH, run `./cryozen` from the
-checkout or symlink the venv's entrypoint:
+To run it from a shell without that venv on PATH, call
+`~/.cryozen-agent/venvs/cryozen-dev/bin/cryozen` directly or symlink it:
 
 ```bash
 mkdir -p ~/.local/bin
-ln -sf "$VIRTUAL_ENV/bin/cryozen" ~/.local/bin/cryozen
+ln -sf ~/.cryozen-agent/venvs/cryozen-dev/bin/cryozen ~/.local/bin/cryozen
 ```
 
 ### Run tests
 
 ```bash
 # Preferred — matches CI (hermetic `env -i`, per-file subprocess isolation
-# via run_tests_parallel.py, worker count auto-scaled); see AGENTS.md
-scripts/run_tests.sh
+# via run_tests_parallel.py, worker count auto-scaled); see AGENTS.md.
+# CRYOZEN_PYTHON points it at the out-of-tree venv, which it does not probe.
+CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh
 
 # Alternative (activate the venv first). The wrapper is still recommended
 # for parity with GitHub Actions before you open a PR:
@@ -595,7 +596,7 @@ Do not put personal names, GitHub handles or co-author credits in the frontmatte
 
 6. **Scripts go in `scripts/`, references in `references/`, templates in `templates/`.** Don't expect the model to inline-write parsers, XML walkers, or non-trivial logic every call — ship a helper script. Reference scripts from SKILL.md by path relative to the skill directory.
 
-7. **Tests live at `tests/skills/test_<skill>_skill.py`** and use only stdlib + pytest + `unittest.mock`. No live network calls. Run via `scripts/run_tests.sh tests/skills/test_<skill>_skill.py -q`. Must pass under the hermetic CI env (no API keys leaking through). Use `monkeypatch` and `tmp_path` for any env-var or filesystem dependencies.
+7. **Tests live at `tests/skills/test_<skill>_skill.py`** and use only stdlib + pytest + `unittest.mock`. No live network calls. Run via `CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh tests/skills/test_<skill>_skill.py -q`. Must pass under the hermetic CI env (no API keys leaking through). Use `monkeypatch` and `tmp_path` for any env-var or filesystem dependencies.
 
 8. **`.env.example` additions are isolated to a clearly delimited block.** Don't touch the surrounding file — contributor-supplied `.env.example` versions are usually stale, and edits outside the skill's own block will be dropped during salvage. Comment all values with `#` (it's documentation, not live config).
 
@@ -913,7 +914,7 @@ refactor/description   # Code restructuring
 
 ### Before submitting
 
-1. **Run tests**: `scripts/run_tests.sh` (recommended; same as CI) or `pytest tests/ -v` with the project venv activated
+1. **Run tests**: `CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh` (recommended; same as CI) or `pytest tests/ -v` with the project venv activated
 2. **Test manually**: Run `cryozen` and exercise the code path you changed
 3. **Check cross-platform impact**: If you touch file I/O, process management, or terminal handling, consider macOS, Linux, and WSL2
 4. **Keep PRs focused**: One logical change per PR. Don't mix a bug fix with a refactor with a new feature.
