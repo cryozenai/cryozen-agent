@@ -80,6 +80,10 @@ CRYOZEN_OVERLAYS: Dict[str, CryozenOverlay] = {
                                           base_url_override="https://api.tokenfactory.nebius.com/v1",
                                           base_url_env_var="NEBIUS_BASE_URL"),
     "ollama-cloud": CryozenOverlay(base_url_override="https://ollama.com/v1", base_url_env_var="OLLAMA_BASE_URL"),
+    # models.dev lists this provider under CMD_API_KEY; the plugin profile and setup flows use COMMANDCODE_API_KEY.
+    "commandcode": CryozenOverlay(extra_env_vars=("COMMANDCODE_API_KEY",),
+                                 base_url_override="https://api.commandcode.ai/provider/v1",
+                                 base_url_env_var="COMMANDCODE_BASE_URL"),
     # Azure Foundry serves OpenAI- and Anthropic-style endpoints; transport comes from model.api_mode.
     "azure-foundry": CryozenOverlay(base_url_env_var="AZURE_FOUNDRY_BASE_URL"),
     "bedrock": CryozenOverlay(transport="bedrock_converse", auth_type="aws_sdk"),
@@ -144,7 +148,7 @@ _LABEL_OVERRIDES: Dict[str, str] = {
     "upstage": "Upstage Solar", "actual": "Actual Computer", "tencent-tokenhub": "Tencent TokenHub",
     "nebius-token-factory": "Nebius Token Factory", "tencent-tokenplan": "Tencent TokenPlan", "lmstudio": "LM Studio",
     "local": "Local endpoint", "bedrock": "AWS Bedrock", "vertex": "Google Vertex AI", "ollama-cloud": "Ollama Cloud",
-    "xai-oauth": "xAI Grok OAuth (SuperGrok / Premium+)",
+    "xai-oauth": "xAI Grok OAuth (SuperGrok / Premium+)", "commandcode": "CommandCode",
 }
 
 

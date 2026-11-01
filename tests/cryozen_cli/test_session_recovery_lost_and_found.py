@@ -222,9 +222,7 @@ def test_unreadable_schema_without_cli_names_the_sqlite3_requirement(
     output = tmp_path / "schemaless-recovered.db"
     _make_schema_unreadable_source(source)
 
-    import cryozen_cli.session_lost_and_found as laf
-
-    monkeypatch.setattr(laf, "find_sqlite3_cli", lambda: None)
+    monkeypatch.setenv("PATH", str(tmp_path))
     with pytest.raises(SessionRecoverySourceError) as excinfo:
         recover_session_database(
             source,
