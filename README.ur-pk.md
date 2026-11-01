@@ -6,9 +6,11 @@
 
 # کرائیوزن ایجنٹ (Cryozen Agent)
 
+> **پیش نظارہ، ابھی جاری نہیں ہوا۔** کرائیوزن ایجنٹ زیرِ تعمیر ہے۔
+> ابھی کوئی انسٹالر، پیکیج، ریلیز یا دستاویزات کی سائٹ موجود نہیں، اور کمانڈز بدل سکتی ہیں۔
+> آزمانے کے لیے [سورس سے چلائیں](#سورس-سے-چلائیں)۔ دستاویزات [`website/docs`](website/docs/index.mdx) میں ہیں۔
+
 <p align="center">
-  <a href="https://cryozenai.github.io/cryozen-agent/docs/"><img src="https://img.shields.io/badge/docs-cryozenai.github.io-7DD3FC?style=for-the-badge" alt="Documentation"></a>
-  <a href="https://github.com/cryozenai/cryozen-agent/discussions"><img src="https://img.shields.io/badge/Discussions-GitHub-388BFD?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Discussions"></a>
   <a href="https://github.com/cryozenai/cryozen-agent/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/Lang-English-blue?style=for-the-badge" alt="English"></a>
   <a href="README.es.md"><img src="https://img.shields.io/badge/Lang-Español-orange?style=for-the-badge" alt="Español"></a>
@@ -18,7 +20,7 @@
 یہ کام کرتے ہوئے سیکھتا ہے: تجربے سے دوبارہ استعمال ہونے والی مہارتیں (skills) لکھتا ہے، استعمال کے دوران انہیں بہتر بناتا ہے، مستقل میموری رکھتا ہے، اپنی پچھلی گفتگو میں تلاش کرتا ہے، اور سیشنز کے دوران یہ سمجھتا ہے کہ آپ کس طرح کام کرنا پسند کرتے ہیں۔
 اسے اپنے لیپ ٹاپ، ایک چھوٹے VPS، GPU سرور یا ایسے سرور لیس (serverless) انفراسٹرکچر پر چلائیں جس کا خرچ غیر فعال ہونے پر تقریباً صفر ہوتا ہے، اور اس سے ٹرمینل، ڈیسک ٹاپ ایپ یا ٹیلی گرام جیسی میسجنگ ایپ سے بات کریں۔
 
-اپنی پسند کا ماڈل استعمال کریں: Anthropic، OpenAI، OpenRouter، لوکل ماڈل سرور، یا [بہت سے دوسرے فراہم کنندگان](https://cryozenai.github.io/cryozen-agent/docs/integrations/providers)۔
+اپنی پسند کا ماڈل استعمال کریں: Anthropic، OpenAI، OpenRouter، لوکل ماڈل سرور، یا [بہت سے دوسرے فراہم کنندگان](website/docs/integrations/providers.md)۔
 `cryozen model` کے ذریعے کسی بھی وقت تبدیل کریں، کوڈ میں کسی تبدیلی کے بغیر۔
 
 <table>
@@ -33,38 +35,26 @@
 
 ---
 
-## فوری انسٹالیشن
+## سورس سے چلائیں
 
-### Linux، macOS، WSL2، Termux
-
-<div dir="ltr">
-
-```bash
-curl -fsSL https://cryozenai.github.io/cryozen-agent/install.sh | bash
-```
-
-</div>
-
-### Windows (نیٹو، PowerShell)
-
-<div dir="ltr">
-
-```powershell
-iex (irm https://cryozenai.github.io/cryozen-agent/install.ps1)
-```
-
-</div>
-
-انسٹالیشن کے بعد:
+کرائیوزن ایجنٹ ابھی پیش نظارہ (preview) میں ہے، اس لیے کوئی انسٹالر شائع نہیں کیا گیا۔
+اسے آزمانے کے لیے ایک کلون سے چلائیں:
 
 <div dir="ltr">
 
 ```bash
-source ~/.bashrc    # reload your shell (or: source ~/.zshrc)
-cryozen             # start chatting
+git clone https://github.com/cryozenai/cryozen-agent.git
+cd cryozen-agent
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv venv ~/.cryozen-agent/venvs/cryozen-dev --python 3.11
+source ~/.cryozen-agent/venvs/cryozen-dev/bin/activate
+uv pip install -e ".[all,dev]"
+cryozen
 ```
 
 </div>
+
+نیٹو Windows پر کلون سے `powershell -ExecutionPolicy ByPass -File scripts\install.ps1` چلائیں۔
 
 ---
 
@@ -84,14 +74,13 @@ cryozen doctor       # diagnose problems
 
 </div>
 
-مکمل دستاویزات: **[cryozenai.github.io/cryozen-agent/docs](https://cryozenai.github.io/cryozen-agent/docs/)**
+مکمل دستاویزات: **[website/docs](website/docs/index.mdx)**
 
 ---
 
 ## معاونت
 
-- سوالات اور تجاویز: [GitHub Discussions](https://github.com/cryozenai/cryozen-agent/discussions)
-- خرابیوں کی رپورٹ: [GitHub Issues](https://github.com/cryozenai/cryozen-agent/issues)
+- خرابیوں اور سوالات کے لیے: [GitHub Issues](https://github.com/cryozenai/cryozen-agent/issues)
 - سیکیورٹی رپورٹس: [SECURITY.md](SECURITY.md) دیکھیں
 
 ---
@@ -99,6 +88,7 @@ cryozen doctor       # diagnose problems
 ## لائسنس
 
 کرائیوزن ایجنٹ MIT لائسنس کے تحت جاری کیا گیا ہے؛ [LICENSE](LICENSE) اور [NOTICE](NOTICE) دیکھیں۔
+اس میں Nous Research کا [Hermes Agent](https://github.com/NousResearch/hermes-agent) شامل ہے، جو MIT لائسنس ہی کے تحت ہے۔
 
 Copyright (c) 2026 Cryozen.
 

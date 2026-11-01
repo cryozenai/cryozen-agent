@@ -7,6 +7,10 @@ sidebar_position: 2
 
 # Windows (WSL2) Guide
 
+:::caution Preview
+Cryozen Agent is in preview and not released. No installer, package, release, or documentation site is published yet, so the install commands on this page do not work. To try it, [run it from source](https://github.com/cryozenai/cryozen-agent#run-from-source).
+:::
+
 Cryozen Agent now supports **both** native Windows and WSL2.  This page covers the WSL2 path; for the native PowerShell install see the dedicated **[Windows (Native) Guide](./windows-native.md)**.
 
 **When to pick WSL2 over native:**

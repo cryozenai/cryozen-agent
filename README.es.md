@@ -4,9 +4,11 @@
 
 # Cryozen Agent
 
+> **Versión preliminar, sin publicar.** Cryozen Agent está en desarrollo activo.
+> Todavía no hay instalador, paquete, versión publicada ni sitio de documentación, y los comandos pueden cambiar.
+> Para probarlo, [ejecútalo desde el código fuente](#ejecutar-desde-el-código-fuente). La documentación está en [`website/docs`](website/docs/index.mdx).
+
 <p align="center">
-  <a href="https://cryozenai.github.io/cryozen-agent/docs/"><img src="https://img.shields.io/badge/docs-cryozenai.github.io-7DD3FC?style=for-the-badge" alt="Documentación"></a>
-  <a href="https://github.com/cryozenai/cryozen-agent/discussions"><img src="https://img.shields.io/badge/Discusiones-GitHub-388BFD?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Discussions"></a>
   <a href="https://github.com/cryozenai/cryozen-agent/blob/main/LICENSE"><img src="https://img.shields.io/badge/Licencia-MIT-green?style=for-the-badge" alt="Licencia: MIT"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/Lang-English-blue?style=for-the-badge" alt="English"></a>
   <a href="README.ur-pk.md"><img src="https://img.shields.io/badge/Lang-اردو-green?style=for-the-badge" alt="اردو"></a>
@@ -16,7 +18,7 @@
 Aprende mientras trabaja: escribe habilidades reutilizables a partir de la experiencia, las perfecciona al usarlas, mantiene una memoria persistente, busca en sus conversaciones pasadas y construye un modelo de cómo te gusta trabajar entre sesiones.
 Ejecútalo en tu portátil, en un VPS pequeño, en un servidor con GPU o en infraestructura serverless que casi no cuesta nada cuando está inactiva, y háblale desde la terminal, la aplicación de escritorio o una app de mensajería como Telegram.
 
-Usa el modelo que prefieras: Anthropic, OpenAI, OpenRouter, un servidor de modelos local o [muchos otros proveedores](https://cryozenai.github.io/cryozen-agent/docs/integrations/providers).
+Usa el modelo que prefieras: Anthropic, OpenAI, OpenRouter, un servidor de modelos local o [muchos otros proveedores](website/docs/integrations/providers.md).
 Cambia en cualquier momento con `cryozen model`, sin cambios de código y sin dependencia de un proveedor.
 
 <table>
@@ -31,34 +33,22 @@ Cambia en cualquier momento con `cryozen model`, sin cambios de código y sin de
 
 ---
 
-## Instalación rápida
+## Ejecutar desde el código fuente
 
-### Linux, macOS, WSL2, Termux
-
-```bash
-curl -fsSL https://cryozenai.github.io/cryozen-agent/install.sh | bash
-```
-
-### Windows (nativo, PowerShell)
-
-```powershell
-iex (irm https://cryozenai.github.io/cryozen-agent/install.ps1)
-```
-
-En Windows nativo, Cryozen funciona sin WSL: la CLI, el gateway, la TUI y las herramientas funcionan de forma nativa.
-Si prefieres WSL2, el comando de Linux/macOS también funciona allí.
-
-El instalador prepara todo lo necesario: uv, Python 3.11, Node.js, ripgrep, ffmpeg y, en Windows, un Git Bash portátil (MinGit, descomprimido en `%LOCALAPPDATA%\cryozen\git`, sin permisos de administrador y aislado de cualquier Git del sistema).
-Si Git ya está instalado, el instalador lo utiliza.
-
-En Android, sigue la [guía de Termux](https://cryozenai.github.io/cryozen-agent/docs/getting-started/termux).
-
-Después de la instalación:
+Cryozen Agent está en versión preliminar, así que no se publica ningún instalador.
+Para probarlo, ejecútalo desde un clon, con el entorno virtual fuera del árbol de código porque el agente puede ejecutar comandos sobre su propio checkout:
 
 ```bash
-source ~/.bashrc    # recarga tu shell (o: source ~/.zshrc)
-cryozen             # empieza a conversar
+git clone https://github.com/cryozenai/cryozen-agent.git
+cd cryozen-agent
+curl -LsSf https://astral.sh/uv/install.sh | sh    # omítelo si ya tienes uv
+uv venv ~/.cryozen-agent/venvs/cryozen-dev --python 3.11
+source ~/.cryozen-agent/venvs/cryozen-dev/bin/activate
+uv pip install -e ".[all,dev]"
+cryozen            # empieza a chatear
 ```
+
+En Windows nativo, ejecuta `powershell -ExecutionPolicy ByPass -File scripts\install.ps1` desde el clon.
 
 ---
 
@@ -77,7 +67,7 @@ cryozen update       # actualiza a la última versión
 cryozen doctor       # diagnostica problemas
 ```
 
-Documentación completa: **[cryozenai.github.io/cryozen-agent/docs](https://cryozenai.github.io/cryozen-agent/docs/)**
+Documentación completa: **[website/docs](website/docs/index.mdx)**
 
 ---
 
@@ -116,21 +106,19 @@ cryozen claw migrate --overwrite        # sobrescribir conflictos existentes
 
 ## Desarrollo
 
-Consulta la [guía de contribución](https://cryozenai.github.io/cryozen-agent/docs/developer-guide/contributing) para la configuración de desarrollo, el estilo de código y el proceso de pull requests.
+Consulta la [guía de contribución](website/docs/developer-guide/contributing.md) para la configuración de desarrollo, el estilo de código y el proceso de pull requests.
+
+Configúralo como en [Ejecutar desde el código fuente](#ejecutar-desde-el-código-fuente) y luego ejecuta los tests:
 
 ```bash
-curl -fsSL https://cryozenai.github.io/cryozen-agent/install.sh | bash
-cd "${CRYOZEN_HOME:-$HOME/.cryozen-agent}/cryozen-agent"
-uv pip install -e ".[all,dev]"
-scripts/run_tests.sh
+CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh
 ```
 
 ---
 
 ## Soporte
 
-- Preguntas e ideas: [GitHub Discussions](https://github.com/cryozenai/cryozen-agent/discussions)
-- Errores: [GitHub Issues](https://github.com/cryozenai/cryozen-agent/issues)
+- Errores y preguntas: [GitHub Issues](https://github.com/cryozenai/cryozen-agent/issues)
 - Informes de seguridad: consulta [SECURITY.es.md](SECURITY.es.md)
 
 ---
@@ -138,5 +126,6 @@ scripts/run_tests.sh
 ## Licencia
 
 Cryozen Agent se publica bajo la licencia MIT; consulta [LICENSE](LICENSE) y [NOTICE](NOTICE).
+Incorpora [Hermes Agent](https://github.com/NousResearch/hermes-agent) de Nous Research, también bajo la licencia MIT.
 
 Copyright (c) 2026 Cryozen.

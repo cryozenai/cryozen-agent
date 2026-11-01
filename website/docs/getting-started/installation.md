@@ -6,6 +6,10 @@ description: "Install Cryozen Agent on Linux, macOS, WSL2, native Windows, or An
 
 # Installation
 
+:::caution Preview
+Cryozen Agent is in preview and not released. No installer, package, release, or documentation site is published yet, so the install commands on this page do not work. To try it, [run it from source](https://github.com/cryozenai/cryozen-agent#run-from-source).
+:::
+
 Get Cryozen Agent up and running in under two minutes!
 
 :::tip Platform Support

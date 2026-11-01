@@ -98,7 +98,7 @@ grow: expansive at the edges, conservative at the waist.
   SaaS connectors, analytics dashboards, and other "someone else's product" plugins do NOT
   land under `plugins/` — every one becomes our burden against a fast-moving core for a
   backend we don't own. Ship as a **standalone plugin repo** (`~/.cryozen-agent/plugins/` or pip
-  entry point), promoted in Cryozen GitHub Discussions. This is a
+  entry point). This is a
   coupling decision, not a quality bar; such PRs are closed with a pointer to publish.
 
 ### Before you call it a bug — verify the premise (and when NOT to close)
@@ -245,7 +245,8 @@ families: `cryozen_state.py` (21), `gateway/run.py` (15), `tools/mcp_tool.py` (1
   (`PLUGIN-COMPAT` blocks, `COMPAT_MANIFEST.md`, `compat_manifest.json`) must not be used by
   in-tree code or tests; `scripts/check_compat_pointers.py` runs in CI, and
   `-W error::cryozen_cli.plugin_compat.CryozenPluginCompatWarning` catches them in the suite.
-  They are removed 2026-09-14 by reverting one commit. Import from the defining module.
+  Their removal date, 2026-09-14, has passed; they stay until one commit is reverted. Import from
+  the defining module.
 - **Don't recreate god files.** A file passing ~2,000 lines or a function passing ~300 lines /
   cyclomatic complexity 30 is the signal to split along `<stem>_<topic>` FIRST, in its own
   commit. New behaviour goes in a new or topical sibling — never appended to a facade.

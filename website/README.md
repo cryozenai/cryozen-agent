@@ -2,14 +2,20 @@
 
 The Cryozen Agent documentation site, built with [Docusaurus](https://docusaurus.io/).
 
-> **Reading the docs on GitHub?** The Markdown under `docs/` is authored for the rendered site at
-> <https://cryozenai.github.io/cryozen-agent/docs/>. Cross-page links are relative Markdown paths, so they
-> follow through on GitHub's file viewer too. Every page on the site has an **Edit this page** link
+> **Status: off until launch.** Cryozen Agent is in preview. GitHub Pages is not enabled, so none of
+> the URLs under "Hosting layout" resolve, and `.github/workflows/deploy-site.yml` is skipped until
+> the repository variable `DOCS_SITE_ENABLED` is `true`. The same variable gates the deploy that
+> `skills-index.yml` triggers and the schedule of `skills-index-freshness.yml`, whose manual runs
+> still probe. To launch: enable Pages with GitHub Actions as the source, set that variable, and
+> rerun Deploy Site.
+
+> **Reading the docs on GitHub?** The Markdown under `docs/` is authored for the rendered site.
+> Cross-page links are relative Markdown paths, so they follow through on GitHub's file viewer too. Every page on the site has an **Edit this page** link
 > that opens the source file here.
 
 ## Hosting layout
 
-The site is a GitHub Pages project site for `cryozenai/cryozen-agent`, published by
+At launch, the site is a GitHub Pages project site for `cryozenai/cryozen-agent`, published by
 `.github/workflows/deploy-site.yml`:
 
 | URL | Source |

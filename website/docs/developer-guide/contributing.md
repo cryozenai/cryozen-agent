@@ -6,6 +6,10 @@ description: "How to contribute to Cryozen Agent — dev setup, code style, PR p
 
 # Contributing
 
+:::caution Preview
+Cryozen Agent is in preview and not released. No installer, package, release, or documentation site is published yet, so the install commands on this page do not work. To try it, [run it from source](https://github.com/cryozenai/cryozen-agent#run-from-source).
+:::
+
 Thank you for contributing to Cryozen Agent! This guide covers setting up your dev environment, understanding the codebase, and getting your PR merged.
 
 ## Contribution Priorities
@@ -123,18 +127,20 @@ cryozen doctor
 cryozen chat -q "Hello"
 ```
 
-If you used the manual clone fallback, run `./cryozen` from the checkout or
-symlink this clone's venv explicitly:
+If you used the manual clone fallback, call
+`~/.cryozen-agent/venvs/cryozen-dev/bin/cryozen` directly or symlink it:
 
 ```bash
 mkdir -p ~/.local/bin
-ln -sf "$(pwd)/venv/bin/cryozen" ~/.local/bin/cryozen
+ln -sf ~/.cryozen-agent/venvs/cryozen-dev/bin/cryozen ~/.local/bin/cryozen
 ```
 
 ### Run Tests
 
 ```bash
-scripts/run_tests.sh
+# CRYOZEN_PYTHON points the runner at the manual clone's out-of-tree venv,
+# which it does not probe. It finds the standard install's venv by itself.
+CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh
 ```
 
 ## Code Style
@@ -222,7 +228,7 @@ refactor/description   # Code restructuring
 
 ### Before Submitting
 
-1. **Run tests**: `scripts/run_tests.sh` for CI-parity. Use direct `python -m pytest ...` only when the wrapper is unavailable or you are intentionally debugging outside the wrapper.
+1. **Run tests**: `CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh` for CI-parity (see [Run Tests](#run-tests)). Use direct `python -m pytest ...` only when the wrapper is unavailable or you are intentionally debugging outside the wrapper.
 2. **Test manually**: Run `cryozen` and exercise the code path you changed
 3. **Check cross-platform impact**: Consider macOS, Linux, WSL2, and native Windows. If you touch file I/O, process management, terminal handling, subprocesses, or signals, run `scripts/check-windows-footguns.py`.
 4. **Keep PRs focused**: One logical change per PR
@@ -292,9 +298,9 @@ When you ask Cryozen to review a PR in a repository that has `.agents/checks/`, 
 - Check existing issues before creating duplicates
 - For security vulnerabilities, please report privately
 
-## Discussions
+## Where to talk
 
-- **Questions and design proposals**: [GitHub Discussions](https://github.com/cryozenai/cryozen-agent/discussions)
+- **Questions and design proposals**: [GitHub Issues](https://github.com/cryozenai/cryozen-agent/issues)
 - **Skills Hub**: publish specialized skills for other users
 
 ## License

@@ -63,7 +63,7 @@ Bundled skills (in `skills/`) ship with every Cryozen install. They should be **
 
 If your skill is official and useful but not universally needed (e.g., a paid service integration, a heavyweight dependency), put it in **`optional-skills/`** — it ships with the repo but isn't activated by default. Users can discover it via `cryozen skills browse` (labeled "official") and install it with `cryozen skills install` (no third-party warning, built-in trust).
 
-If your skill is specialized, community-contributed, or niche, it's better suited for a **Skills Hub** — upload it to a skills registry and share it in the [Cryozen GitHub Discussions](https://github.com/cryozenai/cryozen-agent/discussions). Users can install it with `cryozen skills install`.
+If your skill is specialized, community-contributed, or niche, it's better suited for a **Skills Hub** — upload it to a skills registry. Users can install it with `cryozen skills install`.
 
 ---
 
@@ -93,10 +93,9 @@ The reason is maintenance load, not quality. Every external product absorbed int
 
 Publish these as a **standalone plugin repo** instead:
 
-- Implement the relevant ABC and use the existing plugin discovery path (`~/.cryozen-agent/plugins/`, project `.cryozen-agent/plugins/`, or a pip entry point) — see [Build a Cryozen Plugin](https://cryozenai.github.io/cryozen-agent/docs/guides/build-a-cryozen-plugin)
+- Implement the relevant ABC and use the existing plugin discovery path (`~/.cryozen-agent/plugins/`, project `.cryozen-agent/plugins/`, or a pip entry point) — see [Build a Cryozen Plugin](website/docs/developer-guide/plugins/index.md)
 - Register lifecycle hooks (`pre_tool_call`, `post_tool_call`, `pre_llm_call`, `post_llm_call`, `on_session_start`, `on_session_end`), tools (`ctx.register_tool`), and CLI subcommands (`ctx.register_cli_command`) through the surface we already expose — no core changes needed
 - If your plugin needs a capability the framework doesn't expose, that's a feature request to **widen the generic plugin surface** (a new hook or `ctx` method) — never special-case your plugin in core
-- Promote it in the [Cryozen GitHub Discussions](https://github.com/cryozenai/cryozen-agent/discussions) so users can find and install it
 
 A well-built third-party-product plugin can clear automated review and still be closed for this reason — it's a placement decision, not a verdict on the code. PRs that add such a directory under `plugins/` will be closed with a pointer to publish it as its own repo.
 
@@ -113,41 +112,13 @@ A well-built third-party-product plugin can clear automated review and still be 
 | **uv** | Fast Python package manager ([install](https://docs.astral.sh/uv/)) |
 | **Node.js 20+** | Optional — needed for browser tools and WhatsApp bridge (matches root `package.json` engines) |
 
-### Install with the standard installer
+### Install from a clone
 
-For most contributors, the best development bootstrap is the same path users
-take: run the standard installer, then work inside the repository it cloned.
-The installer creates the Cryozen venv, wires the `cryozen` command, stamps the
-install method for `cryozen update`, and clones the full git project into
-`$CRYOZEN_HOME/cryozen-agent` (usually `~/.cryozen-agent/cryozen-agent`). That keeps your
-development environment on the same layout the CLI, updater, lazy dependency
-installer, gateway, and docs assume.
+Cryozen Agent is in preview, so no hosted installer is published.
+Develop from a clone as below.
 
-```bash
-curl -fsSL https://cryozenai.github.io/cryozen-agent/install.sh | bash
-cd "${CRYOZEN_HOME:-$HOME/.cryozen-agent}/cryozen-agent"
-
-# Add dev/test extras on top of the standard install.
-uv pip install -e ".[all,dev]"
-
-# Optional: docs site + workspace dependencies.
-npm install
-```
-
-After that, create branches and run tests from that checkout:
-
-```bash
-git checkout -b fix/description
-scripts/run_tests.sh
-```
-
-### Manual clone fallback
-
-Use this only if you intentionally do not want Cryozen' managed install layout
-(for example, a throwaway clone inside a container or CI job). If you install
-this way, make sure you run the `cryozen` entrypoint from this venv; running the
-system `python3 -m cryozen_cli.main` can pick up unrelated system Python
-packages.
+Make sure you run the `cryozen` entrypoint from the venv created below; running the system
+`python3 -m cryozen_cli.main` can pick up unrelated system Python packages.
 
 Create the venv **outside** the cloned source tree. A venv that lives inside
 the directory the agent operates from can be wiped by a relative-path command
@@ -185,25 +156,26 @@ echo "OPENROUTER_API_KEY=***" >> ~/.cryozen-agent/.env
 ### Run
 
 ```bash
-# The standard installer already put `cryozen` on PATH.
+# `cryozen` is on PATH while the venv above is active.
 cryozen doctor
 cryozen chat -q "Hello"
 ```
 
-If you used the manual clone fallback, run `./cryozen` from the checkout or
-symlink this clone's venv explicitly:
+To run it from a shell without that venv on PATH, call
+`~/.cryozen-agent/venvs/cryozen-dev/bin/cryozen` directly or symlink it:
 
 ```bash
 mkdir -p ~/.local/bin
-ln -sf "$(pwd)/venv/bin/cryozen" ~/.local/bin/cryozen
+ln -sf ~/.cryozen-agent/venvs/cryozen-dev/bin/cryozen ~/.local/bin/cryozen
 ```
 
 ### Run tests
 
 ```bash
 # Preferred — matches CI (hermetic `env -i`, per-file subprocess isolation
-# via run_tests_parallel.py, worker count auto-scaled); see AGENTS.md
-scripts/run_tests.sh
+# via run_tests_parallel.py, worker count auto-scaled); see AGENTS.md.
+# CRYOZEN_PYTHON points it at the out-of-tree venv, which it does not probe.
+CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh
 
 # Alternative (activate the venv first). The wrapper is still recommended
 # for parity with GitHub Actions before you open a PR:
@@ -284,7 +256,7 @@ cryozen-agent/
 ├── skills/                   # Bundled skills (copied to ~/.cryozen-agent/skills/ on install)
 ├── optional-skills/          # Official optional skills (discoverable via hub, not activated by default)
 ├── tests/                    # Test suite
-├── website/                  # Documentation site (cryozenai.github.io/cryozen-agent)
+├── website/                  # Documentation site (off during the preview)
 │
 ├── cli-config.yaml.example   # Example configuration (copied to ~/.cryozen-agent/config.yaml)
 └── AGENTS.md                 # Development guide for AI coding assistants
@@ -625,7 +597,7 @@ Do not put personal names, GitHub handles or co-author credits in the frontmatte
 
 6. **Scripts go in `scripts/`, references in `references/`, templates in `templates/`.** Don't expect the model to inline-write parsers, XML walkers, or non-trivial logic every call — ship a helper script. Reference scripts from SKILL.md by path relative to the skill directory.
 
-7. **Tests live at `tests/skills/test_<skill>_skill.py`** and use only stdlib + pytest + `unittest.mock`. No live network calls. Run via `scripts/run_tests.sh tests/skills/test_<skill>_skill.py -q`. Must pass under the hermetic CI env (no API keys leaking through). Use `monkeypatch` and `tmp_path` for any env-var or filesystem dependencies.
+7. **Tests live at `tests/skills/test_<skill>_skill.py`** and use only stdlib + pytest + `unittest.mock`. No live network calls. Run via `CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh tests/skills/test_<skill>_skill.py -q`. Must pass under the hermetic CI env (no API keys leaking through). Use `monkeypatch` and `tmp_path` for any env-var or filesystem dependencies.
 
 8. **`.env.example` additions are isolated to a clearly delimited block.** Don't touch the surrounding file — contributor-supplied `.env.example` versions are usually stale, and edits outside the skill's own block will be dropped during salvage. Comment all values with `#` (it's documentation, not live config).
 
@@ -943,7 +915,7 @@ refactor/description   # Code restructuring
 
 ### Before submitting
 
-1. **Run tests**: `scripts/run_tests.sh` (recommended; same as CI) or `pytest tests/ -v` with the project venv activated
+1. **Run tests**: `CRYOZEN_PYTHON="$VIRTUAL_ENV/bin/python" scripts/run_tests.sh` (recommended; same as CI) or `pytest tests/ -v` with the project venv activated
 2. **Test manually**: Run `cryozen` and exercise the code path you changed
 3. **Check cross-platform impact**: If you touch file I/O, process management, or terminal handling, consider macOS, Linux, and WSL2
 4. **Keep PRs focused**: One logical change per PR. Don't mix a bug fix with a refactor with a new feature.
@@ -997,7 +969,6 @@ test(tools): add unit tests for file_operations
 
 ## Where to talk
 
-- **GitHub Discussions**: [cryozenai/cryozen-agent discussions](https://github.com/cryozenai/cryozen-agent/discussions) for questions, design proposals and sharing skills
 - **Skills Hub**: publish specialized skills to a skills registry instead of bundling them
 
 ---

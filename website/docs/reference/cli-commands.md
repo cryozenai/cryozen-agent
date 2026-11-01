@@ -1025,7 +1025,7 @@ config_overrides:
 ### When to use
 
 - Reporting a bug on GitHub — paste the dump into your issue
-- Asking for help in GitHub Discussions — share it in a code block
+- Asking for help in a GitHub issue — share it in a code block
 - Comparing your setup to someone else's
 - Quick sanity check when something isn't working
 

@@ -45,7 +45,7 @@ Las habilidades incluidas (en `skills/`) se envían con cada instalación de Cry
 
 Si tu habilidad es oficial y útil pero no universalmente necesaria (ej., una integración de servicio de pago, una dependencia pesada), ponla en **`optional-skills/`** — se envía con el repositorio pero no está activada por defecto. Los usuarios pueden descubrirla a través de `cryozen skills browse` (etiquetada como "oficial") e instalarla con `cryozen skills install` (sin advertencia de terceros, confianza integrada).
 
-Si tu habilidad es especializada, contribuida por la comunidad o de nicho, es mejor para un **Skills Hub** — súbela a un registro de habilidades y compártela en el [GitHub Discussions de Cryozen](https://github.com/cryozenai/cryozen-agent/discussions). Los usuarios pueden instalarla con `cryozen skills install`.
+Si tu habilidad es especializada, contribuida por la comunidad o de nicho, es mejor para un **Skills Hub** — súbela a un registro de habilidades. Los usuarios pueden instalarla con `cryozen skills install`.
 
 ---
 
@@ -194,7 +194,7 @@ cryozen-agent/
 ├── skills/                   # Habilidades incluidas (copiadas a ~/.cryozen-agent/skills/ en la instalación)
 ├── optional-skills/          # Habilidades opcionales oficiales (descubribles vía hub, no activadas por defecto)
 ├── tests/                    # Suite de tests
-├── website/                  # Sitio de documentación (cryozenai.github.io/cryozen-agent)
+├── website/                  # Sitio de documentación (desactivado en la versión preliminar)
 │
 ├── cli-config.yaml.example   # Configuración de ejemplo (copiada a ~/.cryozen-agent/config.yaml)
 └── AGENTS.md                 # Guía de desarrollo para asistentes de codificación IA
@@ -591,8 +591,6 @@ test(tools): añadir tests unitarios para file_operations
 
 ## Comunidad
 
-- **Discusiones**: [GitHub Discussions](https://github.com/cryozenai/cryozen-agent/discussions) — para preguntas, mostrar proyectos y compartir habilidades
-- **GitHub Discussions**: Para propuestas de diseño y discusiones de arquitectura
 - **Skills Hub**: Sube habilidades especializadas a un registro y compártelas con la comunidad
 
 ---
