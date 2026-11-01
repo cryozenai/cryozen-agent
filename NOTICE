@@ -5,10 +5,37 @@ This product is licensed under the MIT License (see LICENSE).
 
 Provenance
 ----------
-Cryozen Agent incorporates software originally distributed under the MIT
-License. The copyright notice required by that license is retained in
-LICENSE. Cryozen Agent is an independent product of Cryozen and is not
-affiliated with, sponsored by, or endorsed by the authors of that software.
+Cryozen Agent incorporates Hermes Agent by Nous Research
+(https://github.com/NousResearch/hermes-agent), distributed under the MIT
+License. Cryozen Agent is an independent product of Cryozen and is not
+affiliated with, sponsored by, or endorsed by Nous Research. Files that came
+from upstream with their own Nous Research notice keep it, including
+skills/productivity/{docx,pdf,powerpoint,xlsx}/LICENSE and
+apps/desktop/src/plugins/cryozen-bots/LICENSE.
+
+The Hermes Agent license, verbatim:
+
+MIT License
+
+Copyright (c) 2025 Nous Research
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 Third-party material
 --------------------
@@ -50,7 +77,10 @@ named file under LICENSES/.
            helpers in gateway/platforms/helpers.py.
 
 - Grok CLI: https://github.com/superagent-ai/grok-cli
-  Copyright (c) [year] [copyright holders] (as stated in the upstream license)
+  Copyright notice: upstream's LICENSE reads "Copyright (c) [year] [copyright
+  holders]", an unfilled template line, reproduced as is. Upstream names no
+  holder there; the repository owner is superagent-ai and its package.json
+  gives the author as Vibe Kit.
   License: MIT; see LICENSES/MIT-grok-cli.txt.
   Used in: agent/verify/, tui_gateway/slash_fuzzy.py and
            ui-tui/src/app/slash/fuzzyScore.ts.

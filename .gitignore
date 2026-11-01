@@ -307,3 +307,6 @@ native/fts5_cjk/*.so
 
 # Disposable profile created by scripts/probe_active_session_exclusivity.py
 .probe-home/
+
+# Local task notes never belong in this public repository.
+/backlog.md

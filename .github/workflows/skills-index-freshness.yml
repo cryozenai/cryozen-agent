@@ -6,6 +6,11 @@ name: Skills Index Freshness Check
 # this workflow opens a GitHub issue so we hear about it before users do.
 #
 # Triggered every 4 hours so we catch a stuck cron within one tick.
+#
+# There is nothing to probe until the docs site launches, so the schedule is
+# off until the repository variable DOCS_SITE_ENABLED is true. A manual run
+# always probes. A probe that is not ok fails the run, so a dead site can never
+# show up here as a green check.
 
 on:
   schedule:
@@ -18,7 +23,7 @@ permissions:
 
 jobs:
   check-freshness:
-    if: github.repository == 'cryozenai/cryozen-agent'
+    if: github.repository == 'cryozenai/cryozen-agent' && (vars.DOCS_SITE_ENABLED == 'true' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: trusted-automation
@@ -165,3 +170,12 @@ jobs:
               --title "$TITLE_PREFIX Skills index is stale or degraded ($STATUS)" \
               --body "$BODY"
           fi
+
+      - name: Fail the run when the probe is not ok
+        if: always() && steps.probe.outputs.status != 'ok'
+        env:
+          STATUS: ${{ steps.probe.outputs.status }}
+          DETAIL: ${{ steps.probe.outputs.detail }}
+        run: |
+          echo "::error::Skills index probe: $STATUS: $DETAIL"
+          exit 1

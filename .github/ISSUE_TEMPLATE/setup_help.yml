@@ -13,7 +13,6 @@ body:
         - If you're in a chat session, you can use `/debug` instead — it does the same thing
         - Try `cryozen update` to get the latest version
         - Check the [README troubleshooting section](https://github.com/cryozenai/cryozen-agent#troubleshooting)
-        - For general questions, consider the [Cryozen GitHub Discussions](https://github.com/cryozenai/cryozen-agent/discussions) for faster help
 
   - type: textarea
     id: description

@@ -759,5 +759,60 @@ class TestFetchOwnerHandleRetry(unittest.TestCase):
         self.assertLess(mock_get.call_count, 200)
 
 
+
+
+def _walk_with_failures(page_two_failures):
+    """Drive a real walk over a two-page catalog whose second page fails N times."""
+    calls = {"page_two": 0}
+
+    def fake_get(url, *args, **kwargs):
+        cursor = (kwargs.get("params") or {}).get("cursor")
+        if cursor is None:
+            return _MockResponse(
+                status_code=200,
+                json_data={"items": [{"slug": "first"}], "nextCursor": "page-2"},
+            )
+        calls["page_two"] += 1
+        if calls["page_two"] <= page_two_failures:
+            return _MockResponse(status_code=503, json_data={})
+        return _MockResponse(status_code=200, json_data={"items": [{"slug": "second"}], "nextCursor": None})
+
+    return fake_get, calls
+
+
+class TestIndexBuilderWalkSurvivesOutages(unittest.TestCase):
+    @patch("tools.skills_hub_clawhub.time.sleep")
+    @patch("tools.skills_hub._write_index_cache")
+    @patch("tools.skills_hub._read_index_cache", return_value=None)
+    @patch("tools.skills_hub.httpx.get")
+    def test_outage_longer_than_browse_retries_still_completes(
+        self, mock_get, _read_cache, write_cache, _sleep
+    ):
+        failures = ClawHubSource.CATALOG_PAGE_RETRIES + 2
+        mock_get.side_effect, _ = _walk_with_failures(failures)
+
+        results = ClawHubSource()._load_catalog_index(max_items=0)
+
+        self.assertEqual([m.identifier for m in results], ["first", "second"])
+        write_cache.assert_called_once()
+
+    @patch("tools.skills_hub_clawhub.time.sleep")
+    @patch("tools.skills_hub._write_index_cache")
+    @patch("tools.skills_hub._read_index_cache", return_value=None)
+    @patch("tools.skills_hub.httpx.get")
+    def test_giving_up_is_partial_uncached_and_logged(
+        self, mock_get, _read_cache, write_cache, _sleep
+    ):
+        mock_get.side_effect, calls = _walk_with_failures(10_000)
+
+        with self.assertLogs("tools.skills_hub", level="WARNING") as logs:
+            results = ClawHubSource()._load_catalog_index(max_items=0)
+
+        self.assertEqual([m.identifier for m in results], ["first"])
+        self.assertEqual(calls["page_two"], 10)
+        write_cache.assert_not_called()
+        self.assertIn("partial catalog of 1 skills", logs.output[0])
+
+
 if __name__ == "__main__":
     unittest.main()

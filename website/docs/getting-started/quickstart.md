@@ -6,6 +6,10 @@ description: "Your first conversation with Cryozen Agent — from install to cha
 
 # Cryozen Agent Quickstart
 
+:::caution Preview
+Cryozen Agent is in preview and not released. No installer, package, release, or documentation site is published yet, so the install commands on this page do not work. To try it, [run it from source](https://github.com/cryozenai/cryozen-agent#run-from-source).
+:::
+
 This guide gets you from zero to a working Cryozen setup that survives real use. Install, choose a provider, verify a working chat, and know exactly what to do when something breaks.
 
 ## Prefer to watch?

@@ -67,6 +67,11 @@ class ClawHubSource(GuardedFetchMixin, SkillSource):
     # Wall-clock budget for a full catalog walk: 50k+ skills, sequential
     # (~250 requests each under timeout=30), so unbounded it blocks for minutes.
     CATALOG_WALK_BUDGET_SECONDS = 12
+    # The index builder has no user waiting, and a walk that gives up early ships
+    # nothing because it trips the deploy health floor. So it rides out an outage
+    # of several minutes at one cursor, where interactive browse gives up quickly.
+    INDEX_BUILDER_PAGE_RETRIES = 10
+    INDEX_BUILDER_MAX_BACKOFF_SECONDS = 60
     ZIP_DOWNLOAD_MAX_BYTES = 25 * 1024 * 1024
     ZIP_DOWNLOAD_CHUNK_BYTES = 64 * 1024
     _SLUG_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*$")
@@ -302,8 +307,9 @@ class ClawHubSource(GuardedFetchMixin, SkillSource):
         failed page fetch would poison it with a partial slice.
 
         ``_get_json`` returns ``None`` on timeout/non-200. That is a hole in the
-        walk, not catalog exhaustion: the same cursor is retried a few times
-        before the walk gives up (partial, uncached).
+        walk, not catalog exhaustion: the same cursor is retried (a few times for
+        browse, longer for the index builder) before the walk gives up (partial,
+        uncached, and logged).
         """
         cache_key = "clawhub_catalog_v1"
         cached = _cached_metas(cache_key)
@@ -327,11 +333,15 @@ class ClawHubSource(GuardedFetchMixin, SkillSource):
             data = self._get_json(f"{self.BASE_URL}/skills", timeout=30, params=params)
             if data is None:
                 fetch_failures += 1
-                if fetch_failures >= self.CATALOG_PAGE_RETRIES:
+                retries = self.CATALOG_PAGE_RETRIES if deadline is not None else self.INDEX_BUILDER_PAGE_RETRIES
+                if fetch_failures >= retries:
+                    logger.warning("ClawHub catalog walk stopped after %d failed fetches of one page; "
+                                   "returning a partial catalog of %d skills", fetch_failures, len(results))
                     partial = True
                     break
                 # Interactive browse stays inside its 12 s budget; the index builder backs off.
-                time.sleep(0.5 if deadline is not None else min(2 ** fetch_failures, 8))
+                time.sleep(0.5 if deadline is not None else
+                           min(2 ** fetch_failures, self.INDEX_BUILDER_MAX_BACKOFF_SECONDS))
                 continue
             fetch_failures = 0
             items = data.get("items", []) if isinstance(data, dict) else []

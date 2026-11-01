@@ -1,5 +1,9 @@
 name: Deploy Site
 
+# Off until launch: Cryozen Agent is in preview and GitHub Pages is not enabled.
+# To launch: enable Pages with GitHub Actions as the source, then set the
+# repository variable DOCS_SITE_ENABLED to true. See website/README.md.
+
 on:
   release:
     types: [published]
@@ -40,7 +44,7 @@ concurrency:
 
 jobs:
   deploy-docs:
-    if: github.repository == 'cryozenai/cryozen-agent'
+    if: github.repository == 'cryozenai/cryozen-agent' && vars.DOCS_SITE_ENABLED == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment:

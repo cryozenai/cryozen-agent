@@ -5,10 +5,12 @@
 # Uses uv for fast Python provisioning and package management.
 #
 # Usage:
-#   iex (irm https://cryozenai.github.io/cryozen-agent/install.ps1)
+#   .\scripts\install.ps1
 #
-# Or download and run with options:
-#   .\install.ps1 -NoVenv -SkipSetup
+# Or with options:
+#   .\scripts\install.ps1 -NoVenv -SkipSetup
+#
+# Cryozen Agent is in preview: no hosted copy of this script is published.
 #
 # ============================================================================
 
@@ -5164,8 +5166,7 @@ try {
     Write-Host ""
     Write-Err "Installation failed: $_"
     Write-Host ""
-    Write-Info "If the error is unclear, try downloading and running the script directly:"
-    Write-Host "  Invoke-WebRequest -Uri 'https://cryozenai.github.io/cryozen-agent/install.ps1' -OutFile install.ps1" -ForegroundColor Yellow
+    Write-Info "If the error is unclear, try running the script directly from a checkout:"
     Write-Host "  .\install.ps1" -ForegroundColor Yellow
     Write-Host ""
 }

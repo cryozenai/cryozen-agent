@@ -6,10 +6,12 @@
 # Uses uv for desktop/server installs and Python's stdlib venv + pip on Termux.
 #
 # Usage:
-#   curl -fsSL https://cryozenai.github.io/cryozen-agent/install.sh | bash
+#   bash scripts/install.sh
 #
 # Or with options:
-#   curl -fsSL ... | bash -s -- --no-venv --skip-setup
+#   bash scripts/install.sh --no-venv --skip-setup
+#
+# Cryozen Agent is in preview: no hosted copy of this script is published.
 #
 # ============================================================================
 
@@ -566,7 +568,7 @@ detect_os() {
             OS="windows"
             DISTRO="windows"
             log_error "Windows detected. Please use the PowerShell installer:"
-            log_info "  iex (irm https://cryozenai.github.io/cryozen-agent/install.ps1)"
+            log_info "  powershell -ExecutionPolicy ByPass -File scripts\\install.ps1"
             exit 1
             ;;
         *)

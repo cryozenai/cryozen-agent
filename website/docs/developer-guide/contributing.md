@@ -6,6 +6,10 @@ description: "How to contribute to Cryozen Agent — dev setup, code style, PR p
 
 # Contributing
 
+:::caution Preview
+Cryozen Agent is in preview and not released. No installer, package, release, or documentation site is published yet, so the install commands on this page do not work. To try it, [run it from source](https://github.com/cryozenai/cryozen-agent#run-from-source).
+:::
+
 Thank you for contributing to Cryozen Agent! This guide covers setting up your dev environment, understanding the codebase, and getting your PR merged.
 
 ## Contribution Priorities
