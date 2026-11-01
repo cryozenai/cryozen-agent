@@ -54,7 +54,7 @@ cryozen
 
 </div>
 
-نیٹو Windows پر کلون سے `.\scripts\install.ps1` چلائیں۔
+نیٹو Windows پر کلون سے `powershell -ExecutionPolicy ByPass -File scripts\install.ps1` چلائیں۔
 
 ---
 
@@ -88,6 +88,7 @@ cryozen doctor       # diagnose problems
 ## لائسنس
 
 کرائیوزن ایجنٹ MIT لائسنس کے تحت جاری کیا گیا ہے؛ [LICENSE](LICENSE) اور [NOTICE](NOTICE) دیکھیں۔
+اس میں Nous Research کا [Hermes Agent](https://github.com/NousResearch/hermes-agent) شامل ہے، جو MIT لائسنس ہی کے تحت ہے۔
 
 Copyright (c) 2026 Cryozen.
 

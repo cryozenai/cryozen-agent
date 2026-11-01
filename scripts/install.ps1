@@ -5,10 +5,10 @@
 # Uses uv for fast Python provisioning and package management.
 #
 # Usage:
-#   .\scripts\install.ps1
+#   powershell -ExecutionPolicy ByPass -File scripts\install.ps1
 #
 # Or with options:
-#   .\scripts\install.ps1 -NoVenv -SkipSetup
+#   powershell -ExecutionPolicy ByPass -File scripts\install.ps1 -NoVenv -SkipSetup
 #
 # Cryozen Agent is in preview: no hosted copy of this script is published.
 #
@@ -5167,6 +5167,6 @@ try {
     Write-Err "Installation failed: $_"
     Write-Host ""
     Write-Info "If the error is unclear, try running the script directly from a checkout:"
-    Write-Host "  .\install.ps1" -ForegroundColor Yellow
+    Write-Host "  powershell -ExecutionPolicy ByPass -File scripts\install.ps1" -ForegroundColor Yellow
     Write-Host ""
 }

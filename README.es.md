@@ -48,7 +48,7 @@ uv pip install -e ".[all,dev]"
 cryozen            # empieza a chatear
 ```
 
-En Windows nativo, ejecuta `.\scripts\install.ps1` desde el clon.
+En Windows nativo, ejecuta `powershell -ExecutionPolicy ByPass -File scripts\install.ps1` desde el clon.
 
 ---
 

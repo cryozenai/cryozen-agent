@@ -155,17 +155,17 @@ echo "OPENROUTER_API_KEY=***" >> ~/.cryozen-agent/.env
 ### Run
 
 ```bash
-# The standard installer already put `cryozen` on PATH.
+# `cryozen` is on PATH while the venv above is active.
 cryozen doctor
 cryozen chat -q "Hello"
 ```
 
-If you used the manual clone fallback, run `./cryozen` from the checkout or
-symlink this clone's venv explicitly:
+To run it from a shell without that venv on PATH, run `./cryozen` from the
+checkout or symlink the venv's entrypoint:
 
 ```bash
 mkdir -p ~/.local/bin
-ln -sf "$(pwd)/venv/bin/cryozen" ~/.local/bin/cryozen
+ln -sf "$VIRTUAL_ENV/bin/cryozen" ~/.local/bin/cryozen
 ```
 
 ### Run tests

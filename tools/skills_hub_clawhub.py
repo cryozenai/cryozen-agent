@@ -69,7 +69,8 @@ class ClawHubSource(GuardedFetchMixin, SkillSource):
     CATALOG_WALK_BUDGET_SECONDS = 12
     # The index builder has no user waiting, and a walk that gives up early ships
     # nothing because it trips the deploy health floor. So it rides out an outage
-    # of several minutes at one cursor, where interactive browse gives up quickly.
+    # of several minutes at one cursor, where interactive callers give up quickly.
+    CATALOG_PAGE_MAX_BACKOFF_SECONDS = 8
     INDEX_BUILDER_PAGE_RETRIES = 10
     INDEX_BUILDER_MAX_BACKOFF_SECONDS = 60
     ZIP_DOWNLOAD_MAX_BYTES = 25 * 1024 * 1024
@@ -191,8 +192,8 @@ class ClawHubSource(GuardedFetchMixin, SkillSource):
             # Empty query: paginating catalog walker. A disk-cached full catalog
             # is returned whole (caller paginates); on a cold cache the walk is
             # bounded to `limit` so browse renders page one without walking
-            # 50k+ skills (max_items=0 = unbounded, offline index builder only).
-            catalog = self._load_catalog_index(max_items=max(limit, 0))
+            # 50k+ skills (limit<=0 = unbounded, offline index builder only).
+            catalog = self._load_catalog_index(max_items=max(limit, 0), index_builder=limit <= 0)
             if catalog:
                 deduped = _dedupe_results(catalog)
                 return deduped[:limit] if limit > 0 else deduped
@@ -296,20 +297,20 @@ class ClawHubSource(GuardedFetchMixin, SkillSource):
         _cache_metas(cache_key, results)
         return results
 
-    def _load_catalog_index(self, max_items: int = 0) -> List[SkillMeta]:
+    def _load_catalog_index(self, max_items: int = 0, *, index_builder: bool = False) -> List[SkillMeta]:
         """Walk the ClawHub catalog via cursor pagination.
 
         ``max_items`` stops the walk early once that many distinct skills are
         gathered (browse's cold-start fallback renders one page); ``0`` walks
-        to exhaustion (offline index builder). Only a COMPLETE walk (cursor
-        exhausted or page cap) is written to the shared ``clawhub_catalog_v1``
-        cache — a walk cut by ``max_items``, the wall-clock budget, or a
+        to exhaustion (keyword search, offline index builder). Only a COMPLETE
+        walk (cursor exhausted or page cap) is written to the shared
+        ``clawhub_catalog_v1`` cache — a walk cut by ``max_items``, the wall-clock budget, or a
         failed page fetch would poison it with a partial slice.
 
         ``_get_json`` returns ``None`` on timeout/non-200. That is a hole in the
-        walk, not catalog exhaustion: the same cursor is retried (a few times for
-        browse, longer for the index builder) before the walk gives up (partial,
-        uncached, and logged).
+        walk, not catalog exhaustion: the same cursor is retried (a few times, or
+        longer with ``index_builder``, which has no user waiting) before the walk
+        gives up (partial, uncached, and logged).
         """
         cache_key = "clawhub_catalog_v1"
         cached = _cached_metas(cache_key)
@@ -325,6 +326,8 @@ class ClawHubSource(GuardedFetchMixin, SkillSource):
         deadline = time.monotonic() + self.CATALOG_WALK_BUDGET_SECONDS if max_items > 0 else None
         partial = False
         fetch_failures = 0
+        retries = self.INDEX_BUILDER_PAGE_RETRIES if index_builder else self.CATALOG_PAGE_RETRIES
+        max_backoff = self.INDEX_BUILDER_MAX_BACKOFF_SECONDS if index_builder else self.CATALOG_PAGE_MAX_BACKOFF_SECONDS
         for _ in range(750):
             if deadline is not None and time.monotonic() > deadline:
                 partial = True
@@ -333,15 +336,13 @@ class ClawHubSource(GuardedFetchMixin, SkillSource):
             data = self._get_json(f"{self.BASE_URL}/skills", timeout=30, params=params)
             if data is None:
                 fetch_failures += 1
-                retries = self.CATALOG_PAGE_RETRIES if deadline is not None else self.INDEX_BUILDER_PAGE_RETRIES
                 if fetch_failures >= retries:
                     logger.warning("ClawHub catalog walk stopped after %d failed fetches of one page; "
                                    "returning a partial catalog of %d skills", fetch_failures, len(results))
                     partial = True
                     break
-                # Interactive browse stays inside its 12 s budget; the index builder backs off.
-                time.sleep(0.5 if deadline is not None else
-                           min(2 ** fetch_failures, self.INDEX_BUILDER_MAX_BACKOFF_SECONDS))
+                # Interactive browse stays inside its 12 s budget; unbounded walks back off.
+                time.sleep(0.5 if deadline is not None else min(2 ** fetch_failures, max_backoff))
                 continue
             fetch_failures = 0
             items = data.get("items", []) if isinstance(data, dict) else []

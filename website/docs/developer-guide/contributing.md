@@ -132,7 +132,7 @@ symlink this clone's venv explicitly:
 
 ```bash
 mkdir -p ~/.local/bin
-ln -sf "$(pwd)/venv/bin/cryozen" ~/.local/bin/cryozen
+ln -sf "$VIRTUAL_ENV/bin/cryozen" ~/.local/bin/cryozen
 ```
 
 ### Run Tests
