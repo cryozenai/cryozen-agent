@@ -747,9 +747,14 @@ class TestImageApiSurface:
 
     def test_catalog_models_are_offered_only_by_openrouter(self):
         from plugins.image_gen.openrouter import _IMAGE_API_MODELS, _build_providers
+        import requests as req_lib
 
-        by_name = {p.name: p for p in _build_providers()}
-        openrouter_ids = {m["id"] for m in by_name["openrouter"].list_models()}
+        # Offline, so the curated list is what is offered. Reaching the live
+        # catalog made this depend on which models OpenRouter lists today.
+        offline = req_lib.ConnectionError("offline")
+        with patch("requests.get", side_effect=offline), patch("requests.post", side_effect=offline):
+            by_name = {p.name: p for p in _build_providers()}
+            openrouter_ids = {m["id"] for m in by_name["openrouter"].list_models()}
         assert "openai/gpt-image-2" in openrouter_ids
         assert set(_IMAGE_API_MODELS) <= openrouter_ids
 
